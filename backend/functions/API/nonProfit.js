@@ -76,10 +76,8 @@ exports.npSignUp = (request, response) => {
 }
 
 exports.npLogin = (request, response) => {
-    const np = {
-        npEmail: request.body.npEmail,
-        npPassword: request.body.npPassword
-    }
+    const np = JSON.parse(request.body)
+
     // validates email and password
     const { valid, errors } = validateNpLogin(np);
     if (!valid) return response.status(400).json(errors);
@@ -152,17 +150,12 @@ exports.updateNpAccountCredentials = (request, response) => {
                 .where("npInfo.npUid", "==", request.user.uid)
                 .get()
                 .then((documents) => {
-                    console.log(documents.docs)
                     let npInfo = {
                         npName: data.npName,
                         npWebsite: data.npWebsite,
                         npEmail: data.npEmail,
                         npUid: request.user.uid
                     }
-                    // for (let i in documents.docs) {
-                    //     const doc = documents.docs[i]
-                    //     doc.update({npInfo: npInfo})
-                    // }
                     documents.forEach((myDoc) => {
                         collection.doc(myDoc.id)
                             .update({npInfo: npInfo})
@@ -185,9 +178,103 @@ exports.updateNpProjects = (request, response) => {
 
 }
 
-exports.updateNpProfilePic = (request, response) => {
-
+deleteImage = (imageName) => {
+    const bucket = admin.storage().bucket();
+    const path = `${imageName}`
+    return bucket.file(path).delete()
+        .then(() => {})
+        .catch((error) => {})
 }
+
+exports.updateNpProfileImg = (request, response) => {
+    const BusBoy = require('busboy');
+    const path = require('path');
+    const os = require('os');
+    const fsMod = require('fs');
+    const busboy = new BusBoy({ headers: request.headers });
+
+    let imageFileName;
+    let imageToBeUploaded = {};
+
+    busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+        if (mimetype !== 'image/png' && mimetype !== 'image/jpeg') {
+            return response.status(400).json({ error: 'Wrong file type submited' });
+        }
+        const imageExtension = filename.split('.')[filename.split('.').length - 1];
+        imageFileName = `${request.user.username}.${imageExtension}`;
+        const filePath = path.join(os.tmpdir(), imageFileName);
+        imageToBeUploaded = { filePath, mimetype };
+        file.pipe(fsMod.createWriteStream(filePath));
+    });
+    deleteImage(imageFileName).then()
+    let imageUrl
+    busboy.on('finish', () => {
+        admin
+            .storage()
+            .bucket()
+            .upload(imageToBeUploaded.filePath, {
+                resumable: false,
+                metadata: {
+                    metadata: {
+                        contentType: imageToBeUploaded.mimetype
+                    }
+                }
+            })
+            // change img url in np_account document
+            .then(() => {
+                imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`
+                fs
+                    .collection("np_accounts")
+                    .doc(request.user.uid)
+                    .update({"profileImgURL": imageUrl})
+                    .catch((err) => {
+                        return response.status(500).json({error: err.message})
+                    })
+            })
+            // update img url in admin
+            .then(() => {
+                admin
+                    .auth()
+                    .updateUser(request.user.uid,{
+                        photoURL: imageUrl
+                    })
+                    .catch((err) => {
+                        return response.status(500).json({error: err.message})
+                    })
+                return imageUrl
+            })
+            // update img url in projects
+            .then(() => {
+                let collection = fs.collection("projects")
+                collection
+                    .where("npInfo.npUid", "==", request.user.uid)
+                    .get()
+                    .then((documents) => {
+                        documents.forEach((myDoc) => {
+                            collection.doc(myDoc.id)
+                                .update({"npInfo.profileImgURL": imageUrl})
+                                .catch((err) => {
+                                    return response.status(500).json({error: err.message})
+                                })
+                        })
+                    })
+                    .catch((err) => {
+                        return response.status(500).json({error: err.message})
+                    })
+            })
+            .catch((err) => {
+                return response.status(500).json({error: err.message})
+            })
+            .then(() => {
+                return response.json({ message: 'Image uploaded successfully' });
+            })
+            .catch((error) => {
+                console.error(error);
+                return response.status(500).json({ error: error.message });
+            });
+    });
+    busboy.end(request.rawBody);
+};
 
 
 

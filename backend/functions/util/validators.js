@@ -45,7 +45,6 @@ exports.validateNpCredentials = (data) => {
     if (isEmpty(data.npEmail)) {
         errors.npEmail = 'Must not be empty';
     } else if (!isEmail(data.npEmail)) {
-        console.log(data.npEmail)
         errors.npEmail = 'Must be valid npEmail address';
     }
 

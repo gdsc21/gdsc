@@ -5,7 +5,8 @@ const {
     npSignUp,
     npLogin,
     getNpAccount,
-    updateNpAccountCredentials
+    updateNpAccountCredentials,
+    updateNpProfileImg
 } = require("./API/nonProfit")
 
 const {
@@ -17,4 +18,5 @@ app.post("/signup", npSignUp)
 app.post("/login", npLogin)
 app.get("/getNpAccount", auth, getNpAccount)
 app.post("/updateNpCredentials", auth, updateNpAccountCredentials)
+app.post("/updateNpProfileImg", auth, updateNpProfileImg)
 exports.api = functions.https.onRequest(app);
