@@ -1,100 +1,94 @@
 const { admin, fs } = require('../util/admin');
 const config = require('../util/config');
 const firebase = require('firebase');
-const { validateNpSignUp, validateNpLogin } = require('../util/validators');
+const { validateNpSignUp, validateNpLogin, validateNpCredentials } = require('../util/validators');
 
 
 firebase.initializeApp(config);
 
 exports.npSignUp = (request, response) => {
-    // extract data from form post request
-    const newNp = {
-        npName: String(request.body.npName),
-        username: String(request.body.username),
-        email: String(request.body.email),
-        phoneNumber: String(request.body.phoneNumber),
-        country: String(request.body.country),
-        password: String(request.body.password),
-        confirmPassword: String(request.body.confirmPassword),
-        website: String(request.body.website)
-    };
+    // extract data from form post request -- if field is optional and nothing is passed leave it empty
+    let newCredentials = request.body
 
     // validate data and return 400 error if data is invalid
-    const { valid, errors } = validateNpSignUp(newNp);
+    const { valid, errors } = validateNpSignUp(newCredentials);
     if (!valid) return response.status(400).json(errors);
 
-    let token, userId;
-    // check if document with passed username exists - if not create the user in firebase
-    fs
-        .doc(`/non_profit_accounts/${newNp.username}`)
-        .get()
-        .then((doc) => {
-            if (doc.exists) {
-                return response.status(400).json({ username: 'this username is already taken' });
-            } else {
-                return firebase
-                    .auth()
-                    .createUserWithEmailAndPassword(
-                        newNp.email,
-                        newNp.password
-                    );
-            }
+    // check if a user with the entered email already exists if so return error otherwise move on
+    admin
+        .auth()
+        .getUserByEmail(newCredentials.npEmail)
+        .then((userRecord) => {
+            return response.status(409).json({
+                npEmail: "This email is already taken. If this is your email please login instead."})
         })
-        // get the id token return from firebase authentication
-        .then((data) => {
-            userId = data.user.uid;
-            return data.user.getIdToken();
-        })
-        //  create a document with the non profits account information
-        .then((idToken) => {
-            token = idToken;
-            const userCredentials = {
-                npName: newNp.npName,
-                username: newNp.username,
-                phoneNumber: newNp.phoneNumber,
-                country: newNp.country,
-                email: newNp.email,
-                website: newNp.website,
-                createdAt: new Date().toISOString(),
-                userId
-            };
-            return fs
-                .doc(`/non_profit_accounts/${newNp.username}`)
-                .set({userCredentials: userCredentials});
-        })
-        // return the authentication token to the client
-        .then(()=>{
-            return response.status(201).json({ token });
-        })
-        // catch any errors
         .catch((err) => {
-            // console.error(err);
-            // if (err.code === 'auth/email-already-in-use') {
-            //     return response.status(400).json({ email: 'Email already in use' });
-            // }
-            // else if (err.code === "auth/weak-password") {
-            //     return response.status(400).json({ email: 'Email already in use' });
-            // }else {
-            //     return response.status(500).json({ general: err.message });
-            // }
-            return response.status(400).json({error: err.message})
-        });
+            if (err.code === "auth/user-not-found") {} // ignore the error thrown if the user (email) doesn't exist
+            else return response.status(500).json({error: err.message})
+        })
+
+    // creates the user in admin and then creates an document (title == uid) with the same info (except password)
+    // then it logs the user in and returns an authorization token
+    admin
+        .auth()
+        .createUser({
+            email: newCredentials.npEmail,
+            phoneNumber: newCredentials.npPhoneNumber,
+            password: newCredentials.npPassword,
+            displayName: newCredentials.npDisplayName
+        })
+        // creates the document associated with the user in np_accounts collection
+        .then((userRecord) => {
+            fs
+                .collection("np_accounts")
+                .doc(userRecord.uid)
+                .set({
+                    npEmail: newCredentials.npEmail,
+                    npPhoneNumber: newCredentials.npPhoneNumber,
+                    npDisplayName: newCredentials.npDisplayName,
+                    npWebsite: newCredentials.npWebsite,
+                    npCountry: newCredentials.npCountry
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+        })
+        // signs the user in and returns a JWT token
+        .then(() => {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(newCredentials.npEmail, newCredentials.npPassword)
+                .then((userCredential) => {
+                    return userCredential.user.getIdToken()
+                })
+                // KEEP THESE 2 .then STATEMENTS SEPARATED TO AVOID CIRCULAR JSON ERROR --- OTHERWISE TOKEN WILL BE
+                // INVALID AS IT IS ASSIGNED AN INTERMEDIATE VALUE THAT HASN'T FULLY LOADED
+                .then((idToken) => {
+                    return response.status(201).json({ token: idToken })
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 exports.npLogin = (request, response) => {
     const np = {
-        email: String(request.body.email),
-        password: String(request.body.password)
+        npEmail: request.body.npEmail,
+        npPassword: request.body.npPassword
     }
-
+    // validates email and password
     const { valid, errors } = validateNpLogin(np);
     if (!valid) return response.status(400).json(errors);
 
     firebase
         .auth()
-        .signInWithEmailAndPassword(np.email, np.password)
+        .signInWithEmailAndPassword(np.npEmail, np.npPassword)
         .then((data) => {
-            return data.user.getIdToken();
+            return data.user.getIdToken()
         })
         .then((token) => {
             return response.json({ token });
@@ -104,39 +98,94 @@ exports.npLogin = (request, response) => {
         })
 }
 
-exports.npLogOut = (request, response) => {
-    firebase.auth().signOut().then(() => {
-        return response.status(200)
-    }).catch((err) => {
-        return response.status(500).json({error: err})
-    });
-
-}
-
 // returns all the data in a non_profits_account document
 exports.getNpAccount = (request, response) => {
     fs
-        .collection("non_profit_accounts")
-        .doc(request.user.username)
+        .collection("np_accounts")
+        .doc(request.user.uid)
         .get()
         .then((doc) => {
-            console.log(request.user.username)
             if (doc.exists) {
-                // let data = doc.data()
-                // npData.userCredentials = data.userCredentials
                 return response.json(doc.data())
             }
             else {
-                return response.json({word: "hello word"})
-
+                return response.json({error: "Account doesn't exist"})
             }
+        })
+        .catch((err) => {
+
+            return response.status(500).json({error: err.message})
+        })
+}
+
+// update non profit account credentials -- updates the info in all places including project pages
+exports.updateNpAccountCredentials = (request, response) => {
+    let data = JSON.parse(request.body)
+
+    // validate data and return 400 error if data is invalid
+    const { valid, errors } = validateNpCredentials(data);
+    if (!valid) return response.status(400).json(errors);
+
+    // updates the admin db
+    admin
+        .auth()
+        .updateUser(request.user.uid,{
+            email: data.npEmail,
+            phoneNumber: data.npPhoneNumber,
+            displayName: data.npDisplayName
+        })
+        .then((userRecord) => {
+            return response.status(200).json({message: "Updated successfully"})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+    // updates the np account document
+    fs
+        .collection("np_accounts")
+        .doc(request.user.uid)
+        .update(data)
+        // update all the non profit credentials in all of its projects
+        .then(() => {
+            let collection = fs.collection("projects")
+            collection
+                .where("npInfo.npUid", "==", request.user.uid)
+                .get()
+                .then((documents) => {
+                    console.log(documents.docs)
+                    let npInfo = {
+                        npName: data.npName,
+                        npWebsite: data.npWebsite,
+                        npEmail: data.npEmail,
+                        npUid: request.user.uid
+                    }
+                    // for (let i in documents.docs) {
+                    //     const doc = documents.docs[i]
+                    //     doc.update({npInfo: npInfo})
+                    // }
+                    documents.forEach((myDoc) => {
+                        collection.doc(myDoc.id)
+                            .update({npInfo: npInfo})
+                            .catch((err) => {
+                                return response.status(500).json({error: err.message})
+                            })
+                    })
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
 }
 
-exports.updateNpProfile = (request, response) => {
+
+exports.updateNpProjects = (request, response) => {
+
+}
+
+exports.updateNpProfilePic = (request, response) => {
 
 }
 
@@ -160,8 +209,8 @@ exports.updateNpProfile = (request, response) => {
 //     // Handle Errors here.
 //     let errorCode = error.code;
 //     let errorMessage = error.message;
-//     // The email of the user's account used.
-//     let email = error.email;
+//     // The npEmail of the user's account used.
+//     let npEmail = error.npEmail;
 //     // The firebase.auth.AuthCredential type that was used.
 //     let credential = error.credential;
 // });

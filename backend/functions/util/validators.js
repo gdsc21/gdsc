@@ -1,8 +1,8 @@
-const isEmail = (email) => {
-    //TODO edit regex to check for company email
-    let tString = String(email)
-    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return !!tString.match(emailRegEx);
+const isEmail = (Email) => {
+    //TODO edit regex to check for company npEmail
+    let tString = String(Email)
+    const EmailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return !!tString.match(EmailRegEx);
 };
 
 function isEmpty(some_string) {
@@ -11,19 +11,19 @@ function isEmpty(some_string) {
 }
 
 exports.validateNpSignUp = (data) => {
-    let errors = {};
-    if (isEmpty(data.email)) {
-        errors.email = 'Must not be empty';
-    } else if (!isEmail(data.email)) {
-        errors.email = 'Must be valid email address';
+    let errors = {}
+    if (isEmpty(data.npEmail)) {
+        errors.npEmail = 'Must not be empty';
+    } else if (!isEmail(data.npEmail)) {
+        errors.npEmail = 'Must be valid npEmail address';
     }
 
-    if (isEmpty(data.nonProfitName)) errors.nonProfitName = 'Must not be empty';
-    if (isEmpty(data.phoneNumber)) errors.phoneNumber = 'Must not be empty';
-    if (isEmpty(data.country)) errors.country = 'Must not be empty';
+    if (isEmpty(data.npName)) errors.npName = 'Must not be empty';
+    if (isEmpty(data.npUsername)) errors.npUsername = 'Must not be empty';
+    if (isEmpty(data.npCountry)) errors.npCountry = 'Must not be empty';
 
-    if (isEmpty(data.password)) errors.password = 'Must not be empty';
-    if (data.password !== data.confirmPassword) errors.confirmPassword = 'Passowrds must be the same';
+    if (isEmpty(data.npPassword)) errors.npPassword = 'Must not be empty';
+    if (data.npPassword !== data.npConfirmPassword) errors.npConfirmPassword = 'Passowrds must be the same';
     return {
         errors,
         valid: Object.keys(errors).length === 0
@@ -32,10 +32,28 @@ exports.validateNpSignUp = (data) => {
 
 exports.validateNpLogin = (data) => {
     let errors = {};
-    if (isEmpty(data.email)) errors.email = 'Must not be empty';
-    if (isEmpty(data.password)) errors.password = 'Must not be  empty';
+    if (isEmpty(data.npEmail)) errors.npEmail = 'Must not be empty';
+    if (isEmpty(data.npPassword)) errors.npPassword = 'Must not be  empty';
     return {
         errors,
         valid: Object.keys(errors).length === 0
     };
-};
+}
+
+exports.validateNpCredentials = (data) => {
+    let errors = {}
+    if (isEmpty(data.npEmail)) {
+        errors.npEmail = 'Must not be empty';
+    } else if (!isEmail(data.npEmail)) {
+        console.log(data.npEmail)
+        errors.npEmail = 'Must be valid npEmail address';
+    }
+
+    if (isEmpty(data.npDisplayName)) errors.npDisplayName = 'Must not be empty';
+    if (isEmpty(data.npCountry)) errors.npCountry = 'Must not be empty';
+
+    return {
+        errors,
+        valid: Object.keys(errors).length === 0
+    }
+}

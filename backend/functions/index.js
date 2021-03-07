@@ -4,8 +4,8 @@ const app = require('express')();
 const {
     npSignUp,
     npLogin,
-    npLogOut,
     getNpAccount,
+    updateNpAccountCredentials
 } = require("./API/nonProfit")
 
 const {
@@ -15,6 +15,6 @@ const {
 
 app.post("/signup", npSignUp)
 app.post("/login", npLogin)
-app.post("/logout", auth, npLogOut)
 app.get("/getNpAccount", auth, getNpAccount)
+app.post("/updateNpCredentials", auth, updateNpAccountCredentials)
 exports.api = functions.https.onRequest(app);
