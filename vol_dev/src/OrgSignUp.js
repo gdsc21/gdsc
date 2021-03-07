@@ -27,6 +27,7 @@ class OrgSignUp extends React.Component{
                 <label htmlFor="orgweb">Organization Website</label>
                 <input type="text" id = "orgweb"/><br />
                 </div>
+                <button className="signupButton">Sign Up</button>
             </div>
         )
     }

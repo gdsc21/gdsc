@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import OrgSignUp from './OrgSignUp'
+import OrgLogIn from './OrgLogIn';
 
-ReactDOM.render(
-  <OrgSignUp />,
+ReactDOM.render(<div>
+  <OrgSignUp />
+  <OrgLogIn />
+</div>
+  ,
   document.getElementById('root')
 );
