@@ -1,9 +1,20 @@
-const functions = require("firebase-functions");
+const functions = require('firebase-functions');
+const app = require('express')();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+const {
+    npSignUp,
+    npLogin,
+    npLogOut,
+    getNpAccount,
+} = require("./API/nonProfit")
+
+const {
+    auth
+} = require("./util/auth")
+
+
+app.post("/signup", npSignUp)
+app.post("/login", npLogin)
+app.post("/logout", auth, npLogOut)
+app.get("/getNpAccount", auth, getNpAccount)
+exports.api = functions.https.onRequest(app);
