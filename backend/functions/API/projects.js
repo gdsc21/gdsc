@@ -3,7 +3,11 @@ const config = require('../util/config');
 const firebase = require('firebase');
 
 
-firebase.initializeApp(config)
+if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+}else {
+    firebase.app(); // if already initialized, use that one
+}
 
 exports.createProject = (request, response) => {
     /**
@@ -93,3 +97,4 @@ exports.loadProject = (request, response) => {
             return response.status(500).json({error: err.message})
         })
 }
+

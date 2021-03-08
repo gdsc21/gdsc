@@ -1,3 +1,6 @@
+const { admin, fs } = require('../util/admin');
+
+
 const isEmail = (Email) => {
     //TODO edit regex to check for company npEmail
     let tString = String(Email)
@@ -55,4 +58,18 @@ exports.validateNpCredentials = (data) => {
         errors,
         valid: Object.keys(errors).length === 0
     }
+}
+
+exports.checkUserExist = (email) => {
+    // check if a user with the entered email already exists if so return error otherwise move on
+    admin
+        .auth()
+        .getUserByEmail(email)
+        .then((userRecord) => {
+            return true
+        })
+        .catch((err) => {
+            if (err.code === "auth/user-not-found") return false
+            else return err.message
+        })
 }
