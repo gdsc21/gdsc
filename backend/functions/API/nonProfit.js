@@ -7,6 +7,14 @@ const { validateNpSignUp, validateNpLogin, validateNpCredentials } = require('..
 firebase.initializeApp(config);
 
 exports.npSignUp = (request, response) => {
+    /**
+     * Takes data from signup form, creates a user account, creates a document for the user, saves info from the form in
+     * the document, authenticates the user, returns a JWT token.
+     * @param {request} body={npEmail:, npPhoneNumber: optional, npPassword:, npConfirmPassword:, npDisplayName:,
+     *                          npCountry:, npWebsite: optional}
+     * @return success: status=201 --- json={token:}
+     *          failure: status=400/409/500 --- json={message/error: ""/err.message}
+     */
     // extract data from form post request -- if field is optional and nothing is passed leave it empty
     let newCredentials = request.body
 
@@ -20,7 +28,7 @@ exports.npSignUp = (request, response) => {
         .getUserByEmail(newCredentials.npEmail)
         .then((userRecord) => {
             return response.status(409).json({
-                npEmail: "This email is already taken. If this is your email please login instead."})
+                message: "This email is already taken. If this is your email please login instead."})
         })
         .catch((err) => {
             if (err.code === "auth/user-not-found") {} // ignore the error thrown if the user (email) doesn't exist
@@ -76,6 +84,12 @@ exports.npSignUp = (request, response) => {
 }
 
 exports.npLogin = (request, response) => {
+    /**
+     * Email and password login for non profits. Returns a JWT token.
+     * @param {request} body={npEmail:, npPassword}
+     * @return success: status=200 --- json={token: token}
+     *          failure: status=403 --- json={error: err.message}
+     */
     const np = JSON.parse(request.body)
 
     // validates email and password
@@ -89,14 +103,13 @@ exports.npLogin = (request, response) => {
             return data.user.getIdToken()
         })
         .then((token) => {
-            return response.json({ token });
+            return response.status(200).json({ token });
         })
         .catch((err) => {
-            return response.status(403).json({ error: err.message});
+            return response.status(403).json({error: err.message});
         })
 }
 
-// returns all the data in a non_profits_account document
 exports.getNpAccount = (request, response) => {
     fs
         .collection("np_accounts")
@@ -107,7 +120,7 @@ exports.getNpAccount = (request, response) => {
                 return response.json(doc.data())
             }
             else {
-                return response.json({error: "Account doesn't exist"})
+                return response.status(404).json({error: "Account doesn't exist"})
             }
         })
         .catch((err) => {
@@ -116,8 +129,13 @@ exports.getNpAccount = (request, response) => {
         })
 }
 
-// update non profit account credentials -- updates the info in all places including project pages
 exports.updateNpAccountCredentials = (request, response) => {
+    /**
+     * Updates the email, phone number, display name, website, and country
+     * @param {request} body={npEmail:, npDisplayName:, npPhoneNumber:, npCountry:, npWebsite} --- user.uid=decodedToken
+     * @return success: status=200 --- json={message: "Updated successfully"}
+     *          failure: status=400/500 --- json={error: err.message}
+     */
     let data = JSON.parse(request.body)
 
     // validate data and return 400 error if data is invalid
@@ -131,9 +149,6 @@ exports.updateNpAccountCredentials = (request, response) => {
             email: data.npEmail,
             phoneNumber: data.npPhoneNumber,
             displayName: data.npDisplayName
-        })
-        .then((userRecord) => {
-            return response.status(200).json({message: "Updated successfully"})
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -151,7 +166,7 @@ exports.updateNpAccountCredentials = (request, response) => {
                 .get()
                 .then((documents) => {
                     let npInfo = {
-                        npName: data.npName,
+                        npDisplayName: data.npDisplayName,
                         npWebsite: data.npWebsite,
                         npEmail: data.npEmail,
                         npUid: request.user.uid
@@ -168,11 +183,13 @@ exports.updateNpAccountCredentials = (request, response) => {
                     return response.status(500).json({error: err.message})
                 })
         })
+        .then(() => {
+            return response.status(200).json({message: "Updated successfully"})
+        })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
 }
-
 
 exports.updateNpProjects = (request, response) => {
 
@@ -187,6 +204,14 @@ deleteImage = (imageName) => {
 }
 
 exports.updateNpProfileImg = (request, response) => {
+    /**
+     * Takes an uploaded file, stores in firebase storage, gets the stored image's url, saves the url to np_accounts
+     * document and all of the projects that non profit has.
+     * @param {request} file=png/jpg
+     * @return success: status=200 --- json={message: 'Image uploaded successfully'}
+     *          failure: wrong file type: status=400 --- json={error: "Wrong file type submitted"}
+     *          failure: status=500 --- json={error: err.message}
+     */
     const BusBoy = require('busboy');
     const path = require('path');
     const os = require('os');
@@ -198,7 +223,7 @@ exports.updateNpProfileImg = (request, response) => {
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
         if (mimetype !== 'image/png' && mimetype !== 'image/jpeg') {
-            return response.status(400).json({ error: 'Wrong file type submited' });
+            return response.status(400).json({ error: 'Wrong file type submitted' });
         }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
         imageFileName = `${request.user.username}.${imageExtension}`;
@@ -226,7 +251,7 @@ exports.updateNpProfileImg = (request, response) => {
                 fs
                     .collection("np_accounts")
                     .doc(request.user.uid)
-                    .update({"profileImgURL": imageUrl})
+                    .update({"npProfileImgURL": imageUrl})
                     .catch((err) => {
                         return response.status(500).json({error: err.message})
                     })
@@ -252,7 +277,7 @@ exports.updateNpProfileImg = (request, response) => {
                     .then((documents) => {
                         documents.forEach((myDoc) => {
                             collection.doc(myDoc.id)
-                                .update({"npInfo.profileImgURL": imageUrl})
+                                .update({"npInfo.npProfileImgURL": imageUrl})
                                 .catch((err) => {
                                     return response.status(500).json({error: err.message})
                                 })
@@ -262,22 +287,15 @@ exports.updateNpProfileImg = (request, response) => {
                         return response.status(500).json({error: err.message})
                     })
             })
-            .catch((err) => {
-                return response.status(500).json({error: err.message})
-            })
             .then(() => {
-                return response.json({ message: 'Image uploaded successfully' });
+                return response.status(200).json({ message: 'Image uploaded successfully' });
             })
             .catch((error) => {
-                console.error(error);
                 return response.status(500).json({ error: error.message });
             });
     });
     busboy.end(request.rawBody);
 };
-
-
-
 
 
 // let provider = new firebase.auth.GithubAuthProvider();
