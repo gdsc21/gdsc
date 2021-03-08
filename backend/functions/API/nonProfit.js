@@ -53,7 +53,8 @@ exports.npSignUp = (request, response, next) => {
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
                 })
-            request.body ={"npEmail": newCredentials.npEmail, "npPassword":newCredentials.npPassword}
+            // reset request body and send to login function to authenticate
+            request.body = {"npEmail": newCredentials.npEmail, "npPassword":newCredentials.npPassword}
             return next()
         })
         .catch((err) => {
@@ -81,7 +82,7 @@ exports.npLogin = (request, response) => {
         .auth()
         .signInWithEmailAndPassword(np.npEmail, np.npPassword)
         .then((data) => {
-            return data.user.getIdToken()
+            return data.user.getIdToken(true)
         })
         .then((token) => {
             return response.status(200).json({ token });
@@ -97,7 +98,6 @@ exports.getNpAccount = (request, response) => {
         .doc(request.user.uid)
         .get()
         .then((doc) => {
-            console.log(request.user.uid)
             if (doc.exists) {
                 return response.json(doc.data())
             }

@@ -9,6 +9,7 @@ exports.auth = (request, response, next) => {
     } else {
         return response.status(401).json({ error: 'Unauthorized' });
     }
+    console.log(token)
     admin
         // VERY IMPORT: request.user assignment is used by all endpoints that require user info so always put auth
         // first if the end objective utilizes user info
