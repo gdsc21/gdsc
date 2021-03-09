@@ -75,7 +75,7 @@ exports.npLogin = (request, response) => {
 
     // validates email and password
     const { valid, errors } = validateNpLogin(np);
-    if (!valid) return response.status(400).json(errors);
+    if (!valid) return response.status(400).json({errors: errors});
 
     firebase
         .auth()
@@ -92,9 +92,18 @@ exports.npLogin = (request, response) => {
 }
 
 exports.getNpAccount = (request, response) => {
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let retrieveUID
+    if (data.npUid !== "undefined") retrieveUID = data.npUid
+    else retrieveUID = request.user.uid
+
     fs
         .collection("np_accounts")
-        .doc(request.user.uid)
+        .doc(retrieveUID)
         .get()
         .then((doc) => {
             if (doc.exists) {
@@ -105,7 +114,6 @@ exports.getNpAccount = (request, response) => {
             }
         })
         .catch((err) => {
-
             return response.status(500).json({error: err.message})
         })
 }
@@ -209,7 +217,7 @@ exports.updateNpProfileImg = (request, response) => {
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
         if (mimetype !== 'image/png' && mimetype !== 'image/jpeg') {
-            return response.status(400).json({ error: 'Wrong file type submitted' });
+            return response.status(400).json({ error: 'Wrong file type' });
         }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
         imageFileName = `${request.user.username}.${imageExtension}`;

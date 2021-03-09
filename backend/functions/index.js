@@ -24,11 +24,11 @@ const {
 } = require("./API/developers")
 
 
-app.post("/signup", npSignUp, npLogin)
-app.post("/login", npLogin)
-app.get("/getNpAccount", auth, getNpAccount)
+app.post("/np-signup", npSignUp, npLogin)
+app.post("/np-login", npLogin)
+app.get("/get-non-profit", auth, getNpAccount)
 app.post("/updateNpCredentials", auth, updateNpAccountCredentials)
-app.post("/updateNpProfileImg", auth, updateNpProfileImg)
+app.post("/update-np-profile-img", auth, updateNpProfileImg)
 app.post("/create-project", auth, createProject)
 app.post("/delete-project", auth, deleteProject)
 app.post("/dev-create-profile", auth, createDevProfile)
