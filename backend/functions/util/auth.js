@@ -18,7 +18,6 @@ exports.auth = (request, response, next) => {
         // decodedToken contains name - uid - email - phone number - etc
         .then((decodedToken) => {
             request.user = decodedToken // assigns request.user to the decodedToken user information --- used in next()
-            console.log("Auth:", request.user.uid)
             return next()
         })
         .catch((err) => {

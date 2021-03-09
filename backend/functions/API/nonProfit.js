@@ -39,7 +39,6 @@ exports.npSignUp = (request, response, next) => {
         // creates the document associated with the user in np_accounts collection
         .then((userRecord) => {
             npUid = userRecord.uid
-            console.log("userRecord UID:", npUid)
             fs
                 .collection("np_accounts")
                 .doc(npUid)

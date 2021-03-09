@@ -53,13 +53,11 @@ exports.deleteProject = (request, response) => {
      * @return success: status=200 --- json={message: Successfully deleted the project}
      *          failure: status=500 --- json={error: err.message}
      */
-    console.log("DeletePrject UID:", request.user.uid)
     let data, projectId
     if (typeof request.body != "object") {
         data = JSON.parse(request.body)
         projectId = data.projectId
     } else projectId = request.body.projectId
-    console.log("ProjectID:", projectId)
 
     // delete project from non profit account document
     let projects
