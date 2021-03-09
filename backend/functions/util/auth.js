@@ -9,7 +9,6 @@ exports.auth = (request, response, next) => {
     } else {
         return response.status(401).json({ error: 'Unauthorized' });
     }
-    console.log(token)
     admin
         // VERY IMPORT: request.user assignment is used by all endpoints that require user info so always put auth
         // first if the end objective utilizes user info
@@ -19,6 +18,7 @@ exports.auth = (request, response, next) => {
         // decodedToken contains name - uid - email - phone number - etc
         .then((decodedToken) => {
             request.user = decodedToken // assigns request.user to the decodedToken user information --- used in next()
+            console.log("Auth:", request.user.uid)
             return next()
         })
         .catch((err) => {

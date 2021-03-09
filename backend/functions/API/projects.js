@@ -13,7 +13,7 @@ exports.createProject = (request, response) => {
     /**
      * Creates a new project document with a random uid as the file name and inserts a title, description and npInfo
      * @param {request} body={title:, description:, npInfo: {npEmail:, npDisplayName:, npWebsite:}}
-     * @return success: status=201 --- json={message: "Project successfully created!}
+     * @return success: status=201 --- json={projectId:}
      *          failure: status=500 --- json={error: err.message}
      */
     const data = JSON.parse(request.body)
@@ -37,7 +37,7 @@ exports.createProject = (request, response) => {
                         description: data.description,
                     }})
                 .then(() => {
-                    return response.status(201).json({message: "Project successfully created!"})
+                    return response.status(201).json({projectId: projectDoc.id})
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
@@ -53,25 +53,50 @@ exports.deleteProject = (request, response) => {
      * @return success: status=200 --- json={message: Successfully deleted the project}
      *          failure: status=500 --- json={error: err.message}
      */
-    const data = JSON.parse(request.body)
+    console.log("DeletePrject UID:", request.user.uid)
+    let data, projectId
+    if (typeof request.body != "object") {
+        data = JSON.parse(request.body)
+        projectId = data.projectId
+    } else projectId = request.body.projectId
+    console.log("ProjectID:", projectId)
+
+    // delete project from non profit account document
+    let projects
+    let npDocRef = fs.collection("np_accounts").doc(request.user.uid)
+    npDocRef
+        .get()
+        .then((npDoc) => {
+            projects = npDoc.data().npProjects
+            if (!(projectId in projects)) {
+                return response.status(400).json({message: "Cannot delete this project"})
+            } else {
+                delete projects[projectId]
+                console.log(projects)
+                npDocRef
+                    .update({"npProjects": projects})
+                    .then(() => {
+                        return response.status(200).json({message: "Successfully deleted the project!"})
+                    })
+                    .catch((err) => {
+                        return response.status(500).json({error: err.message})
+                    })
+            }
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+
+    // delete project document
     fs
         .collection("projects")
-        .doc(data.projectId)
+        .doc(projectId)
         .delete()
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
-    fs
-        .collection("np_accounts")
-        .doc(request.user.uid)
-        .update({[`npProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()})
-        .then(() => {
-            return response.status(200).json({message: "Successfully deleted the project"})
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
 }
+
 
 exports.loadProject = (request, response) => {
     /**
@@ -97,4 +122,5 @@ exports.loadProject = (request, response) => {
             return response.status(500).json({error: err.message})
         })
 }
+
 
