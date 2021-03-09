@@ -1,12 +1,12 @@
 const { admin, fs } = require('../util/admin');
 const config = require('../util/config');
 const firebase = require('firebase');
-const { validateNpSignUp, validateNpLogin, validateNpCredentials } = require('../util/validators');
+const { validateNpSignUp, validateNpLogin, validateNpCredentials, checkUserExist } = require('../util/validators');
 
 
 firebase.initializeApp(config);
 
-exports.npSignUp = (request, response) => {
+exports.npSignUp = (request, response, next) => {
     /**
      * Takes data from signup form, creates a user account, creates a document for the user, saves info from the form in
      * the document, authenticates the user, returns a JWT token.
@@ -15,28 +15,19 @@ exports.npSignUp = (request, response) => {
      * @return success: status=201 --- json={token:}
      *          failure: status=400/409/500 --- json={message/error: ""/err.message}
      */
-    // extract data from form post request -- if field is optional and nothing is passed leave it empty
+        // extract data from form post request -- if field is optional and nothing is passed leave it empty
     let newCredentials = request.body
 
     // validate data and return 400 error if data is invalid
     const { valid, errors } = validateNpSignUp(newCredentials);
     if (!valid) return response.status(400).json(errors);
 
-    // check if a user with the entered email already exists if so return error otherwise move on
-    admin
-        .auth()
-        .getUserByEmail(newCredentials.npEmail)
-        .then((userRecord) => {
-            return response.status(409).json({
-                message: "This email is already taken. If this is your email please login instead."})
-        })
-        .catch((err) => {
-            if (err.code === "auth/user-not-found") {} // ignore the error thrown if the user (email) doesn't exist
-            else return response.status(500).json({error: err.message})
-        })
+    // checks if the email is already in use
+    if (checkUserExist(newCredentials.npEmail))
+        return response.status(400).json({message: "Email is already taken"})
 
     // creates the user in admin and then creates an document (title == uid) with the same info (except password)
-    // then it logs the user in and returns an authorization token
+    let npUid
     admin
         .auth()
         .createUser({
@@ -47,9 +38,10 @@ exports.npSignUp = (request, response) => {
         })
         // creates the document associated with the user in np_accounts collection
         .then((userRecord) => {
+            npUid = userRecord.uid
             fs
                 .collection("np_accounts")
-                .doc(userRecord.uid)
+                .doc(npUid)
                 .set({
                     npEmail: newCredentials.npEmail,
                     npPhoneNumber: newCredentials.npPhoneNumber,
@@ -60,23 +52,9 @@ exports.npSignUp = (request, response) => {
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
                 })
-        })
-        // signs the user in and returns a JWT token
-        .then(() => {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(newCredentials.npEmail, newCredentials.npPassword)
-                .then((userCredential) => {
-                    return userCredential.user.getIdToken()
-                })
-                // KEEP THESE 2 .then STATEMENTS SEPARATED TO AVOID CIRCULAR JSON ERROR --- OTHERWISE TOKEN WILL BE
-                // INVALID AS IT IS ASSIGNED AN INTERMEDIATE VALUE THAT HASN'T FULLY LOADED
-                .then((idToken) => {
-                    return response.status(201).json({ token: idToken })
-                })
-                .catch((err) => {
-                    return response.status(500).json({error: err.message})
-                })
+            // reset request body and send to login function to authenticate
+            request.body = {"npEmail": newCredentials.npEmail, "npPassword":newCredentials.npPassword}
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -90,7 +68,10 @@ exports.npLogin = (request, response) => {
      * @return success: status=200 --- json={token: token}
      *          failure: status=403 --- json={error: err.message}
      */
-    const np = JSON.parse(request.body)
+    let np
+    if (typeof request.body != "object")
+        np = JSON.parse(request.body)
+    else np = request.body
 
     // validates email and password
     const { valid, errors } = validateNpLogin(np);
@@ -100,7 +81,7 @@ exports.npLogin = (request, response) => {
         .auth()
         .signInWithEmailAndPassword(np.npEmail, np.npPassword)
         .then((data) => {
-            return data.user.getIdToken()
+            return data.user.getIdToken(true)
         })
         .then((token) => {
             return response.status(200).json({ token });
