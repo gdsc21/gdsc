@@ -110,6 +110,8 @@ exports.getNpAccount = (request, response) => {
         })
 }
 
+// TODO: Fix so that only fields sent are updated - no need to pass all fields
+// do this by check if data element is passed and if so do a batch update on that specific element
 exports.updateNpAccountCredentials = (request, response) => {
     /**
      * Updates the email, phone number, display name, website, and country
@@ -117,7 +119,10 @@ exports.updateNpAccountCredentials = (request, response) => {
      * @return success: status=200 --- json={message: "Updated successfully"}
      *          failure: status=400/500 --- json={error: err.message}
      */
-    let data = JSON.parse(request.body)
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
     // validate data and return 400 error if data is invalid
     const { valid, errors } = validateNpCredentials(data);

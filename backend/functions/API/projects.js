@@ -25,7 +25,9 @@ exports.createProject = (request, response) => {
         .add({
             title: data.title,
             description: data.description,
-            npInfo: npInfo
+            npInfo: npInfo,
+            devProfiles: {},
+            GitHubRepo: ""
         })
         .then((projectDoc) => {
             fs
