@@ -19,3 +19,8 @@ input {
 .form-field {
   margin: 20px;
 }
+.navbar a {
+  text-decoration: none;
+  color: black;
+  margin: 15px;
+}
