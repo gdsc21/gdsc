@@ -1,11 +1,14 @@
 import React from "react";
-import Home from "./home/home";
+import { Home, SignUp, SignIn, Project, Explore, NonProfit, Dev } from "./pages";
+import { Switch, Route } from "react-router-dom";
 
 const App = () => {
 	return (
-		<div>
-			<Home />
-		</div>
+		<Switch>
+			<Route path="/dashboard">
+				<Home />
+			</Route>
+		</Switch>
 	);
 };
 
