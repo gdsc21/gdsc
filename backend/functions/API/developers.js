@@ -146,3 +146,27 @@ exports.updateDevProfile = (request, response) => {
 
 
 }
+
+exports.joinProject = (request, response) => {
+
+}
+
+exports.leaveProject = (request, response) => {
+
+}
+
+exports.addCommit = (request, response) => {
+
+}
+
+exports.addXP = (request, response) => {
+
+}
+
+exports.removeXP = (request, response) => {
+
+}
+
+exports.addBadge = (request, response) => {
+
+}

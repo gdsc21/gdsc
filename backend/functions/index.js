@@ -5,7 +5,7 @@ const {
     npSignUp,
     npLogin,
     getNpAccount,
-    updateNpAccountCredentials,
+    updateNpAccount,
     updateNpProfileImg
 } = require("./API/nonProfit")
 
@@ -15,7 +15,9 @@ const {
 
 const {
     createProject,
-    deleteProject
+    deleteProject,
+    loadProject,
+    updateNpInfo
 } = require("./API/projects")
 
 const {
@@ -27,7 +29,7 @@ const {
 app.post("/np-signup", npSignUp, npLogin)
 app.post("/np-login", npLogin)
 app.get("/get-non-profit", auth, getNpAccount)
-app.post("/updateNpCredentials", auth, updateNpAccountCredentials)
+app.post("/update-np-info", auth, updateNpAccount, updateNpInfo)
 app.post("/update-np-profile-img", auth, updateNpProfileImg)
 app.post("/create-project", auth, createProject)
 app.post("/delete-project", auth, deleteProject)

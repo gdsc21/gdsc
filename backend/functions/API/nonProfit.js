@@ -119,7 +119,7 @@ exports.getNpAccount = (request, response) => {
 }
 
 // do this by check if data element is passed and if so do a batch update on that specific element
-exports.updateNpAccountCredentials = (request, response) => {
+exports.updateNpAccount = (request, response, next) => {
     /**
      * Updates the email, phone number, display name, website, and country
      * @param {request} body={npEmail:, npDisplayName:, npPhoneNumber:, npCountry:, npWebsite} --- user.uid=decodedToken
@@ -151,6 +151,7 @@ exports.updateNpAccountCredentials = (request, response) => {
             })
     }
 
+    // updates the non profits account document
     let batch = fs.batch()
     let npDocRef = fs.collection("np_accounts").doc(request.user.uid)
 
@@ -160,71 +161,16 @@ exports.updateNpAccountCredentials = (request, response) => {
     "npWebsite" in data ? batch.update(npDocRef, {"npWebsite": data.npWebsite}) : ""
     "npCountry" in data ? batch.update(npDocRef, {"npCountry": data.npCountry}) : ""
 
-    fs
-        .collection("projects")
-        .where("npInfo.npUid", "==", request.user.uid)
-        .get()
-        .then((projectDocs) => {
-            projectDocs.forEach((doc) => {
-                "npEmail" in data ? batch.update(doc.ref, {"npInfo.npEmail": data.npEmail}) : ""
-                "npDisplayName" in data ? batch.update(doc.ref, {"npInfo.npDisplayName": data.npDisplayName}) : ""
-                "npPhoneNumber" in data ? batch.update(doc.ref, {"npInfo.npPhoneNumber": data.npPhoneNumber}) : ""
-                "npWebsite" in data ? batch.update(doc.ref, {"npInfo.npWebsite": data.npWebsite}) : ""
-                "npCountry" in data ? batch.update(doc.ref, {"npInfo.npCountry": data.npCountry}) : ""
-            })
-        })
-
     batch
         .commit()
         .then(() => {
-            return response.status(200).json({message: "Profile updated"})
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({message: err.message})
         })
-
-
-    // updates the np account document
-    // fs
-    //     .collection("np_accounts")
-    //     .doc(request.user.uid)
-    //     .update(data)
-    //     // update all the non profit credentials in all of its projects
-    //     .then(() => {
-    //         let collection = fs.collection("projects")
-    //         collection
-    //             .where("npInfo.npUid", "==", request.user.uid)
-    //             .get()
-    //             .then((documents) => {
-    //                 let npInfo = {
-    //                     npDisplayName: data.npDisplayName,
-    //                     npWebsite: data.npWebsite,
-    //                     npEmail: data.npEmail,
-    //                     npUid: request.user.uid
-    //                 }
-    //                 documents.forEach((myDoc) => {
-    //                     collection.doc(myDoc.id)
-    //                         .update({npInfo: npInfo})
-    //                         .catch((err) => {
-    //                             return response.status(500).json({error: err.message})
-    //                         })
-    //                 })
-    //             })
-    //             .catch((err) => {
-    //                 return response.status(500).json({error: err.message})
-    //             })
-    //     })
-    //     .then(() => {
-    //         return response.status(200).json({message: "Updated successfully"})
-    //     })
-    //     .catch((err) => {
-    //         return response.status(500).json({error: err.message})
-    //     })
 }
 
-exports.updateNpProjects = (request, response) => {
-
-}
 
 deleteImage = (imageName) => {
     const bucket = admin.storage().bucket();
