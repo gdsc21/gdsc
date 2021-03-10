@@ -75,7 +75,7 @@ exports.npLogin = (request, response) => {
 
     // validates email and password
     const { valid, errors } = validateNpLogin(np);
-    if (!valid) return response.status(400).json(errors);
+    if (!valid) return response.status(400).json({errors: errors});
 
     firebase
         .auth()
@@ -92,9 +92,18 @@ exports.npLogin = (request, response) => {
 }
 
 exports.getNpAccount = (request, response) => {
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let retrieveUID
+    if (data.npUid !== "undefined") retrieveUID = data.npUid
+    else retrieveUID = request.user.uid
+
     fs
         .collection("np_accounts")
-        .doc(request.user.uid)
+        .doc(retrieveUID)
         .get()
         .then((doc) => {
             if (doc.exists) {
@@ -105,76 +114,63 @@ exports.getNpAccount = (request, response) => {
             }
         })
         .catch((err) => {
-
             return response.status(500).json({error: err.message})
         })
 }
 
-exports.updateNpAccountCredentials = (request, response) => {
+// do this by check if data element is passed and if so do a batch update on that specific element
+exports.updateNpAccount = (request, response, next) => {
     /**
      * Updates the email, phone number, display name, website, and country
      * @param {request} body={npEmail:, npDisplayName:, npPhoneNumber:, npCountry:, npWebsite} --- user.uid=decodedToken
      * @return success: status=200 --- json={message: "Updated successfully"}
      *          failure: status=400/500 --- json={error: err.message}
      */
-    let data = JSON.parse(request.body)
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
     // validate data and return 400 error if data is invalid
     const { valid, errors } = validateNpCredentials(data);
     if (!valid) return response.status(400).json(errors);
 
-    // updates the admin db
-    admin
-        .auth()
-        .updateUser(request.user.uid,{
-            email: data.npEmail,
-            phoneNumber: data.npPhoneNumber,
-            displayName: data.npDisplayName
+    // newUserData populated with email and display name if available
+    let newUserData = {}
+    "npEmail" in data ? newUserData.email = data.npEmail : ""
+    "npDisplayName" in data ? newUserData.displayName = data.npDisplayName : ""
+    "npPhoneNumber" in data ? newUserData.phoneNumber = data.npPhoneNumber : ""
+
+    // updates the admin database if email or display name is in newUserData
+    if (Object.keys(newUserData).length !== 0) {
+        admin
+            .auth()
+            .updateUser(request.user.uid, newUserData)
+            .catch((err) => {
+                return response.status(500).json({error: err.message})
+            })
+    }
+
+    // updates the non profits account document
+    let batch = fs.batch()
+    let npDocRef = fs.collection("np_accounts").doc(request.user.uid)
+
+    "npEmail" in data ? batch.update(npDocRef, {"npEmail": data.npEmail}) : ""
+    "npDisplayName" in data ? batch.update(npDocRef, {"npDisplayName": data.npDisplayName}) : ""
+    "npPhoneNumber" in data ? batch.update(npDocRef, {"npPhoneNumber": data.npPhoneNumber}) : ""
+    "npWebsite" in data ? batch.update(npDocRef, {"npWebsite": data.npWebsite}) : ""
+    "npCountry" in data ? batch.update(npDocRef, {"npCountry": data.npCountry}) : ""
+
+    batch
+        .commit()
+        .then(() => {
+            return next()
         })
         .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
-    // updates the np account document
-    fs
-        .collection("np_accounts")
-        .doc(request.user.uid)
-        .update(data)
-        // update all the non profit credentials in all of its projects
-        .then(() => {
-            let collection = fs.collection("projects")
-            collection
-                .where("npInfo.npUid", "==", request.user.uid)
-                .get()
-                .then((documents) => {
-                    let npInfo = {
-                        npDisplayName: data.npDisplayName,
-                        npWebsite: data.npWebsite,
-                        npEmail: data.npEmail,
-                        npUid: request.user.uid
-                    }
-                    documents.forEach((myDoc) => {
-                        collection.doc(myDoc.id)
-                            .update({npInfo: npInfo})
-                            .catch((err) => {
-                                return response.status(500).json({error: err.message})
-                            })
-                    })
-                })
-                .catch((err) => {
-                    return response.status(500).json({error: err.message})
-                })
-        })
-        .then(() => {
-            return response.status(200).json({message: "Updated successfully"})
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
+            return response.status(500).json({message: err.message})
         })
 }
 
-exports.updateNpProjects = (request, response) => {
-
-}
 
 deleteImage = (imageName) => {
     const bucket = admin.storage().bucket();
@@ -204,7 +200,7 @@ exports.updateNpProfileImg = (request, response) => {
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
         if (mimetype !== 'image/png' && mimetype !== 'image/jpeg') {
-            return response.status(400).json({ error: 'Wrong file type submitted' });
+            return response.status(400).json({ error: 'Wrong file type' });
         }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
         imageFileName = `${request.user.username}.${imageExtension}`;
