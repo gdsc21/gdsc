@@ -1,6 +1,4 @@
-import React from "react";
-
-const signin = () => {
+const SignIn = () => {
 	return (
 		<div className="orglogin">
 			<div className="form-field">
@@ -17,4 +15,5 @@ const signin = () => {
 		</div>
 	);
 };
-export default signin;
+
+export default SignIn;
