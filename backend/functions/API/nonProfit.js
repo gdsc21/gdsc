@@ -75,7 +75,7 @@ exports.npLogin = (request, response) => {
 
     // validates email and password
     const { valid, errors } = validateNpLogin(np);
-    if (!valid) return response.status(400).json(errors);
+    if (!valid) return response.status(400).json({errors: errors});
 
     firebase
         .auth()
@@ -92,9 +92,18 @@ exports.npLogin = (request, response) => {
 }
 
 exports.getNpAccount = (request, response) => {
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let retrieveUID
+    if (data.npUid !== "undefined") retrieveUID = data.npUid
+    else retrieveUID = request.user.uid
+
     fs
         .collection("np_accounts")
-        .doc(request.user.uid)
+        .doc(retrieveUID)
         .get()
         .then((doc) => {
             if (doc.exists) {
@@ -105,11 +114,12 @@ exports.getNpAccount = (request, response) => {
             }
         })
         .catch((err) => {
-
             return response.status(500).json({error: err.message})
         })
 }
 
+// TODO: Fix so that only fields sent are updated - no need to pass all fields
+// do this by check if data element is passed and if so do a batch update on that specific element
 exports.updateNpAccountCredentials = (request, response) => {
     /**
      * Updates the email, phone number, display name, website, and country
@@ -117,7 +127,10 @@ exports.updateNpAccountCredentials = (request, response) => {
      * @return success: status=200 --- json={message: "Updated successfully"}
      *          failure: status=400/500 --- json={error: err.message}
      */
-    let data = JSON.parse(request.body)
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
     // validate data and return 400 error if data is invalid
     const { valid, errors } = validateNpCredentials(data);
@@ -204,7 +217,7 @@ exports.updateNpProfileImg = (request, response) => {
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
         if (mimetype !== 'image/png' && mimetype !== 'image/jpeg') {
-            return response.status(400).json({ error: 'Wrong file type submitted' });
+            return response.status(400).json({ error: 'Wrong file type' });
         }
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
         imageFileName = `${request.user.username}.${imageExtension}`;

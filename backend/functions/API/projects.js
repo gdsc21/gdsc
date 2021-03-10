@@ -25,7 +25,9 @@ exports.createProject = (request, response) => {
         .add({
             title: data.title,
             description: data.description,
-            npInfo: npInfo
+            npInfo: npInfo,
+            devProfiles: {},
+            GitHubRepo: ""
         })
         .then((projectDoc) => {
             fs
@@ -95,7 +97,6 @@ exports.deleteProject = (request, response) => {
         })
 }
 
-
 exports.loadProject = (request, response) => {
     /**
      * Takes a projectId and returns the document data for that project
@@ -120,5 +121,4 @@ exports.loadProject = (request, response) => {
             return response.status(500).json({error: err.message})
         })
 }
-
 

@@ -1,12 +1,14 @@
-import React from "react";
-import Home from "./home/home";
+import React from 'react';
+import Home from "./Home/Home";
+import TestComponent from "./TestComponent";
 
-const App = () => {
-	return (
-		<div>
-			<Home />
-		</div>
-	);
-};
+const App =() => {
+    return(
+        <div>
+            <Home />
+            <TestComponent/>
+        </div>
+    )
+}
 
 export default App;
