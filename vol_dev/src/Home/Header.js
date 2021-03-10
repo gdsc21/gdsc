@@ -1,7 +1,32 @@
 import React from 'react'
 import {Link} from 'react-scroll'
+import Logos from './Logos'
+import gitLogo from './images/gitLogo.png'
+import projectLogo from './images/projectLogo.png'
+import pointLogo from './images/pointLogo.png'
+import msgLogo from './images/msgLogo.png'
+import ProjectDesc from './ProjectDesc'
+
  
 const Header = () => {
+    let images = [
+        {
+            img: gitLogo,
+            description: "embedded github collaboration"
+        },
+        {
+            img: projectLogo,
+            description: "integrated project management"
+        },
+        {
+            img: pointLogo,
+            description: "point granting && redemption"
+        },
+        {
+            img: msgLogo,
+            description: "individual && group messaging"
+        }
+    ];
         return (
             <div className="home-info">
                 <nav className='nav'>
@@ -23,8 +48,18 @@ const Header = () => {
                     but we have a gamified system that awards our developers with amazing products and opportunities. </h4>
             </div>
             <a href="/"> Join Our Community</a>
+            <div>
+                {images.map(function(image, index) {
+                    return(
+                        <Logos key={index} image={image} />
+                    )
+                })}  
+            </div>
             <div className="projects-home">
                 <h1>Awesome Projects Built on Smth Smth </h1>
+                <div>
+                <ProjectDesc />
+                </div>    
             </div>
         </div>
     )
