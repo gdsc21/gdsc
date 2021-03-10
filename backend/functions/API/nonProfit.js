@@ -118,7 +118,6 @@ exports.getNpAccount = (request, response) => {
         })
 }
 
-// TODO: Fix so that only fields sent are updated - no need to pass all fields
 // do this by check if data element is passed and if so do a batch update on that specific element
 exports.updateNpAccountCredentials = (request, response) => {
     /**
@@ -136,53 +135,91 @@ exports.updateNpAccountCredentials = (request, response) => {
     const { valid, errors } = validateNpCredentials(data);
     if (!valid) return response.status(400).json(errors);
 
-    // updates the admin db
-    admin
-        .auth()
-        .updateUser(request.user.uid,{
-            email: data.npEmail,
-            phoneNumber: data.npPhoneNumber,
-            displayName: data.npDisplayName
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
-    // updates the np account document
+    // newUserData populated with email and display name if available
+    let newUserData = {}
+    "npEmail" in data ? newUserData.email = data.npEmail : ""
+    "npDisplayName" in data ? newUserData.displayName = data.npDisplayName : ""
+    "npPhoneNumber" in data ? newUserData.phoneNumber = data.npPhoneNumber : ""
+
+    // updates the admin database if email or display name is in newUserData
+    if (Object.keys(newUserData).length !== 0) {
+        admin
+            .auth()
+            .updateUser(request.user.uid, newUserData)
+            .catch((err) => {
+                return response.status(500).json({error: err.message})
+            })
+    }
+
+    let batch = fs.batch()
+    let npDocRef = fs.collection("np_accounts").doc(request.user.uid)
+
+    "npEmail" in data ? batch.update(npDocRef, {"npEmail": data.npEmail}) : ""
+    "npDisplayName" in data ? batch.update(npDocRef, {"npDisplayName": data.npDisplayName}) : ""
+    "npPhoneNumber" in data ? batch.update(npDocRef, {"npPhoneNumber": data.npPhoneNumber}) : ""
+    "npWebsite" in data ? batch.update(npDocRef, {"npWebsite": data.npWebsite}) : ""
+    "npCountry" in data ? batch.update(npDocRef, {"npCountry": data.npCountry}) : ""
+
     fs
-        .collection("np_accounts")
-        .doc(request.user.uid)
-        .update(data)
-        // update all the non profit credentials in all of its projects
-        .then(() => {
-            let collection = fs.collection("projects")
-            collection
-                .where("npInfo.npUid", "==", request.user.uid)
-                .get()
-                .then((documents) => {
-                    let npInfo = {
-                        npDisplayName: data.npDisplayName,
-                        npWebsite: data.npWebsite,
-                        npEmail: data.npEmail,
-                        npUid: request.user.uid
-                    }
-                    documents.forEach((myDoc) => {
-                        collection.doc(myDoc.id)
-                            .update({npInfo: npInfo})
-                            .catch((err) => {
-                                return response.status(500).json({error: err.message})
-                            })
-                    })
-                })
-                .catch((err) => {
-                    return response.status(500).json({error: err.message})
-                })
+        .collection("projects")
+        .where("npInfo.npUid", "==", request.user.uid)
+        .get()
+        .then((projectDocs) => {
+            projectDocs.forEach((doc) => {
+                "npEmail" in data ? batch.update(doc.ref, {"npInfo.npEmail": data.npEmail}) : ""
+                "npDisplayName" in data ? batch.update(doc.ref, {"npInfo.npDisplayName": data.npDisplayName}) : ""
+                "npPhoneNumber" in data ? batch.update(doc.ref, {"npInfo.npPhoneNumber": data.npPhoneNumber}) : ""
+                "npWebsite" in data ? batch.update(doc.ref, {"npInfo.npWebsite": data.npWebsite}) : ""
+                "npCountry" in data ? batch.update(doc.ref, {"npInfo.npCountry": data.npCountry}) : ""
+            })
         })
+
+    batch
+        .commit()
         .then(() => {
-            return response.status(200).json({message: "Updated successfully"})
+            return response.status(200).json({message: "Profile updated"})
         })
         .catch((err) => {
-            return response.status(500).json({error: err.message})
+            return response.status(500).json({message: err.message})
         })
+
+
+    // updates the np account document
+    // fs
+    //     .collection("np_accounts")
+    //     .doc(request.user.uid)
+    //     .update(data)
+    //     // update all the non profit credentials in all of its projects
+    //     .then(() => {
+    //         let collection = fs.collection("projects")
+    //         collection
+    //             .where("npInfo.npUid", "==", request.user.uid)
+    //             .get()
+    //             .then((documents) => {
+    //                 let npInfo = {
+    //                     npDisplayName: data.npDisplayName,
+    //                     npWebsite: data.npWebsite,
+    //                     npEmail: data.npEmail,
+    //                     npUid: request.user.uid
+    //                 }
+    //                 documents.forEach((myDoc) => {
+    //                     collection.doc(myDoc.id)
+    //                         .update({npInfo: npInfo})
+    //                         .catch((err) => {
+    //                             return response.status(500).json({error: err.message})
+    //                         })
+    //                 })
+    //             })
+    //             .catch((err) => {
+    //                 return response.status(500).json({error: err.message})
+    //             })
+    //     })
+    //     .then(() => {
+    //         return response.status(200).json({message: "Updated successfully"})
+    //     })
+    //     .catch((err) => {
+    //         return response.status(500).json({error: err.message})
+    //     })
 }
 
 exports.updateNpProjects = (request, response) => {
