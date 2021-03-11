@@ -1,4 +1,4 @@
-import Home from "./home/home";
+import Home from "./home";
 import SignUp from "./signup/signup";
 import SignIn from "./signin/signin";
 import Project from "./project/project";
