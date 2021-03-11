@@ -1,0 +1,107 @@
+* {
+  color: #16223b;
+}
+
+a {
+  text-decoration: none;
+}
+
+.home-info {
+  position: absolute;
+  width: 1439.69px;
+  height: 731.95px;
+  left: 0.31px;
+  top: 0px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(240, 166, 62, 0.62)), to(rgba(240, 166, 62, 0.18)));
+  background: linear-gradient(180deg, rgba(240, 166, 62, 0.62) 0%, rgba(240, 166, 62, 0.18) 100%);
+}
+
+.home-info .nav {
+  position: fixed;
+  left: 658.84px;
+  top: 69.33px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.home-info .nav a {
+  margin-right: 47.3px;
+  width: 53px;
+  height: 27px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
+}
+
+.home-info .info {
+  position: fixed;
+}
+
+.home-info .info h1 {
+  left: 121.28px;
+  top: 164.17px;
+  font-size: 48px;
+  font-weight: bold;
+  line-height: 72px;
+}
+
+.home-info .info h2 {
+  left: 121.28px;
+  top: 232.97px;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 110%;
+}
+
+.home-info .info h4 {
+  width: 830.44px;
+  height: 92px;
+  left: 121.28px;
+  top: 310.28px;
+  font-size: 18px;
+  line-height: 127%;
+}
+
+.home-info .joinBtn {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 269.12px;
+  height: 40.1px;
+  left: 153.03px;
+  top: 450.78px;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+  color: white;
+  background-color: #16223b;
+  border-radius: 20px;
+}
+
+.home-info .logos-home {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  position: fixed;
+  left: 11.11;
+  right: 80.44%;
+  top: 600.369px;
+  bottom: 78.79%;
+}
+/*# sourceMappingURL=homepage.css.map */
