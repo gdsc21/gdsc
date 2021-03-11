@@ -25,7 +25,9 @@ exports.createProject = (request, response) => {
         .add({
             title: data.title,
             description: data.description,
-            npInfo: npInfo
+            npInfo: npInfo,
+            devProfiles: {},
+            GitHubRepo: ""
         })
         .then((projectDoc) => {
             fs
@@ -95,7 +97,6 @@ exports.deleteProject = (request, response) => {
         })
 }
 
-
 exports.loadProject = (request, response) => {
     /**
      * Takes a projectId and returns the document data for that project
@@ -119,6 +120,57 @@ exports.loadProject = (request, response) => {
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+}
+
+exports.updateNpInfo = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    // updates all the project documents that belong to a specific non profit
+    let batch = fs.batch()
+    fs
+        .collection("projects")
+        .where("npInfo.npUid", "==", user.uid)
+        .get()
+        .then((projectDocs) => {
+            projectDocs.forEach((doc) => {
+                "npEmail" in data ? batch.update(doc.ref, {"npInfo.npEmail": data.npEmail}) : ""
+                "npDisplayName" in data ? batch.update(doc.ref, {"npInfo.npDisplayName": data.npDisplayName}) : ""
+                "npPhoneNumber" in data ? batch.update(doc.ref, {"npInfo.npPhoneNumber": data.npPhoneNumber}) : ""
+                "npWebsite" in data ? batch.update(doc.ref, {"npInfo.npWebsite": data.npWebsite}) : ""
+                "npCountry" in data ? batch.update(doc.ref, {"npInfo.npCountry": data.npCountry}) : ""
+            })
+        })
+
+    batch
+        .commit()
+        .then(() => {
+            return response.status(200).json({message: "Profile updated"})
+        })
+        .catch((err) => {
+            return response.status(500).json({message: err.message})
+        })
+}
+
+exports.updateDevInfo = (request, response) => {
+
+}
+
+exports.addDev = (request, response) => {
+
+}
+
+exports.removeDev = (request, response) => {
+
+}
+
+exports.addCommit = (request, response) => {
+
 }
 
 
