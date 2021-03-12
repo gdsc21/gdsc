@@ -91,15 +91,17 @@ exports.npLogin = (request, response) => {
         })
 }
 
-exports.getNpAccount = (request, response) => {
+exports.npGetAccount = (request, response) => {
     let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
 
     let retrieveUID
-    if (data.npUid !== "undefined") retrieveUID = data.npUid
-    else retrieveUID = request.user.uid
+    console.log(data.npUid)
+    if (!("npUid" in data)) return response.status(400).json({message: "npUid cannot be undefined"})
+    else retrieveUID = data.npUid
+    retrieveUID = String(retrieveUID)
 
     fs
         .collection("np_accounts")
@@ -118,8 +120,7 @@ exports.getNpAccount = (request, response) => {
         })
 }
 
-// do this by check if data element is passed and if so do a batch update on that specific element
-exports.updateNpAccount = (request, response, next) => {
+exports.npUpdateAccount = (request, response, next) => {
     /**
      * Updates the email, phone number, display name, website, and country
      * @param {request} body={npEmail:, npDisplayName:, npPhoneNumber:, npCountry:, npWebsite} --- user.uid=decodedToken
@@ -180,7 +181,7 @@ deleteImage = (imageName) => {
         .catch((error) => {})
 }
 
-exports.updateNpProfileImg = (request, response) => {
+exports.npUpdateProfileImg = (request, response) => {
     /**
      * Takes an uploaded file, stores in firebase storage, gets the stored image's url, saves the url to np_accounts
      * document and all of the projects that non profit has.
@@ -274,25 +275,61 @@ exports.updateNpProfileImg = (request, response) => {
     busboy.end(request.rawBody);
 };
 
+exports.npAddProject = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
-// let provider = new firebase.auth.GithubAuthProvider();
-// firebase
-//     .auth()
-//     .signInWithPopup(provider)
-//     .then((result) => {
-//         /** @type {firebase.auth.OAuthCredential} */
-//         let credential = result.credential;
-//         // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-//         let token = credential.accessToken;
-//         // The signed-in user info.
-//         let user = result.user;
-//
-//     }).catch((error) => {
-//     // Handle Errors here.
-//     let errorCode = error.code;
-//     let errorMessage = error.message;
-//     // The npEmail of the user's account used.
-//     let npEmail = error.npEmail;
-//     // The firebase.auth.AuthCredential type that was used.
-//     let credential = error.credential;
-// });
+    fs
+        .collection("np_accounts")
+        .doc(user.uid)
+        .update({
+            [`npProjects.${data.projectId}`]: {
+                title: data.title,
+                description: data.description,
+            }})
+        .then(() => {
+            return response.status(201).json({projectId: data.projectId})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
+
+exports.npDeleteProject = (request, response, next) => {
+    /**
+     * @param {request} body={projectId}
+     */
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let npDocRef = fs.collection("np_accounts").doc(user.uid)
+
+    npDocRef
+        .get()
+        .then((npDoc) => {
+            if (!npDoc.exists) return response.status(400).json({message: "Non-profit doesn't exist"})
+            let projects = npDoc.data().npProjects
+            if (!(data.projectId in projects)) return response.status(500).json({message: "Unauthorized or project doesn't exist"})
+        })
+
+    npDocRef
+        .update({
+            [`npProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
+        })
+        .then(() => {
+            return next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
