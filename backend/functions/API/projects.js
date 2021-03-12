@@ -38,20 +38,28 @@ exports.projCreate = (request, response, next) => {
                 npWebsite: docData.npWebsite,
                 npUid: user.uid
             }
-        })
 
-    fs
-        .collection("projects")
-        .add({
-            title: data.title,
-            description: data.description,
-            npInfo: npInfo,
-            devProfiles: {},
-            GitHubRepo: ""
+            fs
+                .collection("projects")
+                .add({
+                    title: data.title,
+                    description: data.description,
+                    npInfo: npInfo,
+                    devProfiles: {},
+                    GitHubRepo: ""
+                })
+                .then((projectDoc) => {
+                    request.body.projectId = projectDoc.id
+                    console.log(request.body)
+                    return next
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+
         })
-        .then((projectDoc) => {
-            request.body.projectId = projectDoc.id
-            return next
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
         })
 }
 

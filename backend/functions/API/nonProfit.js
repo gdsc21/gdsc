@@ -98,8 +98,10 @@ exports.npGetAccount = (request, response) => {
     else data = request.body
 
     let retrieveUID
-    if (data.npUid !== "undefined") retrieveUID = data.npUid
-    else retrieveUID = request.user.uid
+    console.log(data.npUid)
+    if (!("npUid" in data)) return response.status(400).json({message: "npUid cannot be undefined"})
+    else retrieveUID = data.npUid
+    retrieveUID = String(retrieveUID)
 
     fs
         .collection("np_accounts")
@@ -118,7 +120,6 @@ exports.npGetAccount = (request, response) => {
         })
 }
 
-// do this by check if data element is passed and if so do a batch update on that specific element
 exports.npUpdateAccount = (request, response, next) => {
     /**
      * Updates the email, phone number, display name, website, and country
@@ -283,6 +284,7 @@ exports.npAddProject = (request, response) => {
         data = JSON.parse(request.body)
     else data = request.body
 
+    console.log("Next Function:")
     fs
         .collection("np_accounts")
         .doc(user.uid)
@@ -332,26 +334,3 @@ exports.npDeleteProject = (request, response, next) => {
             return response.status(500).json({error: err.message})
         })
 }
-
-
-// let provider = new firebase.auth.GithubAuthProvider();
-// firebase
-//     .auth()
-//     .signInWithPopup(provider)
-//     .then((result) => {
-//         /** @type {firebase.auth.OAuthCredential} */
-//         let credential = result.credential;
-//         // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-//         let token = credential.accessToken;
-//         // The signed-in user info.
-//         let user = result.user;
-//
-//     }).catch((error) => {
-//     // Handle Errors here.
-//     let errorCode = error.code;
-//     let errorMessage = error.message;
-//     // The npEmail of the user's account used.
-//     let npEmail = error.npEmail;
-//     // The firebase.auth.AuthCredential type that was used.
-//     let credential = error.credential;
-// });
