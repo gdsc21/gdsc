@@ -9,7 +9,7 @@ if (!firebase.apps.length) {
     firebase.app(); // if already initialized, use that one
 }
 
-exports.createProject = (request, response) => {
+exports.projCreate = (request, response) => {
     /**
      * Creates a new project document with a random uid as the file name and inserts a title, description and npInfo
      * @param {request} body={title:, description:, npInfo: {npEmail:, npDisplayName:, npWebsite:}}
@@ -47,7 +47,7 @@ exports.createProject = (request, response) => {
         })
 }
 
-exports.deleteProject = (request, response) => {
+exports.projDelete = (request, response) => {
     /**
      * Deletes a created project and returns a 500 error if the project doesn't exist
      * @param {request} body={projectId:} --- user=decodedToken
@@ -97,7 +97,7 @@ exports.deleteProject = (request, response) => {
         })
 }
 
-exports.loadProject = (request, response) => {
+exports.projLoad = (request, response) => {
     /**
      * Takes a projectId and returns the document data for that project
      * @param {request} body={projectId:}
@@ -122,7 +122,7 @@ exports.loadProject = (request, response) => {
         })
 }
 
-exports.updateNpInfo = (request, response) => {
+exports.projUpdateNpInfo = (request, response) => {
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -157,7 +157,7 @@ exports.updateNpInfo = (request, response) => {
         })
 }
 
-exports.updateDevInfo = (request, response) => {
+exports.projUpdateDevInfo = (request, response) => {
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -195,7 +195,7 @@ exports.updateDevInfo = (request, response) => {
         })
 }
 
-exports.addDev = (request, response, next) => {
+exports.projAddDev = (request, response, next) => {
     /**
      * Takes a developer profile uid and adds that developers profile to a project. Only a non-profit who owns a project
      * has access to this method. There are three major parts: 1) check if the current uid matches that of npUid in the
@@ -270,10 +270,49 @@ exports.addDev = (request, response, next) => {
         .then(() => {
             return next
         })
-
 }
 
-exports.removeDev = (request, response) => {
+exports.projRemoveDev = (request, response, next) => {
+    /**
+     * Takes a projectId and devUid and deletes that developer from the project.
+     */
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let projDocRef = fs.collection("projects").doc(data.projectId)
+
+    // checks if the uid of the user who made the request matches the npUid in the project document
+    projDocRef
+        .get()
+        .then((projDoc) => {
+            if (projDoc.exists) {
+                if (projDoc.data().npInfo.npUid !== user.uid)
+                    return response.status(401).json({error: "Unauthorized"})
+            } else return response.status(400).json({message: "Project doesn't exists"})
+
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+
+    // deletes the developer profile from the project page
+    projDocRef
+        .update({
+            [`devProfiles.${data.devUid}`]: firebase.firestore.FieldValue.delete()
+        })
+        .then(() => {
+            return next
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+
+
 
 }
 

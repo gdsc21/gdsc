@@ -10,7 +10,7 @@ if (!firebase.apps.length) {
 }
 
 
-exports.createDevProfile = (request, response) => {
+exports.devCreateProfile = (request, response) => {
     /**
      * Takes a token retrieved through Github auth - verifies it and then uses the returned user object to create an
      * associated developer document containing all the data passed in the body
@@ -53,7 +53,7 @@ exports.createDevProfile = (request, response) => {
         })
 }
 
-exports.getDevProfile = (request, response) => {
+exports.devGetProfile = (request, response) => {
     let user
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -72,7 +72,7 @@ exports.getDevProfile = (request, response) => {
         })
 }
 
-exports.updateDevProfile = (request, response, next) => {
+exports.devUpdateProfile = (request, response, next) => {
     /**
      * Updates a developer profile (name, username, email, GitHub, website, LinkedIn).
      * NOT TO BE USED FOR GAMIFICATION/COMMITS/PROJECTS IF FIELD IS NOT BEING UPDATED DO NOT SEND IT AS NULL.
@@ -152,7 +152,7 @@ exports.updateDevProfile = (request, response, next) => {
     //     })
 }
 
-exports.addProject = (request, response) => {
+exports.devAddProject = (request, response) => {
     /**
      * Takes the projectInfo passed by the previous function and adds the project info to a developer profile.
      * @param {request} body={projectId:, devUid:, projectInfo: {title:, description:, gitHubRepo:, npDisplayName:, npUid:}}
@@ -168,7 +168,9 @@ exports.addProject = (request, response) => {
     fs
         .collection("dev_accounts")
         .doc(data.devUid)
-        .update({[`devProjects.${data.projectId}`]: data.projectInfo})
+        .update({
+            [`devProjects.${data.projectId}`]: data.projectInfo
+        })
         .then(() => {
             return response.status(201).json({message: "Developer added"})
         })
@@ -178,8 +180,27 @@ exports.addProject = (request, response) => {
         })
 }
 
-exports.deleteProject = (request, response) => {
+exports.devDeleteProject = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("dev_accounts")
+        .doc(data.devUid)
+        .update({
+            [`devProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
+        })
+        .then(() => {
+            return response.status(200).json({message: "Developer removed from project"})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 exports.addCommit = (request, response) => {

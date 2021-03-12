@@ -91,7 +91,7 @@ exports.npLogin = (request, response) => {
         })
 }
 
-exports.getNpAccount = (request, response) => {
+exports.npGetAccount = (request, response) => {
     let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
@@ -119,7 +119,7 @@ exports.getNpAccount = (request, response) => {
 }
 
 // do this by check if data element is passed and if so do a batch update on that specific element
-exports.updateNpAccount = (request, response, next) => {
+exports.npUpdateAccount = (request, response, next) => {
     /**
      * Updates the email, phone number, display name, website, and country
      * @param {request} body={npEmail:, npDisplayName:, npPhoneNumber:, npCountry:, npWebsite} --- user.uid=decodedToken
@@ -180,7 +180,7 @@ deleteImage = (imageName) => {
         .catch((error) => {})
 }
 
-exports.updateNpProfileImg = (request, response) => {
+exports.npUpdateProfileImg = (request, response) => {
     /**
      * Takes an uploaded file, stores in firebase storage, gets the stored image's url, saves the url to np_accounts
      * document and all of the projects that non profit has.

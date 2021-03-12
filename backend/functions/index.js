@@ -4,9 +4,9 @@ const app = require('express')();
 const {
     npSignUp,
     npLogin,
-    getNpAccount,
-    updateNpAccount,
-    updateNpProfileImg
+    npGetAccount,
+    npUpdateAccount,
+    npUpdateProfileImg
 } = require("./API/nonProfit")
 
 const {
@@ -14,31 +14,38 @@ const {
 } = require("./util/auth")
 
 const {
-    createProject,
-    deleteProject,
-    loadProject,
-    updateNpInfo,
-    addDev
+    projCreate,
+    projDelete,
+    projLoad,
+    projUpdateNpInfo,
+    projAddDev,
+    projRemoveDev
 } = require("./API/projects")
 
 const {
-    createDevProfile,
-    getDevProfile,
-    addProject
+    devCreateProfile,
+    devGetProfile,
+    devAddProject,
+    devDeleteProject
 } = require("./API/developers")
 
 
 app.post("/np-signup", npSignUp, npLogin)
 app.post("/np-login", npLogin)
-app.get("/get-non-profit", auth, getNpAccount)
-app.post("/update-np-info", auth, updateNpAccount, updateNpInfo)
-app.post("/update-np-profile-img", auth, updateNpProfileImg)
-app.post("/create-project", auth, createProject)
-app.post("/delete-project", auth, deleteProject)
-app.post("/dev-create-profile", auth, createDevProfile)
-app.post("/get-dev-profile", auth, getDevProfile)
+app.get("/get-non-profit", auth, npGetAccount)
+app.post("/update-np-info", auth, npUpdateAccount, projUpdateNpInfo)
+app.post("/update-np-profile-img", auth, npUpdateProfileImg)
+app.post("/create-project", auth, projCreate)
+app.post("/delete-project", auth, projDelete)
+app.post("/dev-create-profile", auth, devCreateProfile)
+app.post("/get-dev-profile", auth, devGetProfile)
 
 // adds a developer to a project -- only available to non-profits -- updates project/developer docs
-app.post("add-dev-to-project", auth, addDev, addProject)
+app.post("add-dev-to-project", auth, projAddDev, devAddProject)
+
+// removes a developer from a project -- only available to non-profits -- updates project/developer docs
+app.post("remove-dev-from-project", auth, projRemoveDev, devDeleteProject)
+
+app.post
 
 exports.api = functions.https.onRequest(app);
