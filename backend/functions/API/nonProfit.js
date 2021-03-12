@@ -284,7 +284,6 @@ exports.npAddProject = (request, response) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-    console.log("Next Function:")
     fs
         .collection("np_accounts")
         .doc(user.uid)
@@ -328,7 +327,7 @@ exports.npDeleteProject = (request, response, next) => {
             [`npProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
         })
         .then(() => {
-            return next
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})

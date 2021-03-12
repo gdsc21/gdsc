@@ -49,9 +49,10 @@ exports.projCreate = (request, response, next) => {
                     GitHubRepo: ""
                 })
                 .then((projectDoc) => {
-                    request.body.projectId = projectDoc.id
-                    console.log(request.body)
-                    return next
+                    // must reassign request.body since request.body.projectId does not work to create a new key in body
+                    data.projectId = projectDoc.id
+                    request.body = data
+                    return next()
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
@@ -285,7 +286,7 @@ exports.projAddDev = (request, response, next) => {
             }
         })
         .then(() => {
-            return next
+            return next()
         })
 }
 
@@ -323,7 +324,7 @@ exports.projRemoveDev = (request, response, next) => {
             [`devProfiles.${data.devUid}`]: firebase.firestore.FieldValue.delete()
         })
         .then(() => {
-            return next
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
