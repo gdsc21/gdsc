@@ -72,7 +72,7 @@ exports.getDevProfile = (request, response) => {
         })
 }
 
-exports.updateDevProfile = (request, response) => {
+exports.updateDevProfile = (request, response, next) => {
     /**
      * Updates a developer profile (name, username, email, GitHub, website, LinkedIn).
      * NOT TO BE USED FOR GAMIFICATION/COMMITS/PROJECTS IF FIELD IS NOT BEING UPDATED DO NOT SEND IT AS NULL.
@@ -120,12 +120,22 @@ exports.updateDevProfile = (request, response) => {
     // commit the updates and return
     batch
         .commit()
-        .then(() => {
-            return response.status(200).json({message: "Profile updated"})
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+
+    // adds the projects the developer is on to the request body
+    devDocRef
+        .get()
+        .then((devDoc) => {
+            let devData = devDoc.data()
+            request.body.projects = Object.keys(devData.devProjects)
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+
 
     // updates the project pages
     // devDocRef
@@ -140,18 +150,35 @@ exports.updateDevProfile = (request, response) => {
     //             }
     //         }
     //     })
-
-
-
-
-
 }
 
-exports.joinProject = (request, response) => {
+exports.addProject = (request, response) => {
+    /**
+     * Takes the projectInfo passed by the previous function and adds the project info to a developer profile.
+     * @param {request} body={projectId:, devUid:, projectInfo: {title:, description:, gitHubRepo:, npDisplayName:, npUid:}}
+     */
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("dev_accounts")
+        .doc(data.devUid)
+        .update({[`devProjects.${data.projectId}`]: data.projectInfo})
+        .then(() => {
+            return response.status(201).json({message: "Developer added"})
+        })
+        .catch((err) => {
+            if (err.code === "not-found") return response.status(400).json({message: "Developer doesn't exist"})
+            return response.status(500).json({error: err.message})
+        })
 }
 
-exports.leaveProject = (request, response) => {
+exports.deleteProject = (request, response) => {
 
 }
 

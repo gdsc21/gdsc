@@ -17,12 +17,14 @@ const {
     createProject,
     deleteProject,
     loadProject,
-    updateNpInfo
+    updateNpInfo,
+    addDev
 } = require("./API/projects")
 
 const {
     createDevProfile,
-    getDevProfile
+    getDevProfile,
+    addProject
 } = require("./API/developers")
 
 
@@ -35,4 +37,8 @@ app.post("/create-project", auth, createProject)
 app.post("/delete-project", auth, deleteProject)
 app.post("/dev-create-profile", auth, createDevProfile)
 app.post("/get-dev-profile", auth, getDevProfile)
+
+// adds a developer to a project -- only available to non-profits -- updates project/developer docs
+app.post("add-dev-to-project", auth, addDev, addProject)
+
 exports.api = functions.https.onRequest(app);
