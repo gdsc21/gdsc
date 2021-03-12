@@ -274,6 +274,65 @@ exports.npUpdateProfileImg = (request, response) => {
     busboy.end(request.rawBody);
 };
 
+exports.npAddProject = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    fs
+        .collection("np_accounts")
+        .doc(user.uid)
+        .update({
+            [`npProjects.${data.projectId}`]: {
+                title: data.title,
+                description: data.description,
+            }})
+        .then(() => {
+            return response.status(201).json({projectId: data.projectId})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
+
+exports.npDeleteProject = (request, response, next) => {
+    /**
+     * @param {request} body={projectId}
+     */
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let npDocRef = fs.collection("np_accounts").doc(user.uid)
+
+    npDocRef
+        .get()
+        .then((npDoc) => {
+            if (!npDoc.exists) return response.status(400).json({message: "Non-profit doesn't exist"})
+            let projects = npDoc.data().npProjects
+            if (!(data.projectId in projects)) return response.status(500).json({message: "Unauthorized or project doesn't exist"})
+        })
+
+    npDocRef
+        .update({
+            [`npProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
+        })
+        .then(() => {
+            return next
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
+
 
 // let provider = new firebase.auth.GithubAuthProvider();
 // firebase
