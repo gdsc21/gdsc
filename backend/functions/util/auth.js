@@ -27,3 +27,7 @@ exports.auth = (request, response, next) => {
             return response.status(403).json(err.message);
         });
 }
+
+exports.gitAuth = (request, response, next) => {
+
+}
