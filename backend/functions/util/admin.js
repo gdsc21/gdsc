@@ -1,7 +1,17 @@
 const admin = require('firebase-admin');
+const firebase = require('firebase');
+const config = require('../util/config');
 
 admin.initializeApp();
 
-const fs = admin.firestore();
+// if (!firebase.apps.length) {
+//     firebase.initializeApp(config);
+// }else {
+//     firebase.app(); // if already initialized, use that one
+// }
+firebase.initializeApp(config);
 
-module.exports = { admin, fs };
+const fs = admin.firestore();
+const FieldValue = admin.firestore.FieldValue
+
+module.exports = { admin, fs, firebase, FieldValue };

@@ -1,13 +1,5 @@
-const { admin, fs } = require('../util/admin');
-const config = require('../util/config');
-const firebase = require('firebase');
+const { admin, fs, firebase } = require('../util/admin');
 
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(config);
-}else {
-    firebase.app(); // if already initialized, use that one
-}
 
 exports.projCreate = (request, response, next) => {
     /**
@@ -72,10 +64,7 @@ exports.projDelete = (request, response) => {
      * @return success: status=200 --- json={message: Successfully deleted the project}
      *          failure: status=500 --- json={error: err.message}
      */
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
+    let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
@@ -110,6 +99,9 @@ exports.projDelete = (request, response) => {
         .collection("projects")
         .doc(data.projectId)
         .delete()
+        .then(() => {
+            return response.status(200).json({message: "Project deleted"})
+        })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
@@ -123,7 +115,12 @@ exports.projLoad = (request, response) => {
      *          failure: status=404 --- json={message: Project not found} OR
      *          failure: status=500 --- json={error: err.message}
      */
-    const data = JSON.parse(request.body)
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    if (!("projectId" in data)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
     fs
         .collection("projects")
         .doc(data.projectId)

@@ -1,10 +1,6 @@
-const { admin, fs } = require('../util/admin');
-const config = require('../util/config');
-const firebase = require('firebase');
+const { admin, fs, firebase, FieldValue } = require('../util/admin');
 const { validateNpSignUp, validateNpLogin, validateNpCredentials, checkUserExist } = require('../util/validators');
 
-
-firebase.initializeApp(config);
 
 exports.npSignUp = (request, response, next) => {
     /**
@@ -101,8 +97,8 @@ exports.npGetAccount = (request, response) => {
     else user = request.user
 
     let retrieveUID
-    if ("npUid" in data) retrieveUID = data.npUid
-    else retrieveUID = user.uid
+    if ("npUid" in data) retrieveUID = user.uid
+    else retrieveUID = data.npUid
     retrieveUID = String(retrieveUID)
 
     fs
@@ -322,16 +318,22 @@ exports.npDeleteProject = (request, response, next) => {
             if (!npDoc.exists) return response.status(400).json({message: "Non-profit doesn't exist"})
             let projects = npDoc.data().npProjects
             if (!(data.projectId in projects)) return response.status(500).json({message: "Unauthorized or project doesn't exist"})
-        })
 
-    npDocRef
-        .update({
-            [`npProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
-        })
-        .then(() => {
-            return next()
+            npDocRef
+                .update({
+                    [`npProjects.${data.projectId}`]: FieldValue.delete()
+                })
+                .then(() => {
+                    return next()
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+
+
 }

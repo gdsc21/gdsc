@@ -48,6 +48,9 @@ userApp.post("/update-np-profile-img", auth, npUpdateProfileImg)
 // creates a project -- only available to non-profits -- creates project doc and updates non-profit doc
 userApp.post("/create-project", auth, projCreate, npAddProject)
 
+// load a project -- only available to logged in user/non-profits
+userApp.get("/get-project", auth, projLoad)
+
 // deletes a project -- only available to non-profits (must own doc) -- deletes project doc and updates non-profit doc
 userApp.post("/delete-project", auth, npDeleteProject, projDelete)
 
