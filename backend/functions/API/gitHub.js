@@ -7,5 +7,5 @@ exports.pushes = (request, response) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-
+    console.log(data.payload)
 }
