@@ -4,6 +4,6 @@ const {
     pushes
 } = require("./API/gitHub")
 
-ghApp.post("pushes", pushes)
+ghApp.post("push", pushes)
 
 module.exports = ghApp
