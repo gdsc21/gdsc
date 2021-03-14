@@ -1,4 +1,4 @@
-const { admin, fs, firebase } = require('../util/admin');
+const { fs, FieldValue } = require('../util/admin');
 
 
 exports.projCreate = (request, response, next) => {
@@ -325,7 +325,7 @@ exports.projRemoveDev = (request, response, next) => {
     // deletes the developer profile from the project page
     projDocRef
         .update({
-            [`devProfiles.${data.devUid}`]: firebase.firestore.FieldValue.delete()
+            [`devProfiles.${data.devUid}`]: FieldValue.delete()
         })
         .then(() => {
             return next()

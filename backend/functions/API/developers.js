@@ -1,4 +1,4 @@
-const { admin, fs, firebase} = require('../util/admin');
+const { admin, fs, firebase, FieldValue} = require('../util/admin');
 
 
 exports.devCreateProfile = (request, response) => {
@@ -184,7 +184,7 @@ exports.devDeleteProject = (request, response) => {
         .collection("dev_accounts")
         .doc(data.devUid)
         .update({
-            [`devProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
+            [`devProjects.${data.projectId}`]: FieldValue.delete()
         })
         .then(() => {
             return response.status(200).json({message: "Developer removed from project"})
