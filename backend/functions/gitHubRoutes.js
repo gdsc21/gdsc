@@ -1,5 +1,9 @@
 const ghApp = require('express')();
 
-module.exports = ghApp
+const {
+    pushes
+} = require("./API/gitHub")
 
-// exports.api = functions.https.onRequest(ghApp)
+ghApp.post("pushes", pushes)
+
+module.exports = ghApp

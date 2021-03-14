@@ -1,10 +1,11 @@
-const { admin, fs } = require('../util/admin');
-const config = require('../util/config');
-const firebase = require('firebase');
+const { admin, fs, firebase, FieldValue} = require('../util/admin');
 
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(config);
-}else {
-    firebase.app(); // if already initialized, use that one
+exports.pushes = (request, response) => {
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+
 }
