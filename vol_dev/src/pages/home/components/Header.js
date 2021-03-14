@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as ScrollTo } from "react-scroll";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,7 @@ import projectData from "./projectData";
 import "../styles/homepage.css";
 
 const Header = () => {
-	let images = [
+	const images = [
 		{
 			img: gitLogo,
 			description: "embedded github collaboration",
@@ -35,29 +35,51 @@ const Header = () => {
 			description: "individual && group messaging",
 		},
 	];
+
+	const [hamburger, setHamburger] = useState(false);
+
+	const handleHamburger = () => {
+		setHamburger(!hamburger);
+
+		const menu = document.querySelector(".navlinks");
+		const hburger = document.querySelector(".hamburger");
+		if (hamburger) {
+			menu.classList.remove("open");
+			hburger.classList.remove("open");
+		} else {
+			menu.classList.add("open");
+			hburger.classList.add("open");
+		}
+	};
+
 	return (
 		<div className="header">
 			<nav className="nav">
 				<div className="logo">
 					<img src={logo}></img>
 				</div>
-				<div className="navlinks noselect">
-					<ScrollTo to="home" smooth={true}>
+				<div className="hamburger" onClick={() => handleHamburger()}>
+					<div className="line"></div>
+					<div className="line"></div>
+					<div className="line"></div>
+				</div>
+				<div className="navlinks">
+					<ScrollTo className="link main-links" to="home" smooth={true}>
 						home
 					</ScrollTo>
-					<ScrollTo to="explore" smooth={true}>
+					<ScrollTo className="link main-links" to="explore" smooth={true}>
 						explore
 					</ScrollTo>
-					<ScrollTo to="sponsors" smooth={true}>
+					<ScrollTo className="link main-links" to="sponsors" smooth={true}>
 						sponsors
 					</ScrollTo>
-					<ScrollTo to="contact" smooth={true}>
+					<ScrollTo className="link main-links" to="contact" smooth={true}>
 						contact
 					</ScrollTo>
-					<Link className="btn" to="/signin">
+					<Link className="link btn" to="/signin">
 						sign in
 					</Link>
-					<Link className="signup-btn btn" to="/signup">
+					<Link className="link signup-btn btn" to="/signup">
 						sign up
 					</Link>
 				</div>
@@ -76,7 +98,7 @@ const Header = () => {
 						Join Our Community
 					</Link>
 				</div>
-				<img src={abstract}></img>
+				<img className="abstract" src={abstract}></img>
 			</div>
 
 			<div name="explore" className="explore">
