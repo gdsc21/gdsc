@@ -8,4 +8,5 @@ exports.pushes = (request, response) => {
     else data = request.body
 
     console.log(data.payload)
+    return response.status(200).json({payload: data.payload})
 }
