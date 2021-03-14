@@ -92,15 +92,17 @@ exports.npLogin = (request, response) => {
 }
 
 exports.npGetAccount = (request, response) => {
-    let data
+    let data, user
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
 
     let retrieveUID
-    console.log(data.npUid)
-    if (!("npUid" in data)) return response.status(400).json({message: "npUid cannot be undefined"})
-    else retrieveUID = data.npUid
+    if ("npUid" in data) retrieveUID = data.npUid
+    else retrieveUID = user.uid
     retrieveUID = String(retrieveUID)
 
     fs

@@ -164,15 +164,22 @@ exports.projUpdateNpInfo = (request, response) => {
                 "npCountry" in data ? batch.update(doc.ref, {"npInfo.npCountry": data.npCountry}) : ""
             })
         })
-
-    batch
-        .commit()
         .then(() => {
-            return response.status(200).json({message: "Profile updated"})
+            batch
+                .commit()
+                .then(() => {
+                    return response.status(200).json({message: "Profile updated"})
+                })
+                .catch((err) => {
+                    return response.status(500).json({message: err.message})
+                })
         })
         .catch((err) => {
-            return response.status(500).json({message: err.message})
+            console.log(err.code)
+            return response.status(500).json({error: err.message})
         })
+
+
 }
 
 exports.projUpdateDevInfo = (request, response) => {
