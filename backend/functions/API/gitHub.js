@@ -2,6 +2,7 @@ const { admin, fs, firebase, FieldValue} = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
 
+
 // creates a JWT token
 async function createJWT(installation_id) {
     const auth = createAppAuth({
@@ -78,6 +79,8 @@ exports.push = (request, response, next) => {
     return next()
 }
 
+// this function is quite large and doesn't follow the single functionality rule but it is purposefully so in order to
+// reduce compute time
 exports.updateDevCommits = (request, response, next) => {
 
     let summaries = request.body.commitSummaries
@@ -85,8 +88,11 @@ exports.updateDevCommits = (request, response, next) => {
 
     let batch = fs.batch()
 
-    let devAccRef = fs.collection("commits")
-    let devAccDocRef
+    let commitDocCol = fs.collection("commits")
+    let commitDocRef
+
+    let devDocCol = fs.collection("dev_accounts")
+    let devDocRef
 
     summaries.forEach((commit) => {
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
@@ -102,11 +108,9 @@ exports.updateDevCommits = (request, response, next) => {
                     return response.status(500).json({error: err.message})
                 })
         }
-
-        devAccDocRef = devAccRef.doc(authorUid)
-
         // creates the commit document if it doesn't exist otherwise it appends the commit to the document
-        batch.set(devAccDocRef, {
+        commitDocRef = commitDocCol.doc(authorUid)
+        batch.set(commitDocRef, {
             [commit.commitID]: {
                 "commitAuthorName": commit.commitAuthorName,
                 "commitTimestamp": commit.commitTimestamp,
@@ -121,8 +125,26 @@ exports.updateDevCommits = (request, response, next) => {
                 }
 
             }
-        },  { merge: true }
-        )
+        },  { merge: true })
+
+        let newLevel, newXP
+        devDocRef = devDocCol.doc(authorUid)
+
+        devDocRef
+            .get()
+            .then((doc) => {
+                let data = doc.data()
+                newXP = data.gamification.devXP + commit.commitTotal > 200 ? 200 : commit.commitTotal
+                newLevel = Math.ceil(newXP / 400)
+            })
+            .catch((err) => {
+                return response.status(500).json({error: err.message})
+            })
+
+        batch
+            .update(devDocRef, {"gamification.devLevel": newLevel})
+            .update(devDocRef, {"gamification.devXP": newXP})
+
     })
 
     // commit the changes to the dev commit document
@@ -135,6 +157,7 @@ exports.updateDevCommits = (request, response, next) => {
             return response.status(500).json({error: err.message})
         })
 }
+
 
 exports.updateProjectCommits = (request, response) => {
     // TODO: find project by the repo id stored in the project document and add the commits to it

@@ -1,7 +1,6 @@
 const ghApp = require('express')();
 const router = ghApp.Router()
 
-
 router.use((request, response, next) => {
     switch (request.url) {
         case "/push":

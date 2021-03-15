@@ -172,10 +172,7 @@ exports.devAddProject = (request, response) => {
 }
 
 exports.devDeleteProject = (request, response) => {
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
+    let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
