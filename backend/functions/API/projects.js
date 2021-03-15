@@ -1,6 +1,7 @@
 const { fs, FieldValue } = require('../util/admin');
 
 
+// TODO: Perform title name validation so that the title can be easily converted to a repo name
 exports.projCreate = (request, response, next) => {
     /**
      * Creates a new project document with a random uid as the file name and inserts a title, description and npInfo
@@ -340,6 +341,11 @@ exports.projRemoveDev = (request, response, next) => {
 
 exports.addCommit = (request, response) => {
 
+}
+
+exports.createProjectRepo = (request, response) => {
+    // use github app to create project repo with project title as repo name
+    // TODO: add repo id to the project created page so that the github function that adds commit history can find it
 }
 
 
