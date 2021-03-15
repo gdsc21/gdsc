@@ -1,33 +1,7 @@
 const { admin, fs, firebase, FieldValue} = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
-let clientID = "Iv1.1d26e7ddd2fe7a0d"
-let clientSecret = "9bf11c9de8c262124789ad100474c6ae018cbb1c"
-let privateKey = "MIIEowIBAAKCAQEAvnpk9KkE6YyZXGhbQHeCP+GJNNuAcg3HF4JnfX9D46NnORSL\n" +
-    "ZBk8lHCs2XmTtqTY2A1BuVJj6Al0zivvLZEOEGq6bCJPEACB17AFZ0c4njrpzzT1\n" +
-    "LC4LMz94YJfkVCc0LEfiWOYX1ViAekHUfIrB2bhSfQ8lt6/9fT0nBGm6wC+ssLxS\n" +
-    "G9yHOYB3p3M+mkh29M0QzGgxakoVWLCw434rLfLAo0qnw7cd6qwOhZffeOu8RyLg\n" +
-    "bxXUrwbU574R+/7r+heHrN+/xW+gzwboXr/GCvvwFbZRTKIxp5RjkyAkMY2i27H9\n" +
-    "wy1N2o6rKrO//8h/eehgBLrpAJ9H28c1EY0sVQIDAQABAoIBAC07jXvYI1V+0PBz\n" +
-    "y6+scZ7P5TBLK95pzSyVCBRyQ2HsbNfOPCfCInOxqipex6goz2HHDCOBID56+GT5\n" +
-    "Y+vzNV7KqYiCQTowlKTupOnYrOZOYTWWgt5B9ODvopt1loAxax9U1rh7s48zXBcs\n" +
-    "SNRmcxBLyDLwhOlw/oZeHkTbAsEeaCo3xtG4sueVA6vYAO2yCyE9IpPaQAdr1dm5\n" +
-    "8lZLpQ17Fx/lcPkmREHn/iOzkNhQu/G6VrSCv0Rsm6KgDnvmAwrlYzZc1ddMUT79\n" +
-    "vm0J+7GJwbbmJ+OplxNuZ9Kv3LxINyWBEKH/hWoXcJ48A0oq7fLEXOc8/6zWaLYC\n" +
-    "X2kg+WECgYEA53zk8fZaVZTT4AWRSc0BzL6agb36/p7qD/m8zpKVnKU3qpqEku3V\n" +
-    "UCeI2tkPmu2U0Wt13emtFYI5Q8osskHs+yaoKU9UKjBZG97wpr0mELZ3fZLPYwng\n" +
-    "DZudJlS1cVbO+75PKF5Iyyaai1Bm6GPER5iBQC298yEKhNv6x/JW6HkCgYEA0qXR\n" +
-    "u5zbH/Sm4VgH4CWCqINGQGmfyCjCg8Y5etidfjbge1RACdZv99YugHKeh/SSirAl\n" +
-    "eii+NFLrApQn3dPjJL3H3SkWdk9jyfyfF0td2pREcGUhiv4O7iiYlgCnq01IJSuP\n" +
-    "1iZVYPBfyihKz3KX9ralY+nXMcBb521uekGzI70CgYAZgXxkYKWBan2R4Gsqu4jo\n" +
-    "O1Qg2YLvTSkzC2xPQn1zngytIota+ROY2lJM8r+ybV0JWhLJmba1ePzASGV2Wqc2\n" +
-    "4QKEUrZOU7dtx7myVYL9Mm2mC2gIXI0wUqYVFB5N16fEuypTo1fX8m/yy7AbCOsW\n" +
-    "jGopXSDhyhEzpF1UbJJA2QKBgQCyBuqGwT6Ad2hCsv+U9J7EhI3vClW7+JbMf888\n" +
-    "f647aW23TbEBn3Xp495ROI27IXxoMg66e4yk9B8igsxesiEagDpWM8+EFfykTRi3\n" +
-    "uz6K6RweUZpTufwsU6sBu3P5VstOfs6Fksg9sWmDlSIEyTidjiehlZQFvCjwIpBo\n" +
-    "SvZ3kQKBgBl4EAAO22GvADuqvlx4uteV5gA/korKOi5X9OkY8Ujg8D45FTuweji0\n" +
-    "CpLhOCNfGO4YjqlLWgawh3rRTrIqC1q7kUIlmFkUTJVAS/Hv7xC2j9ffLepKSJ+/\n" +
-    "j+hG3zzuZkYlKBdWgVlExsCTKsnpp5+1VXkIq0tiSuWEWFVaGbQO"
+
 
 // creates a JWT token
 async function createJWT(installation_id) {
