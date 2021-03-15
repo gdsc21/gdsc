@@ -2,15 +2,14 @@ const { admin, fs, firebase, FieldValue} = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
 
-
 // creates a JWT token
 async function createJWT(installation_id) {
     const auth = createAppAuth({
         appId: 105035,
         privateKey: privateKey,
         installationId: installation_id,
-        clientId: "Iv1.1d26e7ddd2fe7a0d",
-        clientSecret: "9bf11c9de8c262124789ad100474c6ae018cbb1c"
+        clientId: clientID,
+        clientSecret: clientSecret
     })
     const { token } = await auth({ type: 'installation' });
     return token;
