@@ -1,1 +1,153 @@
-/* No CSS *//*# sourceMappingURL=signup.css.map */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.signup_header .nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2rem 10vw;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signup_header .nav .links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  min-width: 10rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.signup_header .nav .btn {
+  color: #16223b;
+  font-weight: 400;
+  border: none;
+}
+
+.signup_header .nav .signin-btn {
+  border: 2px solid #16223b;
+  border-radius: 2rem;
+  padding: 0.2rem 0.75rem;
+}
+
+.signup_header .heading {
+  text-align: center;
+}
+
+.signup_header .have-account {
+  position: fixed;
+  text-align: center;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  bottom: 5rem;
+  color: #16223b;
+}
+
+.main_signup .heading {
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.main_signup .cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  padding: 1rem 15vw;
+}
+
+.main_signup .choice__card {
+  z-index: 2;
+  background: linear-gradient(115.35deg, rgba(255, 255, 255, 0.6) 3.11%, rgba(255, 255, 255, 0.3) 96.88%);
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(40px);
+  border-radius: 53px;
+  width: 23rem;
+  height: 28rem;
+  padding: 0 3rem;
+  color: #16223b;
+  text-align: center;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 13rem 1.5rem 5rem 3.75rem 1rem;
+      grid-template-rows: 13rem 1.5rem 5rem 3.75rem 1rem;
+}
+
+.main_signup .choice__card img {
+  place-self: center;
+  height: 7rem;
+  width: auto;
+}
+
+.main_signup .choice__card .ima {
+  font-weight: 500;
+  font-size: 1.25rem;
+  opacity: 0.9;
+  line-height: 1;
+}
+
+.main_signup .choice__card .title {
+  font-weight: 800;
+  font-size: 2rem;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.main_signup .choice__card .description,
+.main_signup .choice__card .subdescription {
+  font-weight: 300;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.main_signup .choice__card .subdescription {
+  font-size: 0.75rem;
+  line-height: 2.5;
+}
+
+@media screen and (max-width: 1000px) {
+  .main_signup .cards {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .main_signup .choice__card {
+    width: 20rem;
+  }
+}
+
+.signup {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background-image: url("../img/bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/*# sourceMappingURL=signup.css.map */
