@@ -6,7 +6,7 @@ const SignUp = () => {
 	return (
 		<div className="signup">
 			<nav className="nav">
-				<img src={logo}></img>
+				<img src={logo} alt="website logo"></img>
 			</nav>
 		</div>
 	);

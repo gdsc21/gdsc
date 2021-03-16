@@ -21,18 +21,22 @@ const Header = () => {
 		{
 			img: gitLogo,
 			description: "embedded github collaboration",
+			alt: "github logo",
 		},
 		{
 			img: projectLogo,
 			description: "integrated project management",
+			alt: "agile project workflow",
 		},
 		{
 			img: pointLogo,
 			description: "point granting && redemption",
+			alt: "circles and dots",
 		},
 		{
 			img: msgLogo,
 			description: "individual && group messaging",
+			alt: "chatbox icon",
 		},
 	];
 
@@ -56,30 +60,45 @@ const Header = () => {
 		<div className="header">
 			<nav className="nav">
 				<div className="logo">
-					<img src={logo}></img>
+					<img src={logo} alt="website logo"></img>
 				</div>
 				<div className="hamburger" onClick={() => handleHamburger()}>
-					<div className="line"></div>
-					<div className="line"></div>
-					<div className="line"></div>
+					<div className="line" id="hamburger-line1"></div>
+					<div className="line" id="hamburger-line2"></div>
+					<div className="line" id="hamburger-line3"></div>
 				</div>
 				<div className="navlinks">
-					<ScrollTo className="link main-links" to="home" smooth={true}>
+					<ScrollTo id="homepage-navlink-home" className="link main-links" to="home" smooth={true}>
 						home
 					</ScrollTo>
-					<ScrollTo className="link main-links" to="explore" smooth={true}>
+					<ScrollTo
+						id="homepage-navlink-explore"
+						className="link main-links"
+						to="explore"
+						smooth={true}
+					>
 						explore
 					</ScrollTo>
-					<ScrollTo className="link main-links" to="sponsors" smooth={true}>
+					<ScrollTo
+						id="homepage-navlink-sponsors"
+						className="link main-links"
+						to="sponsors"
+						smooth={true}
+					>
 						sponsors
 					</ScrollTo>
-					<ScrollTo className="link main-links" to="contact" smooth={true}>
+					<ScrollTo
+						id="homepage-navlink-contact"
+						className="link main-links"
+						to="contact"
+						smooth={true}
+					>
 						contact
 					</ScrollTo>
-					<Link className="link btn" to="/signin">
+					<Link id="homepage-navlink-signin" className="link btn" to="/signin">
 						sign in
 					</Link>
-					<Link className="link signup-btn btn" to="/signup">
+					<Link id="homepage-navlink-signup" className="link signup-btn btn" to="/signup">
 						sign up
 					</Link>
 				</div>
@@ -98,16 +117,16 @@ const Header = () => {
 						Join Our Community
 					</Link>
 				</div>
-				<img className="abstract" src={abstract}></img>
+				<img className="abstract" src={abstract} alt="abstract"></img>
 			</div>
 
-			<div name="explore" className="explore">
+			<div name="explore" className="explore" id="homepage-explore-section">
 				{/* Feature components */}
-				<div className="features">
+				<div className="features" id="homepage-features">
 					{images.map((image, index) => (
-						<div className="feature">
+						<div className="feature" id={`feature${index}`}>
 							<div className="icon">
-								<img src={image.img} />
+								<img src={image.img} alt={image.alt} />
 							</div>
 							<p>{image.description}</p>
 						</div>
@@ -117,9 +136,9 @@ const Header = () => {
 				<h2 className="project-title">Awesome Projects Built on Smth Smth </h2>
 
 				{/* Project components */}
-				<div className="projects">
-					{projectData.map((project) => (
-						<div className="project">
+				<div className="projects" id="homepage-featured-projects">
+					{projectData.map((project, index) => (
+						<div className="project" id={`project${index}`}>
 							<h3>{project.title}</h3>
 							<h4>{project.orgName}</h4>
 							<h5>Team</h5>

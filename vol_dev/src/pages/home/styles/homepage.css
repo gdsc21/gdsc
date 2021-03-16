@@ -499,6 +499,13 @@ a {
   margin: 0 auto;
 }
 
+.connect .warning-msg {
+  color: red;
+  font-size: 0.75rem;
+  line-height: 0;
+  padding-bottom: 1rem;
+}
+
 .footer {
   background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
   color: white;
