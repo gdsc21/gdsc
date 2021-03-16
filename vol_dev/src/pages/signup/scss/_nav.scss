@@ -1,0 +1,66 @@
+.signup_header .nav {
+	display: flex;
+	padding: 2rem 10vw;
+	justify-content: space-between;
+	align-items: center;
+
+	.links {
+		display: flex;
+		justify-content: space-between;
+		min-width: 10rem;
+		align-items: center;
+	}
+
+	.btn {
+		color: $primaryclr;
+		font-weight: 400;
+		border: none;
+	}
+
+	.signin-btn {
+		border: 2px solid $primaryclr;
+		border-radius: 2rem;
+		padding: 0.2rem 0.75rem;
+	}
+}
+
+.signup_header .heading {
+	text-align: center;
+}
+
+.signup_header .have-account {
+	position: fixed;
+	text-align: center;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 5rem;
+	color: $primaryclr;
+}
+
+// Circle pseudoelements
+// .signup_header::before {
+// 	content: "";
+// 	position: absolute;
+// 	width: 500px;
+// 	height: 500px;
+// 	right: -5%;
+// 	top: -10%;
+// 	border-radius: 50%;
+// 	background: linear-gradient(1.69deg, rgba(22, 34, 59, 0.38) 1.43%, rgba(22, 34, 59, 0.01) 77.94%);
+// }
+
+// .signup_header::after {
+// 	content: "";
+// 	position: absolute;
+// 	width: 675px;
+// 	height: 675px;
+// 	left: -5%;
+// 	bottom: -10%;
+// 	border-radius: 50%;
+// 	z-index: 1;
+// 	background: linear-gradient(
+// 		211.79deg,
+// 		rgba(22, 34, 59, 0.4) 13.54%,
+// 		rgba(22, 34, 59, 0.01) 87.13%
+// 	);
+// }
