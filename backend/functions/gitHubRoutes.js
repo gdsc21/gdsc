@@ -11,9 +11,9 @@ const ghApp = require('express')();
 //     next()
 // })
 //
-// const {
-//     push
-// } = require("./API/gitHub")
+const {
+    push
+} = require("./API/gitHub")
 
 ghApp.post("/push", push)
 
