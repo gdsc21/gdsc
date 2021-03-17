@@ -26,6 +26,7 @@ exports.push = (request, response, next) => {
 
     // token is a JWT token with app auth
     const token = createJWT(data.installation.id).then((token) => { return token })
+    console.log(token)
 
     // request object to pass into fetch api
     let reqObj = {
@@ -41,6 +42,7 @@ exports.push = (request, response, next) => {
     commits.forEach((commit) => {
         // creates the unique url for each commit
         let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.id}`
+        console.log(url)
 
         // get request to each commit url through GitHub Commit API
         fetch(url, reqObj)
@@ -67,6 +69,7 @@ exports.push = (request, response, next) => {
                 })
             })
             .catch((err) => {
+                console.log(err)
                 return response.status(500).json({message: "A github error occurred",
                 data: debugRes})
             })
