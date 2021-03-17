@@ -15,7 +15,7 @@ async function createJWT(installation_id) {
 }
 
 exports.push = (request, response, next) => {
-    // endpoint for commit events ---
+    // endpoint for commit events
 
     let data
     if (typeof request.body != "object")
