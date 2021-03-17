@@ -24,8 +24,13 @@ exports.push = (request, response, next) => {
 
     let commits = data["commits"]
 
+    let token
     // token is a JWT token with app auth
-    const token = createJWT(data.installation.id).then((token) => { return token })
+    token = createJWT(data.installation.id)
+        .then((token) => { return token })
+        .catch((err) => {
+            return response.status(400).json({error: "There was an error with the token", token: token})
+        })
     console.log(token)
 
     // request object to pass into fetch api
