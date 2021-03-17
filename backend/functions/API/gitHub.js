@@ -109,7 +109,7 @@ exports.updateDevCommits = (request, response, next) => {
                     if (err.code === "auth/user-not-found")
                         return response.status(400).json({message: "User not found"})
                     else
-                        return response.status(500).json({error: err.message})
+                        return response.status(501).json({error: err.message})
                 })
         }
         // creates the commit document if it doesn't exist otherwise it appends the commit to the document
@@ -133,7 +133,7 @@ exports.updateDevCommits = (request, response, next) => {
 
             })
             .catch((err) => {
-                return response.status(500).json({error: err.message})
+                return response.status(502).json({error: err.message})
             })
     })
 
@@ -144,7 +144,7 @@ exports.updateDevCommits = (request, response, next) => {
             return next()
         })
         .catch((err) => {
-            return response.status(500).json({error: err.message})
+            return response.status(503).json({error: err.message})
         })
 }
 
