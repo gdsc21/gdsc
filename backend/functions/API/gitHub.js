@@ -1,16 +1,14 @@
-const { admin, fs, firebase, FieldValue} = require('../util/admin');
+const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
-
-
 
 // creates a JWT token
 async function createJWT(installation_id) {
     const auth = createAppAuth({
-        appId: 105035,
-        privateKey: privateKey,
+        appId: process.env.GH_APP_ID,
+        privateKey: process.env.GH_PRIVATE_KEY_105035,
         installationId: installation_id,
-        clientId: clientID,
-        clientSecret: clientSecret
+        clientId: process.env.GH_CLIENT_ID_105035,
+        clientSecret: process.env.GH_CLIENT_SECRET_105035
     })
     const { token } = await auth({ type: 'installation' });
     return token;
@@ -24,12 +22,10 @@ exports.push = (request, response, next) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-    let repository = data["repository"]
     let commits = data["commits"]
-    let installation_id = data.installation.id
 
     // token is a JWT token with app auth
-    const token = createJWT(installation_id).then((token) => { return token })
+    const token = createJWT(data.installation.id).then((token) => { return token })
 
     // request object to pass into fetch api
     let reqObj = {
@@ -40,33 +36,39 @@ exports.push = (request, response, next) => {
         }
     }
 
+    let debugRes
     let commitArr = []
     commits.forEach((commit) => {
         // creates the unique url for each commit
-        let url = `https://api.github.com/repos/${commit.author.username}/${repository.name}/commits/${commit.id}`
+        let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.id}`
 
         // get request to each commit url through GitHub Commit API
         fetch(url, reqObj)
-            .then((response) => {
+            .then((res) => {
+                debugRes = res
                 // stores commit info that we need in a dictionary inside of an array
                 commitArr.push({
-                    "repo": {
-                        "repoID": repository.id,
-                        "repoName": repository.name
-                    },
-                    "commitID": commit.id,
-                    "commitAuthorEmail" : commit.committer.email,
-                    "commitAuthorName": commit.committer.username,
-                    "commitTimestamp": commit.timestamp,
-                    "commitMessage": commit.message,
-                    "commitURL": commit.url,
-                    "commitAdditions": response.body.stats.additions,
-                    "commitDeletions": response.body.stats.deletions,
-                    "commitTotal": response.body.stats.total,
+                    [commit.id]: {
+                        "repo": {
+                            "repoID": data.repository.id,
+                            "repoName": data.repository.name
+                        },
+                        "authorEmail" : commit.committer.email,
+                        "authorName": commit.committer.username,
+                        "timestamp": commit.timestamp,
+                        "Message": commit.message,
+                        "url": commit.url,
+                        "changes": {
+                            "additions": res.body.stats.additions,
+                            "deletions": res.body.stats.deletions,
+                            "total": res.body.stats.total
+                        }
+                    }
                 })
             })
             .catch((err) => {
-                return response.status(500).json({message: "A github error occurred"})
+                return response.status(500).json({message: "A github error occurred",
+                data: debugRes})
             })
     })
 
@@ -74,7 +76,7 @@ exports.push = (request, response, next) => {
     if (commitArr.length === 0) return response.status(400).json({message: "No commits"})
 
     // save the newly created summaries to the request body and pass on to the next function
-    request.body.commitSummaries = commitArr
+    request.body = commitArr
 
     return next()
 }
@@ -83,7 +85,7 @@ exports.push = (request, response, next) => {
 // reduce compute time
 exports.updateDevCommits = (request, response, next) => {
 
-    let summaries = request.body.commitSummaries
+    let commitArr = request.body
     let authorEmail, authorUid
 
     let batch = fs.batch()
@@ -91,60 +93,48 @@ exports.updateDevCommits = (request, response, next) => {
     let commitDocCol = fs.collection("commits")
     let commitDocRef
 
-    let devDocCol = fs.collection("dev_accounts")
-    let devDocRef
-
-    summaries.forEach((commit) => {
+    commitArr.forEach((commit) => {
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
-        if (!(authorEmail === commit.commitAuthorEmail)) {
-            authorEmail = commit.commitAuthorEmail
+        if (!(authorEmail === commit.id.authorEmail)) {
+            authorEmail = commit.id.authorEmail
             admin
                 .auth()
-                .getUserByEmail(commit.commitAuthorEmail)
+                .getUserByEmail(commit.id.authorEmail)
                 .then((userRecord) => {
                     authorUid = userRecord.uid
+                    // remove the email so it is not included in the commit info in firestore
+                    delete commit.id.authorEmail
                 })
                 .catch((err) => {
-                    return response.status(500).json({error: err.message})
+                    if (err.code === "auth/user-not-found")
+                        return response.status(400).json({message: "User not found"})
+                    else
+                        return response.status(500).json({error: err.message})
                 })
         }
         // creates the commit document if it doesn't exist otherwise it appends the commit to the document
         commitDocRef = commitDocCol.doc(authorUid)
-        batch.set(commitDocRef, {
-            [commit.commitID]: {
-                "commitAuthorName": commit.commitAuthorName,
-                "commitTimestamp": commit.commitTimestamp,
-                "commitMessage": commit.commitMessage,
-                "commitURL": commit.commitURL,
-                "commitAdditions": commit.commitAdditions,
-                "commitDeletions": commit.commitDeletions,
-                "commitTotal": commit.commitTotal,
-                "repo": {
-                    "repoID": commit.repo.repoID,
-                    "repoName": commit.repo.repoName
-                }
-
-            }
-        },  { merge: true })
+        batch.set(commitDocRef, commit,  { merge: true })
 
         let newLevel, newXP
-        devDocRef = devDocCol.doc(authorUid)
+        let devDocRef = fs.collection("dev_accounts").doc(authorUid)
 
+        // updates developer xp and level
         devDocRef
             .get()
             .then((doc) => {
                 let data = doc.data()
-                newXP = data.gamification.devXP + commit.commitTotal > 200 ? 200 : commit.commitTotal
+                newXP = data.gamification.devXP + commit.id.total > 200 ? 200 : commit.total
                 newLevel = Math.ceil(newXP / 400)
+
+                batch
+                    .update(devDocRef, {"gamification.devLevel": newLevel})
+                    .update(devDocRef, {"gamification.devXP": newXP})
+
             })
             .catch((err) => {
                 return response.status(500).json({error: err.message})
             })
-
-        batch
-            .update(devDocRef, {"gamification.devLevel": newLevel})
-            .update(devDocRef, {"gamification.devXP": newXP})
-
     })
 
     // commit the changes to the dev commit document

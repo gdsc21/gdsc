@@ -191,17 +191,6 @@ exports.devDeleteProject = (request, response) => {
         })
 }
 
-exports.addCommit = (request, response) => {
-
-}
-
-exports.addXP = (request, response) => {
-
-}
-
-exports.removeXP = (request, response) => {
-
-}
 
 exports.addBadge = (request, response) => {
 

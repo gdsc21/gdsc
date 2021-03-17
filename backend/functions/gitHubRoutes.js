@@ -1,4 +1,4 @@
-const ghApp = require('express')();
+const ghApp = require('express');
 const router = ghApp.Router()
 
 router.use((request, response, next) => {
@@ -15,6 +15,6 @@ const {
     push
 } = require("./API/gitHub")
 
-ghApp.post("/push", push)
+router.post("/push", push)
 
-module.exports = ghApp
+module.exports = router
