@@ -23,7 +23,6 @@ exports.push = (request, response, next) => {
     else data = request.body
 
     let commits = data["commits"]
-    return response.status(200).json(data)
 
     // token is a JWT token with app auth
     const token = createJWT(data.installation.id).then((token) => { return token })
