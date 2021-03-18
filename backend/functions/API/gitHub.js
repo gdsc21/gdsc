@@ -43,24 +43,25 @@ exports.push = async (request, response, next) => {
     try {
         // token = await createJWT(data.installation.id)
         appAuth = await auth({type: "installation"})
-        console.log("Auth Object:", appAuth)
+        token = appAuth.token
     }
     catch(error) {
         console.log({"MainFunc": error})
     }
-    // if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
-    // console.log(token)
+
+    if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
+    console.log(token)
     return response.status(200).json({token: token})
 
-    //
-    // // request object to pass into fetch api
-    // let reqObj = {
-    //     method: "GET",
-    //     headers: {
-    //         "Authorization": "Bearer " + token,
-    //         "accept": "application/vnd.github.v3+json"
-    //     }
-    // }
+
+    // request object to pass into fetch api
+    let reqObj = {
+        method: "GET",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "accept": "application/vnd.github.v3+json"
+        }
+    }
     //
     // let debugRes
     // let commitArr = []
