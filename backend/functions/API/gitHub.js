@@ -9,7 +9,7 @@ async function createJWT(installation_id) {
     try {
         const auth = createAppAuth({
             appId: 105035,
-            privateKey: "./pemKey.pem",
+            privateKey: "pemKey.pem",
             installationId: installation_id,
             clientId: "Iv1.1d26e7ddd2fe7a0d",
             clientSecret: "52d7f7eab675a5f31f0dab0b05b4a82cdfa5b80c"
@@ -25,7 +25,7 @@ async function createJWT(installation_id) {
 
 exports.push = async (request, response, next) => {
     try {
-        const pem = fs.readFileSync("./pemKey.pem", "utf8")
+        const pem = fs.readFileSync("pemKey.pem", "utf8")
     } catch (error) {
         console.log(error)
     }
