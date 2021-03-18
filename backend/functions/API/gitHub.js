@@ -1,20 +1,21 @@
 const functions = require("firebase-functions")
+const fetch = require("node-fetch")
 const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
 
 exports.push = (request, response, next) => {
     // creates a JWT token'
-    async function createJWT(installation_id) {
-        const auth = createAppAuth({
-            appId: functions.config().gh.appId,
-            privateKey: functions.config().gh.privateKey,
-            installationId: installation_id,
-            clientId: functions.config().gh.clientId,
-            clientSecret: functions.config().gh.clientSecret
-        })
-        return await auth({type: 'installation'});
-    }
+    // async function createJWT(installation_id) {
+    //     const auth = createAppAuth({
+    //         appId: functions.config().gh.appId,
+    //         privateKey: functions.config().gh.privateKey,
+    //         installationId: installation_id,
+    //         clientId: functions.config().gh.clientId,
+    //         clientSecret: functions.config().gh.clientSecret
+    //     })
+    //     return await auth({type: 'installation'});
+    // }
 
     // endpoint for commit events
     let data
@@ -25,14 +26,30 @@ exports.push = (request, response, next) => {
     let commits = data["commits"]
 
     let token
-    // token is a JWT token with app auth
-    token = createJWT(data.installation.id)
-        .then((authData) => {
-            console.log(authData)
-            return authData.token })
-        .catch((err) => {
-            return response.status(400).json({error: "There was an error with the token", token: token})
+    createAppAuth({
+        appId: functions.config().gh.appId,
+        privateKey: functions.config().gh.privateKey,
+        installationId: data.installation.id,
+        clientId: functions.config().gh.clientId,
+        clientSecret: functions.config().gh.clientSecret
         })
+        .then((authObj) => {
+            console.log(authObj)
+            token = authObj.token
+        })
+        .catch((err) => {
+            return response.status(500).json({error: "There was a problem creating a token", token: token})
+        })
+
+    // let token
+    // // token is a JWT token with app auth
+    // token = createJWT(data.installation.id)
+    //     .then((authData) => {
+    //         console.log(authData)
+    //         return authData.token })
+    //     .catch((err) => {
+    //         return response.status(400).json({error: "There was an error with the token", token: token})
+    //     })
 
     if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
     console.log(token)
