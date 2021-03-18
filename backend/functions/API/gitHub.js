@@ -5,7 +5,7 @@ const { createAppAuth } = require('@octokit/auth-app');
 
 exports.push = (request, response, next) => {
     // creates a JWT token'
-    function createJWT(installation_id) {
+    async function createJWT(installation_id) {
         const auth = createAppAuth({
             appId: functions.config().gh.appId,
             privateKey: functions.config().gh.privateKey,
@@ -13,8 +13,7 @@ exports.push = (request, response, next) => {
             clientId: functions.config().gh.clientId,
             clientSecret: functions.config().gh.clientSecret
         })
-        const { token } = auth({ type: 'installation' });
-        return token;
+        return await auth({type: 'installation'});
     }
 
     // endpoint for commit events
@@ -28,10 +27,14 @@ exports.push = (request, response, next) => {
     let token
     // token is a JWT token with app auth
     token = createJWT(data.installation.id)
-        .then((token) => { return token })
+        .then((authData) => {
+            console.log(authData)
+            return authData.token })
         .catch((err) => {
             return response.status(400).json({error: "There was an error with the token", token: token})
         })
+
+    if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
     console.log(token)
 
     // request object to pass into fetch api
