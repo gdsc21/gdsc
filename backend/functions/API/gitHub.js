@@ -65,7 +65,7 @@ exports.push = async (request, response, next) => {
     let commitArr = []
     commits.forEach((commit) => {
         // creates the unique url for each commit
-        let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.id}`
+        let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.tree_id}`
         console.log(url)
 
         // get request to each commit url through GitHub Commit API
