@@ -12,11 +12,12 @@ async function createJWT(installation_id) {
         clientId: functions.config().gh.clientId,
         clientSecret: functions.config().gh.clientSecret
     })
+    console.log(functions.config().gh.appId)
     const { token } = await auth({type: "installation"})
     return token
 }
 
-async function push(request, response, next) {
+exports.push = (request, response, next) => {
 
 
     // endpoint for commit events
@@ -27,8 +28,9 @@ async function push(request, response, next) {
 
     let commits = data["commits"]
 
-    let token = await createJWT(data.installation.id)
+    let token
 
+    (async () => { token = await createJWT(data.installation.id) })()
     // let token
     // // token is a JWT token with app auth
     // token = createJWT(data.installation.id)
@@ -97,8 +99,6 @@ async function push(request, response, next) {
 
     return next()
 }
-
-module.exports.push = push
 
 // this function is quite large and doesn't follow the single functionality rule but it is purposefully so in order to
 // reduce compute time
