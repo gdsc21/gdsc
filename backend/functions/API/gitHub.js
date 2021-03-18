@@ -3,19 +3,21 @@ const fetch = require("node-fetch")
 const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
+// creates a JWT token'
+async function createJWT(installation_id) {
+    const auth = createAppAuth({
+        appId: functions.config().gh.appId,
+        privateKey: functions.config().gh.privateKey,
+        installationId: installation_id,
+        clientId: functions.config().gh.clientId,
+        clientSecret: functions.config().gh.clientSecret
+    })
+    const { token } = await auth({type: "installation"})
+    return token
+}
 
-exports.push = (request, response, next) => {
-    // creates a JWT token'
-    // async function createJWT(installation_id) {
-    //     const auth = createAppAuth({
-    //         appId: functions.config().gh.appId,
-    //         privateKey: functions.config().gh.privateKey,
-    //         installationId: installation_id,
-    //         clientId: functions.config().gh.clientId,
-    //         clientSecret: functions.config().gh.clientSecret
-    //     })
-    //     return await auth({type: 'installation'});
-    // }
+async function push(request, response, next) {
+
 
     // endpoint for commit events
     let data
@@ -25,21 +27,7 @@ exports.push = (request, response, next) => {
 
     let commits = data["commits"]
 
-    let token
-    createAppAuth({
-        appId: functions.config().gh.appId,
-        privateKey: functions.config().gh.privateKey,
-        installationId: data.installation.id,
-        clientId: functions.config().gh.clientId,
-        clientSecret: functions.config().gh.clientSecret
-        })
-        .then((authObj) => {
-            console.log(authObj)
-            token = authObj.token
-        })
-        .catch((err) => {
-            return response.status(500).json({error: "There was a problem creating a token", token: token})
-        })
+    let token = await createJWT(data.installation.id)
 
     // let token
     // // token is a JWT token with app auth
@@ -109,6 +97,8 @@ exports.push = (request, response, next) => {
 
     return next()
 }
+
+module.exports.push = push
 
 // this function is quite large and doesn't follow the single functionality rule but it is purposefully so in order to
 // reduce compute time
