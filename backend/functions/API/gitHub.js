@@ -1,27 +1,29 @@
 const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
-// creates a JWT token'
-function createJWT(installation_id) {
-    const auth = createAppAuth({
-        appId: process.env.GH_APP_ID,
-        privateKey: process.env.GH_PRIVATE_KEY_105035,
-        installationId: installation_id,
-        clientId: process.env.GH_CLIENT_ID_105035,
-        clientSecret: process.env.GH_CLIENT_SECRET_105035
-    })
-    const { token } = auth({ type: 'installation' });
-    return token;
-}
+
 
 exports.push = (request, response, next) => {
-    // endpoint for commit events
+    // creates a JWT token'
+    function createJWT(installation_id) {
+        const auth = createAppAuth({
+            appId: process.env.GH_APP_ID,
+            privateKey: process.env.GH_PRIVATE_KEY_105035,
+            installationId: installation_id,
+            clientId: process.env.GH_CLIENT_ID_105035,
+            clientSecret: process.env.GH_CLIENT_SECRET_105035
+        })
+        const { token } = auth({ type: 'installation' });
+        return token;
+    }
 
+    // endpoint for commit events
     let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
 
+    console.log(process.env.GH_APP_ID)
     let commits = data["commits"]
 
     let token
