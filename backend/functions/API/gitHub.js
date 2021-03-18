@@ -36,6 +36,7 @@ exports.push = (request, response, next) => {
         console.log(token)
         return response.status(200).json({token: token})
     })()
+    return response.status(200).json({error: "bruhhhhhhhhhhhhhhhhhhhh"})
     //
     // // request object to pass into fetch api
     // let reqObj = {
