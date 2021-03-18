@@ -1,17 +1,17 @@
+const functions = require("firebase-functions")
 const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
-
 
 
 exports.push = (request, response, next) => {
     // creates a JWT token'
     function createJWT(installation_id) {
         const auth = createAppAuth({
-            appId: process.env.GH_APP_ID,
-            privateKey: process.env.GH_PRIVATE_KEY_105035,
+            appId: functions.config().gh.appId,
+            privateKey: functions.config().gh.privateKey,
             installationId: installation_id,
-            clientId: process.env.GH_CLIENT_ID_105035,
-            clientSecret: process.env.GH_CLIENT_SECRET_105035
+            clientId: functions.config().gh.clientId,
+            clientSecret: functions.config().gh.clientSecret
         })
         const { token } = auth({ type: 'installation' });
         return token;
@@ -23,7 +23,6 @@ exports.push = (request, response, next) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-    console.log(process.env.GH_APP_ID)
     let commits = data["commits"]
 
     let token
