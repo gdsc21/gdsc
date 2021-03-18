@@ -61,7 +61,7 @@ exports.push = async (request, response, next) => {
             "ZJ/b/qC5lv1LWOmyc86j24hdtXdXAe0QO9ZT5RFbuMqy2F5VAZOOlyW/d1dRZqzh\n" +
             "C8lrKpPyuheUAek+nMfKnbeDw4sYNXjWFnokAEEFgmToxncswL8=\n" +
             "-----END RSA PRIVATE KEY-----",
-        installationId: installation_id,
+        installationId: data.installation.id,
         clientId: "Iv1.1d26e7ddd2fe7a0d",
         clientSecret: "52d7f7eab675a5f31f0dab0b05b4a82cdfa5b80c"
     })
