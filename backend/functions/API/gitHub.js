@@ -17,7 +17,7 @@ async function createJWT(installation_id) {
         const { token } = await auth({type: "installation"})
         return token
     } catch (error) {
-        console.log("bruhhh")
+        console.log(error)
     }
 
 }
