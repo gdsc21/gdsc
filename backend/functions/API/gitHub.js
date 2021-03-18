@@ -33,34 +33,8 @@ exports.push = async (request, response, next) => {
     let appAuth, token
 
     const auth = createAppAuth({
-        appId: 105035,
-        privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
-            "MIIEogIBAAKCAQEA8x4lqTlO8n/NFZKFzvivjsjom6o0chkZ47GxkpnuWWrwxJs2\n" +
-            "MrGUsYz5XLKl8DrHtyZOas4DfR2oO9pUnt6/dW/RnpzAX00VsGevdoZb8hefeQRU\n" +
-            "4tLSdhoXDQS0Vedtg/CH+iAo/znA4XCJ5JW5DHwoBx1J68q0QzExKGVwIEwCb0j5\n" +
-            "8BvQf1LhFvaCKRkBe2LLvRKwGREPhyl6Mjb3P72vsevU+da25QQ2fuRjPqPmTc4d\n" +
-            "vH0VupBdecT134MV2GG8bynQyapi4C80jZrV9LzreY1tjQ0LUVmUxJkGUtqXMvzY\n" +
-            "2KYX0CpxnUtljm9i3GSfBp+UVXmhv4OJGN/hjwIDAQABAoIBADuz5Y+/ERIgLF7l\n" +
-            "0pJXI9WupODFVYfHfkIaOv9DafLvfhzp+M9OKLPJaNtIy9NIvA7QC2XTHaw2AkBg\n" +
-            "h3NURDQ0t4d5+wvsRC1D6ST0LdQv1OvFEot5NlHmak66HwcRhCVohhv4ldjHeARk\n" +
-            "vJgz5HOaccH9gU+0QbxWcjn3XyeuyEQ5WkBytO1p0udJ4scF//TsEpRIHJwSfO9h\n" +
-            "Ilm4IZv/zozca4kzKGUEqzP1l1Wh4AuIkvR016vUAmTFerWz0g+zutwF5UN0kfOF\n" +
-            "eXVG10qrriRfOqgKpYcWvDZRJEGWWGlmsxF87z48TcSnf+0HxjWsF79Or76VH7P+\n" +
-            "Cnx1/MECgYEA/o714FRyc689HfsnF0Il59phr/8NBFEXJ71Z70Uwv8PV7C5WMlF+\n" +
-            "OwBhHtg1VWkxB49BSqSPL6+hbdPyjw8ewk5jZlmIKGIx7F9vSOgOF1eQoIn/sM1h\n" +
-            "Xf6PBu6VZa6oD5PqYBUaJTyh70IpOX+XdQbYyhlqnu1In/ulaIKdvjECgYEA9H6Z\n" +
-            "0B961HXBc9AM+ZHGCYRO9oProjv7KXPh5zO8tRR9f84bb1lf3vz1Cha3hw3VhxOs\n" +
-            "Dqm7YJuf2GFERNnEsSQJLPQ/XeBc7BUqu7llemoY+CAcRoLSwBjrRN8vxmRWw9DX\n" +
-            "i+FrS7Kveu2k+nPzRMGgXETgemW6Xw4fn3MY678CgYB/5hRjwgo/Vay/g5EAfpvN\n" +
-            "AkxSwTMpGBUqQlkNfxYfQ6YYJK/qWEe0HVyuwrMJVvDre26ysju/Gd9h7zvP5Sjv\n" +
-            "N7N5mUJwB+ZNfSXM28s4ryZbgvqVOpvRPjVepkEp9bc7HHaGEBQy4WP7cqKD4TeX\n" +
-            "9Pi3kk2fzFjRCP7yo63eAQKBgA7zzyRTSIfFy9bxWlnI+HuMg+e/maGKWYnndGFX\n" +
-            "YKsSXbp7OGJO7PYOMk4zpXW0+uIP6e3bo4H9AoGRMUOkrcrHkWgWZ+mt1wD5Kmvg\n" +
-            "orwh0PUbwZ7uUUU+QOUtYRaY/FVtaEE9v/oZK3IxJm3KuY3y6YO7Ep9pqUQ28Ogn\n" +
-            "edaxAoGAHsiAfaxXfGuzhqgDSPSPy4ceVsLcb0Xs87VdyX0YIvOdw36gf3IQ4qo1\n" +
-            "ZJ/b/qC5lv1LWOmyc86j24hdtXdXAe0QO9ZT5RFbuMqy2F5VAZOOlyW/d1dRZqzh\n" +
-            "C8lrKpPyuheUAek+nMfKnbeDw4sYNXjWFnokAEEFgmToxncswL8=\n" +
-            "-----END RSA PRIVATE KEY-----",
+        appId: functions.config().gh.appId,
+        privateKey: functions.config().gh.privateKey,
         installationId: data.installation.id,
         clientId: functions.config().gh.clientId,
         clientSecret: functions.config().gh.clientSecret
