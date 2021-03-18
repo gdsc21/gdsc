@@ -1,8 +1,8 @@
 const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 
-// creates a JWT token
-async function createJWT(installation_id) {
+// creates a JWT token'
+function createJWT(installation_id) {
     const auth = createAppAuth({
         appId: process.env.GH_APP_ID,
         privateKey: process.env.GH_PRIVATE_KEY_105035,
@@ -10,7 +10,7 @@ async function createJWT(installation_id) {
         clientId: process.env.GH_CLIENT_ID_105035,
         clientSecret: process.env.GH_CLIENT_SECRET_105035
     })
-    const { token } = await auth({ type: 'installation' });
+    const { token } = auth({ type: 'installation' });
     return token;
 }
 
