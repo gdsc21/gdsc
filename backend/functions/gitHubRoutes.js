@@ -1,4 +1,5 @@
 const ghApp = require('express')();
+const functions = require("./API/gitHub")
 // const router = ghApp.Router()
 
 // router.use((request, response, next) => {
@@ -11,10 +12,10 @@ const ghApp = require('express')();
 //     next()
 // })
 //
-const {
-    push
-} = require("./API/gitHub")
+// const {
+//     push
+// } = require("./API/gitHub")
 
-ghApp.post("/push", push)
+ghApp.post("/push", functions.push)
 
 module.exports = ghApp
