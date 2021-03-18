@@ -44,7 +44,7 @@ async function createJWT(installation_id) {
         const { token } = await auth({type: "installation"})
         return token
     } catch (error) {
-        console.log(error)
+        console.log({"SideFunc": error})
     }
 
 }
@@ -69,7 +69,7 @@ exports.push = async (request, response, next) => {
         token = await createJWT(data.installation.id, pem)
     }
     catch(error) {
-        console.log("yooo")
+        console.log({"MainFunc": error})
     }
     if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
     console.log(token)
