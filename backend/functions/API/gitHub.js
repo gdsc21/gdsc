@@ -12,6 +12,7 @@ async function createJWT(installation_id) {
         clientId: functions.config().gh.clientId,
         clientSecret: functions.config().gh.clientSecret
     })
+
     console.log(functions.config().gh.appId)
     const { token } = await auth({type: "installation"})
     return token
@@ -31,15 +32,6 @@ exports.push = (request, response, next) => {
     let token
 
     (async () => { token = await createJWT(data.installation.id) })()
-    // let token
-    // // token is a JWT token with app auth
-    // token = createJWT(data.installation.id)
-    //     .then((authData) => {
-    //         console.log(authData)
-    //         return authData.token })
-    //     .catch((err) => {
-    //         return response.status(400).json({error: "There was an error with the token", token: token})
-    //     })
 
     if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
     console.log(token)
