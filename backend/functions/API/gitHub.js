@@ -17,7 +17,7 @@ async function createJWT(installation_id) {
     return token
 }
 
-exports.push = (request, response, next) => {
+exports.push = async (request, response, next) => {
 
 
     // endpoint for commit events
@@ -30,13 +30,11 @@ exports.push = (request, response, next) => {
 
     let token
 
-    (async () => {
-        token = await createJWT(data.installation.id)
-        if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
-        console.log(token)
-        return response.status(200).json({token: token})
-    })()
-    return response.status(200).json({error: "bruhhhhhhhhhhhhhhhhhhhh"})
+    token = await createJWT(data.installation.id)
+    if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
+    console.log(token)
+    return response.status(200).json({token: token})
+
     //
     // // request object to pass into fetch api
     // let reqObj = {
