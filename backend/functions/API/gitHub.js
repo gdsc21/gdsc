@@ -60,7 +60,6 @@ exports.push = async (request, response, next) => {
             "accept": "application/vnd.github.v3+json"
         }
     }
-    return response.status(200).json({data: commits})
 
     let debugRes
     let commitArr = []
@@ -105,7 +104,7 @@ exports.push = async (request, response, next) => {
 
     // save the newly created summaries to the request body and pass on to the next function
     request.body = commitArr
-    return response.status(200).json({token: token})
+    return response.status(200).json({newData: commitArr})
     // return next()
 }
 
