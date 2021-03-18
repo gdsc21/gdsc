@@ -62,8 +62,8 @@ exports.push = async (request, response, next) => {
             "C8lrKpPyuheUAek+nMfKnbeDw4sYNXjWFnokAEEFgmToxncswL8=\n" +
             "-----END RSA PRIVATE KEY-----",
         installationId: data.installation.id,
-        clientId: "Iv1.1d26e7ddd2fe7a0d",
-        clientSecret: "52d7f7eab675a5f31f0dab0b05b4a82cdfa5b80c"
+        clientId: functions.config().gh.clientId,
+        clientSecret: functions.config().gh.clientSecret
     })
 
     try {
