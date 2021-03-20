@@ -4,13 +4,21 @@ const Devproject = (props) => {
     return ( 
         <div className="devproject">
             <h1>{project.org}</h1>
-            <h4>Title</h4><h4 className="title">{project.title}</h4>
-            <h4>Description</h4><h4 className="description">{project.title}</h4>
-            <h4>Role</h4><h4 className="role">{project.role}</h4>
-            <h4>Progress</h4>
-            <p>{project.progress}%</p>
-            <progress value={project.progress} max={100} /><br/>
-            <a href="/">Go to Page</a>
+            <div>
+                <h4>Title</h4><p className="title">{project.title}</p>
+            </div>
+            <div className="description-div">
+                <h4>Description</h4><p className="description">{project.title}</p>
+            </div>
+            
+            <div>
+                <h4>Role</h4><p className="role">{project.role}</p>
+            </div>
+            <div className="progress">
+                <h4>Progress</h4>
+                <progress value={project.progress} max={100} />{project.progress}%<br/>
+            </div>
+            <a href="/"><span>Go to Page</span></a>
         </div>
      );
 }
