@@ -83,51 +83,67 @@ exports.push = async (request, response, next) => {
 
     let debugRes
     let commitArr = []
-    commits.forEach((commit) => {
-        // creates the unique url for each commit
-        let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.id}`
-        console.log(url)
 
-        // get request to each commit url through GitHub Commit API
-        fetch(url, reqObj)
-            .then((res) => {
-                debugRes = res
-                return response.status(200).json({res: debugRes, body: debugRes.body})
-                console.log(String(debugRes))
-                console.log(String(debugRes.body))
-                // stores commit info that we need in a dictionary inside of an array
-                commitArr.push({
-                    [commit.id]: {
-                        "repo": {
-                            "repoID": data.repository.id,
-                            "repoName": data.repository.name
-                        },
-                        "authorEmail" : commit.committer.email,
-                        "authorName": commit.committer.username,
-                        "timestamp": commit.timestamp,
-                        "Message": commit.message,
-                        "url": commit.url,
-                        "changes": {
-                            "additions": debugRes.body.stats.additions,
-                            "deletions": debugRes.body.stats.deletions,
-                            "total": res.body.stats.total
-                        }
-                    }
-                })
-            })
-            .catch((err) => {
-                console.log(err)
-                return response.status(500).json({message: "A github error occurred",
-                data: debugRes})
-            })
-    })
 
-    // return no commits if no commit summaries was added to commitArr
-    if (commitArr.length === 0) return response.status(400).json({message: "No commits"})
+    let url = `https://api.github.com/repos/${commit[0].author.username}/${data.repository.name}/commits/${commit[0].id}`
 
-    // save the newly created summaries to the request body and pass on to the next function
-    request.body = commitArr
-    return response.status(200).json({newData: commitArr})
+    fetch(url, reqObj)
+        .then((res) => {
+            return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json()})
+        })
+        .catch((err) => {
+            return response.status(201).json({error: err})
+        })
+
+    //
+    //
+    // commits.forEach((commit) => {
+    //     // creates the unique url for each commit
+    //     let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.id}`
+    //     console.log(url)
+    //
+    //     // get request to each commit url through GitHub Commit API
+    //     fetch(url, reqObj)
+    //         .then((res) => {
+    //             return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json()})
+    //         })
+    //         .then((res) => {
+    //             debugRes = res
+    //             console.log(String(debugRes))
+    //             console.log(String(debugRes.body))
+    //             // stores commit info that we need in a dictionary inside of an array
+    //             commitArr.push({
+    //                 [commit.id]: {
+    //                     "repo": {
+    //                         "repoID": data.repository.id,
+    //                         "repoName": data.repository.name
+    //                     },
+    //                     "authorEmail" : commit.committer.email,
+    //                     "authorName": commit.committer.username,
+    //                     "timestamp": commit.timestamp,
+    //                     "Message": commit.message,
+    //                     "url": commit.url,
+    //                     "changes": {
+    //                         "additions": debugRes.body.stats.additions,
+    //                         "deletions": debugRes.body.stats.deletions,
+    //                         "total": res.body.stats.total
+    //                     }
+    //                 }
+    //             })
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //             return response.status(500).json({message: "A github error occurred",
+    //             data: debugRes})
+    //         })
+    // })
+
+    // // return no commits if no commit summaries was added to commitArr
+    // if (commitArr.length === 0) return response.status(400).json({message: "No commits"})
+    //
+    // // save the newly created summaries to the request body and pass on to the next function
+    // request.body = commitArr
+    // return response.status(200).json({newData: commitArr})
     // return next()
 }
 
