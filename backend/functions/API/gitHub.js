@@ -17,12 +17,6 @@ const fs = require('fs');
 // }
 //
 exports.push = async (request, response, next) => {
-    // try {
-    //     const pem = fs.readFileSync("pemKey.pem", "utf8")
-    // } catch (error) {
-    //     console.log(error)
-    // }
-    // endpoint for commit events
     let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
@@ -34,7 +28,33 @@ exports.push = async (request, response, next) => {
 
     const auth = createAppAuth({
         appId: functions.config().gh.appid,
-        privateKey: "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEA8x4lqTlO8n/NFZKFzvivjsjom6o0chkZ47GxkpnuWWrwxJs2\nMrGUsYz5XLKl8DrHtyZOas4DfR2oO9pUnt6/dW/RnpzAX00VsGevdoZb8hefeQRU\n4tLSdhoXDQS0Vedtg/CH+iAo/znA4XCJ5JW5DHwoBx1J68q0QzExKGVwIEwCb0j5\n8BvQf1LhFvaCKRkBe2LLvRKwGREPhyl6Mjb3P72vsevU+da25QQ2fuRjPqPmTc4d\nvH0VupBdecT134MV2GG8bynQyapi4C80jZrV9LzreY1tjQ0LUVmUxJkGUtqXMvzY\n2KYX0CpxnUtljm9i3GSfBp+UVXmhv4OJGN/hjwIDAQABAoIBADuz5Y+/ERIgLF7l\n0pJXI9WupODFVYfHfkIaOv9DafLvfhzp+M9OKLPJaNtIy9NIvA7QC2XTHaw2AkBg\nh3NURDQ0t4d5+wvsRC1D6ST0LdQv1OvFEot5NlHmak66HwcRhCVohhv4ldjHeARk\nvJgz5HOaccH9gU+0QbxWcjn3XyeuyEQ5WkBytO1p0udJ4scF//TsEpRIHJwSfO9h\nIlm4IZv/zozca4kzKGUEqzP1l1Wh4AuIkvR016vUAmTFerWz0g+zutwF5UN0kfOF\neXVG10qrriRfOqgKpYcWvDZRJEGWWGlmsxF87z48TcSnf+0HxjWsF79Or76VH7P+\nCnx1/MECgYEA/o714FRyc689HfsnF0Il59phr/8NBFEXJ71Z70Uwv8PV7C5WMlF+\nOwBhHtg1VWkxB49BSqSPL6+hbdPyjw8ewk5jZlmIKGIx7F9vSOgOF1eQoIn/sM1h\nXf6PBu6VZa6oD5PqYBUaJTyh70IpOX+XdQbYyhlqnu1In/ulaIKdvjECgYEA9H6Z\n0B961HXBc9AM+ZHGCYRO9oProjv7KXPh5zO8tRR9f84bb1lf3vz1Cha3hw3VhxOs\nDqm7YJuf2GFERNnEsSQJLPQ/XeBc7BUqu7llemoY+CAcRoLSwBjrRN8vxmRWw9DX\ni+FrS7Kveu2k+nPzRMGgXETgemW6Xw4fn3MY678CgYB/5hRjwgo/Vay/g5EAfpvN\nAkxSwTMpGBUqQlkNfxYfQ6YYJK/qWEe0HVyuwrMJVvDre26ysju/Gd9h7zvP5Sjv\nN7N5mUJwB+ZNfSXM28s4ryZbgvqVOpvRPjVepkEp9bc7HHaGEBQy4WP7cqKD4TeX\n9Pi3kk2fzFjRCP7yo63eAQKBgA7zzyRTSIfFy9bxWlnI+HuMg+e/maGKWYnndGFX\nYKsSXbp7OGJO7PYOMk4zpXW0+uIP6e3bo4H9AoGRMUOkrcrHkWgWZ+mt1wD5Kmvg\norwh0PUbwZ7uUUU+QOUtYRaY/FVtaEE9v/oZK3IxJm3KuY3y6YO7Ep9pqUQ28Ogn\nedaxAoGAHsiAfaxXfGuzhqgDSPSPy4ceVsLcb0Xs87VdyX0YIvOdw36gf3IQ4qo1\nZJ/b/qC5lv1LWOmyc86j24hdtXdXAe0QO9ZT5RFbuMqy2F5VAZOOlyW/d1dRZqzh\nC8lrKpPyuheUAek+nMfKnbeDw4sYNXjWFnokAEEFgmToxncswL8=\n-----END RSA PRIVATE KEY-----",
+        privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
+            "MIIEpAIBAAKCAQEA7YWDF2v8zaJd32CoXV0ZHoFMFYllDxpXNyFlYb3dFN6pdEjD\n" +
+            "pChE8N9gV0kvSoLg32IwLGVR6o+6hqapHjEkpd9MnR4DWQv0n8QdhJbocZcYIorU\n" +
+            "nKyGXSZOLxHTfxhVuw9BiL+hrFz/ElIxS6d4/4ZnPxhoJkce9T6wsMh5yy3qVb2v\n" +
+            "pOsU6oPxpP9TtXQcbCBpLENe826H+WGx9572kNzj2hLB5ghmQLY1xK4CN7YUb+4I\n" +
+            "HZT6wzUdHZUXQa+SNpuxza2RAohDk1uS5wIs41a/xvSW9IGbj6GL98pfFEDk+eKV\n" +
+            "cbP5pE+1644XnwQPKPn5pyUtFVAoab+j3Nza/QIDAQABAoIBAFbprO9sH2RrjmgH\n" +
+            "qXQIdgGYlGupC+a738AXo05huD1DwMQBQD2YUqnFQy6NZBWi0IBNII2OQaxQDZPp\n" +
+            "9iZLGzrq+9DeQ6FY45l2nMqAoeu2uykgne36n2wEcUV+A2MVV4GMcpGEdbdpjBh7\n" +
+            "JPim/nqaBruqxamECsr4tpTpts9meC8iOxGO48+B7XG92mlzAcdlPfxTQsKA+GLG\n" +
+            "yeTbBZ+ep/I15ohdK8/eLeDe+bhb1ZpW61ZONyyVc3XGBZLiWejKYnlk29vKdvwV\n" +
+            "KrknyLyxkTQLAc58p5sxQtDTM2q2WKYLGQvCKWYkCvki9pDwVZWmev0kaDnzw47H\n" +
+            "uxbkT2ECgYEA/19G7TJs/Aml36WlTiZlgQm/gTsl12f0E9hMecyjqI/0xgYwwMXp\n" +
+            "oOX+ivmVPBokN85/rgHpAglli4EneoOL1qNZ1EGOP6dTMsxuEcCsLxNYO5gnbU3k\n" +
+            "ryN4LSGOfrW1cZ5OuZBUxWlmA9WmfXZF6hdmLjEJ3CCpQyRyfAyJiqUCgYEA7hsA\n" +
+            "Gny4Qw/tGfQ23e33DiMz9a9zN717xJGmb8HM9XqGfIymP3Go7+TwYEfOGFphR6Ac\n" +
+            "yW++O0mOJrVA28UGnPqUIANT7A2bPU7MjW7xUMj6NyJMcZiJyu+w7wZV9r7LS226\n" +
+            "XPRqAWyMJfvAV59Hw0jlJJ0Aqs3mv6rJYh1Xl3kCgYAHpydM/HHfq7pY1XH6wZPR\n" +
+            "JiWjDc64gdkCrzy7ebJ93rKLLKxRWp0BwWK7b3dVccMcGQgigtQkx3tPjvNL7J1I\n" +
+            "NWT/w2cr6SvJHe8+gPOoBYBjaM/lqqvrw7haQeMvUOq7GO9rCDRCJkJ0Yva2U9EM\n" +
+            "jt71C2ssOZ5Y8MKtjQKiMQKBgQCepvcGrxvH85C0vnjgn3MCxIoWpnVLKsKRU8tm\n" +
+            "o+eBmcaKrt0HYSCD2DQiszWsHGy9YP5NaluC/ZvuRs+UoE+rwXt5aT4+B0LtMtgx\n" +
+            "VT8N6RxwKDZvaohF5DgszDfzVWX4OID49xK7KCyqEnky6TrT8HpeTw7mwJOEGrRc\n" +
+            "39hBYQKBgQDv4Abq+K6NmT6KXU7ImfIEIn/rlXzJiD+rJVTDLBfPgCWBbQ54Tn9C\n" +
+            "71peY6U5FbtwaWwR7BPpPUDKPOUE8IzVFg1eZnet4EpHLHEc1eDPbyvbveVsozWH\n" +
+            "VFkE5jcwfQJIcqFReq0/22e+zfbXphk4lAXhb0W8+2WDeRPWPFKRWw==\n" +
+            "-----END RSA PRIVATE KEY-----",
         installationId: data.installation.id,
         clientId: functions.config().gh.clientid,
         clientSecret: functions.config().gh.clientsecret
@@ -65,13 +85,14 @@ exports.push = async (request, response, next) => {
     let commitArr = []
     commits.forEach((commit) => {
         // creates the unique url for each commit
-        let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.tree_id}`
+        let url = `https://api.github.com/repos/${commit.author.username}/${data.repository.name}/commits/${commit.id}`
         console.log(url)
 
         // get request to each commit url through GitHub Commit API
         fetch(url, reqObj)
             .then((res) => {
                 debugRes = res
+                console.log(debugRes)
                 // stores commit info that we need in a dictionary inside of an array
                 commitArr.push({
                     [commit.id]: {
