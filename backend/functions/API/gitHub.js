@@ -87,12 +87,13 @@ exports.push = async (request, response, next) => {
     let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
     // let url = `https://api.github.com/repos/${commits[0].author.username}/${data.repository.name}/commits/${commits[0].id}`
     let url = `https://api.github.com/repos/${data.repository.owner.name}/${data.repository.name}/commits/${commits[0].id}`
-
+    console.log(url)
     fetch(url, reqObj)
         .then((res) => {
             debugRes = res
             if (res.ok) {
-                return response.status(200).json({status: res.statusText, body: debugRes.body, json: res.json(), params: params})
+                return response.status(200).json({status: res.statusText, body: JSON.stringify(debugRes.body), json: res.json(), params: params,
+                payload: debugRes.payload})
             }
             else {
                 return response.status(201).json({message: res.statusText, params: params})
