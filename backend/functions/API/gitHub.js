@@ -92,7 +92,7 @@ exports.push = async (request, response, next) => {
         .then((res) => {
             debugRes = res
             if (res.ok) {
-                return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json(), params: params})
+                return response.status(200).json({status: res.statusText, body: debugRes.body, json: res.json(), params: params})
             }
             else {
                 return response.status(201).json({message: res.statusText, params: params})
