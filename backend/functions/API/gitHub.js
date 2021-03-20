@@ -84,20 +84,21 @@ exports.push = async (request, response, next) => {
     let debugRes
     let commitArr = []
 
-
-    let url = `https://api.github.com/repos/${commits[0].author.username}/${data.repository.name}/commits/${commits[0].id}`
+    let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
+    // let url = `https://api.github.com/repos/${commits[0].author.username}/${data.repository.name}/commits/${commits[0].id}`
+    let url = `https://api.github.com/repos/${data.repository.owner.name}/${data.repository.name}/commits/${commits[0].id}`
 
     fetch(url, reqObj)
         .then((res) => {
             if (res.ok) {
-                return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json()})
+                return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json(), params: params})
             }
             else {
-                return response.status(201).json({message: res.statusText})
+                return response.status(201).json({message: res.statusText, params: params})
             }
         })
         .catch((err) => {
-            return response.status(202).json({error: "rip"})
+            return response.status(202).json({error: "rip", params: params})
         })
 
     //
