@@ -90,6 +90,7 @@ exports.push = async (request, response, next) => {
 
     fetch(url, reqObj)
         .then((res) => {
+            debugRes = res
             if (res.ok) {
                 return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json(), params: params})
             }
@@ -98,7 +99,7 @@ exports.push = async (request, response, next) => {
             }
         })
         .catch((err) => {
-            return response.status(202).json({error: "rip", params: params})
+            return response.status(202).json({error: err, text: debugRes.statusText, params: params})
         })
 
     //
