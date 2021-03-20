@@ -91,8 +91,9 @@ exports.push = async (request, response, next) => {
         // get request to each commit url through GitHub Commit API
         fetch(url, reqObj)
             .then((res) => {
-                debugRes = res
-                console.log(debugRes)
+                debugRes = JSON.parse(res)
+                console.log("JSON REQ:" + String(debugRes))
+                console.log("JSON BODY:" + String(debugRes.body))
                 // stores commit info that we need in a dictionary inside of an array
                 commitArr.push({
                     [commit.id]: {
@@ -106,8 +107,8 @@ exports.push = async (request, response, next) => {
                         "Message": commit.message,
                         "url": commit.url,
                         "changes": {
-                            "additions": res.body.stats.additions,
-                            "deletions": res.body.stats.deletions,
+                            "additions": debugRes.body.stats.additions,
+                            "deletions": debugRes.body.stats.deletions,
                             "total": res.body.stats.total
                         }
                     }
