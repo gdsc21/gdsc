@@ -89,10 +89,15 @@ exports.push = async (request, response, next) => {
 
     fetch(url, reqObj)
         .then((res) => {
-            return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json()})
+            if (res.ok) {
+                return response.status(200).json({res: debugRes, body: debugRes.body, json: res.json()})
+            }
+            else {
+                return response.status(201).json({message: res.statusText})
+            }
         })
         .catch((err) => {
-            return response.status(201).json({error: err})
+            return response.status(202).json({error: "rip"})
         })
 
     //
