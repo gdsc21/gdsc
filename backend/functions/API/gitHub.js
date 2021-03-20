@@ -92,6 +92,7 @@ exports.push = async (request, response, next) => {
         fetch(url, reqObj)
             .then((res) => {
                 debugRes = res
+                return response.status(200).json({res: debugRes, body: debugRes.body})
                 console.log(String(debugRes))
                 console.log(String(debugRes.body))
                 // stores commit info that we need in a dictionary inside of an array
