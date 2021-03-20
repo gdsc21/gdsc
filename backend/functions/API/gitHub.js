@@ -85,7 +85,7 @@ exports.push = async (request, response, next) => {
     let commitArr = []
 
 
-    let url = `https://api.github.com/repos/${commit[0].author.username}/${data.repository.name}/commits/${commit[0].id}`
+    let url = `https://api.github.com/repos/${commits[0].author.username}/${data.repository.name}/commits/${commits[0].id}`
 
     fetch(url, reqObj)
         .then((res) => {
