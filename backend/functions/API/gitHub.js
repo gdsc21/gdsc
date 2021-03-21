@@ -112,13 +112,17 @@ exports.push = async (request, response, next) => {
         })
     }
 
-    request.body = {commits: commitArr}
+    try {
+        request.body = {commits: commitArr}
+    } catch {
+        return response.status(400).json({error: "Commit save to body error"})
+    }
     return next()
 }
 
 // this function is quite large and doesn't follow the single functionality rule but it is purposefully so in order to
 // reduce compute time
-exports.updateDevCommits = (request, response, next) => {
+exports.updateDevCommits = (request, response) => {
     /**
      * Updates the developers xp, level, and badges on their profile document
      */
@@ -150,7 +154,6 @@ exports.updateDevCommits = (request, response, next) => {
                 })
         }
 
-
         // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
         // commitDocRef = commitDocCol.doc(authorUid)
         // batch.set(commitDocRef, commit,  { merge: true })
@@ -177,6 +180,9 @@ exports.updateDevCommits = (request, response, next) => {
                     .catch((err) => {
                         return response.status(500).json({error: "Problem updating xp and level"})
                     })
+            })
+            .then(() => {
+                return response.status(200).json({message: "Success!"})
             })
             .catch((err) => {
                 return response.status(502).json({error: err.message})
