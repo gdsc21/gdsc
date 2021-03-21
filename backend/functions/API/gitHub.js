@@ -139,11 +139,9 @@ exports.updateDevCommits = (request, response) => {
 
     // loop through the commits
     commitArr.forEach((commit) => {
-        return response.status(200).json({commits: commitArr})
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
-        if (!(authorEmail === commit.id.authorEmail)) {
+        if (authorEmail !== commit.id.authorEmail) {
             authorEmail = commit.id.authorEmail
-            try {
                 admin
                     .auth()
                     .getUserByEmail(commit.id.authorEmail)
@@ -154,15 +152,12 @@ exports.updateDevCommits = (request, response) => {
                         delete commit.id.authorEmail
                     })
                     .catch((err) => {
+                        return response.status(203).json({message: "Authentication Error"})
                         if (err.code === "auth/user-not-found")
                             return response.status(400).json({message: "User not found"})
                         else
-                            return response.status(501).json({error: err.message})
+                            return response.status(500).json({error: err.message})
                     })
-            } catch {
-                return response.status(200).json({commits: commitArr})
-            }
-
         }
 
 
