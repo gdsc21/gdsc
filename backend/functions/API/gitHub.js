@@ -1,9 +1,9 @@
 const functions = require("firebase-functions")
-const fetch = require("node-fetch")
-const { admin, firestore } = require('../util/admin');
+const { admin, fs } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
-const fs = require('fs');
 const { Octokit } = require("@octokit/rest");
+
+
 
 function calcXP(currentXP, additions, deletions, total) {
 
@@ -125,8 +125,8 @@ exports.updateDevCommits = (request, response, next) => {
     let commitArr = request.body.commits
     let authorEmail, authorUid
 
-    let commitDocCol = fs.collection("commits")
-    let commitDocRef
+    // let commitDocCol = fs.collection("commits")
+    // let commitDocRef
 
     // loop through the commits
     commitArr.forEach((commit) => {
