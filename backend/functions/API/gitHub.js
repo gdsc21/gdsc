@@ -142,22 +142,24 @@ exports.updateDevCommits = (request, response) => {
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
         if (authorEmail !== commit.id.authorEmail) {
             authorEmail = commit.id.authorEmail
-                admin
-                    .auth()
-                    .getUserByEmail(commit.id.authorEmail)
-                    .then((userRecord) => {
-                        authorUid = userRecord.uid
-                        commit.id.authorUid = authorUid
-                        // remove the email so it is not included in the commit info in firestore
-                        delete commit.id.authorEmail
-                    })
-                    .catch((err) => {
-                        return response.status(203).json({message: "Authentication Error"})
-                        if (err.code === "auth/user-not-found")
-                            return response.status(400).json({message: "User not found"})
-                        else
-                            return response.status(500).json({error: err.message})
-                    })
+            // return response.status(203).json({message: "Authentication Error"})
+
+            admin
+                .auth()
+                // TODO: therein lies the error
+                .getUserByEmail(commit.id.authorEmail)
+                .then((userRecord) => {
+                    authorUid = userRecord.uid
+                    commit.id.authorUid = authorUid
+                    // remove the email so it is not included in the commit info in firestore
+                    delete commit.id.authorEmail
+                })
+                .catch((err) => {
+                    if (err.code === "auth/user-not-found")
+                        return response.status(400).json({message: "User not found"})
+                    else
+                        return response.status(400).json({error: err.message})
+                })
         }
 
 

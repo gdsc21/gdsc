@@ -12,7 +12,10 @@ exports.npSignUp = (request, response, next) => {
      *          failure: status=400/409/500 --- json={message/error: ""/err.message}
      */
         // extract data from form post request -- if field is optional and nothing is passed leave it empty
-    let newCredentials = request.body
+    let newCredentials
+    if (typeof request.body != "object")
+        newCredentials= JSON.parse(request.body)
+    else newCredentials = request.body
 
     // validate data and return 400 error if data is invalid
     const { valid, errors } = validateNpSignUp(newCredentials);
