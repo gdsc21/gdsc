@@ -56,10 +56,10 @@ exports.push = async (request, response) => {
         type: "installation",
     })
 
-    const commitData = await appOctokit.git.getCommit({
+    const commitData = await appOctokit.repos.getCommit({
         owner: data.repository.owner.login,
         repo: data.repository.name,
-        commit_sha: data.commits[0].id
+        ref: data.commits[0].id
     })
 
     return response.status(200).json(commitData)
