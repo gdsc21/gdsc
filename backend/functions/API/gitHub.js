@@ -65,7 +65,7 @@ exports.push = async (request, response) => {
 
     return response.status(200).json(commitStats)
     //     let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
-
+//
 }
 // creates a JWT token'
 // async function createJWT(installation_id) {
