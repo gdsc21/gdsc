@@ -142,23 +142,28 @@ exports.updateDevCommits = (request, response) => {
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
         if (!(authorEmail === commit.id.authorEmail)) {
             authorEmail = commit.id.authorEmail
-            admin
-                .auth()
-                .getUserByEmail(commit.id.authorEmail)
-                .then((userRecord) => {
-                    authorUid = userRecord.uid
-                    commit.id.authorUid = authorUid
-                    // remove the email so it is not included in the commit info in firestore
-                    delete commit.id.authorEmail
-                })
-                .catch((err) => {
-                    if (err.code === "auth/user-not-found")
-                        return response.status(400).json({message: "User not found"})
-                    else
-                        return response.status(501).json({error: err.message})
-                })
+            try {
+                admin
+                    .auth()
+                    .getUserByEmail(commit.id.authorEmail)
+                    .then((userRecord) => {
+                        authorUid = userRecord.uid
+                        commit.id.authorUid = authorUid
+                        // remove the email so it is not included in the commit info in firestore
+                        delete commit.id.authorEmail
+                    })
+                    .catch((err) => {
+                        if (err.code === "auth/user-not-found")
+                            return response.status(400).json({message: "User not found"})
+                        else
+                            return response.status(501).json({error: err.message})
+                    })
+            } catch {
+                return response.status(200).json({commits: commitArr})
+            }
+
         }
-        return response.status(200).json({commits: commitArr})
+
 
         // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
         // commitDocRef = commitDocCol.doc(authorUid)
