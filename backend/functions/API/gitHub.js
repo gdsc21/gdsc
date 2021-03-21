@@ -75,13 +75,14 @@ exports.push = async (request, response, next) => {
     }
 
     let commitArr = []
-    for (const commit of data.commits) {
+    for (let i=0; i < data.commits.length; i++) {
         let res, commitStats
+        let commit = data.commits[i]
         try {
             res = await appOctokit.repos.getCommit({
                 owner: data.repository.owner.login,
                 repo: data.repository.name,
-                ref: data.commits[0].id
+                ref: commit.id
             })
 
             if (res.status != 200) return response.status(res.status).json({error: "Problem requesting commit"})
