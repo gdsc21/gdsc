@@ -66,13 +66,13 @@ exports.push = async (request, response, next) => {
         }
     })
 
-    // try {
-    //     const { token } = await appOctokit.auth({
-    //         type: "installation",
-    //     })
-    // } catch {
-    //     return response.status(404).json({error: "Authentication with GitHub failed"})
-    // }
+    try {
+        const { token } = await appOctokit.auth({
+            type: "installation",
+        })
+    } catch {
+        return response.status(404).json({error: "Authentication with GitHub failed"})
+    }
 
     let commitArr = []
     for (const commit of data.commits) {
