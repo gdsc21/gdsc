@@ -139,6 +139,7 @@ exports.updateDevCommits = (request, response) => {
 
     // loop through the commits
     commitArr.forEach((commit) => {
+        return response.status(200).json({commits: commitArr})
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
         if (!(authorEmail === commit.id.authorEmail)) {
             authorEmail = commit.id.authorEmail
