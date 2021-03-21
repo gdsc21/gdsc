@@ -130,12 +130,12 @@ exports.updateDevCommits = (request, response) => {
     /**
      * Updates the developers xp, level, and badges on their profile document
      */
-    return response.status(200).json({error: "immediate return"})
     let commitArr = request.body.commits
     let authorEmail, authorUid
 
     // let commitDocCol = fs.collection("commits")
     // let commitDocRef
+
 
     // loop through the commits
     commitArr.forEach((commit) => {
