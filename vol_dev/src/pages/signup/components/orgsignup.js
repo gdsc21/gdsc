@@ -30,7 +30,7 @@ const OrgSignUp = () => {
 				console.log(err)
 			})
 
-		if (token === "undefined") {//TODO: Authentication failed --- wut now?}
+		if (token === "undefined") {}//TODO: Authentication failed --- wut now?}
 		let user = {
 			token: token,
 			loggedIn: true,
