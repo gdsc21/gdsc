@@ -12,9 +12,10 @@ const ghApp = require('express')();
 // })
 //
 const {
-    push
+    push,
+    updateDevCommits
 } = require("./API/gitHub")
 
-ghApp.post("/push", push)
+ghApp.post("/push", push, updateDevCommits)
 
 module.exports = ghApp
