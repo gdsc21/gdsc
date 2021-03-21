@@ -56,16 +56,37 @@ exports.push = async (request, response) => {
         type: "installation",
     })
 
-    const res = await appOctokit.repos.getCommit({
-        owner: data.repository.owner.login,
-        repo: data.repository.name,
-        ref: data.commits[0].id
-    })
-    let commitStats = res.data.stats
+    let commitArr = []
+    for (const commit of data.commits) {
+        const res = await appOctokit.repos.getCommit({
+            owner: data.repository.owner.login,
+            repo: data.repository.name,
+            ref: data.commits[0].id
+        })
 
-    return response.status(200).json(commitStats)
-    //     let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
-//
+        let commitStats = res.data.stats
+        commitArr.push({
+            [commit.id]: {
+                "repo": {
+                    "repoID": data.repository.id,
+                    "repoName": data.repository.name
+                },
+                "authorEmail" : commit.author.email,
+                "authorName": commit.author.username,
+                "timestamp": commit.timestamp,
+                "Message": commit.message,
+                "url": commit.url,
+                "changes": {
+                    "additions": commitStats.additions,
+                    "deletions": commitStats.deletions,
+                    "total": commitStats.total
+                }
+            }
+        })
+    }
+
+    return response.status(200).json(commitArr)
+
 }
 // creates a JWT token'
 // async function createJWT(installation_id) {
