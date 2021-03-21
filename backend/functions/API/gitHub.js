@@ -22,6 +22,7 @@ exports.push = async (request, response, next) => {
      * Receives the post request from GitHub push event and saves each commits info in commitArr then saves this list
      * in the request body and passes on to the next function
      */
+    return response.status(200)
     let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
