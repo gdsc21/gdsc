@@ -17,7 +17,7 @@ function calcBadges(level) {
 
 }
 
-exports.push = async (request, response, next) => {
+exports.push = async (request, response) => {
     /**
      * Receives the post request from GitHub push event and saves each commits info in commitArr then saves this list
      * in the request body and passes on to the next function
