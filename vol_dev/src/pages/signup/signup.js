@@ -1,13 +1,24 @@
-import React from "react";
-import "./scss/signup.scss";
-import logo from "../../img/logo.svg";
+import React, { useState } from "react";
+import "./scss/signup.css";
+
+// Import components
+import Header from "./components/header";
+import MainPage from "./components/mainpage";
+import OrgSignUp from "./components/orgsignup";
 
 const SignUp = () => {
+	const [selection, setSelection] = useState("main-page");
+
 	return (
 		<div className="signup">
-			<nav className="nav">
-				<img src={logo}></img>
-			</nav>
+			<Header />
+			{selection == "main-page" ? (
+				<MainPage setSelection={setSelection} />
+			) : selection == "org" ? (
+				<OrgSignUp setSelection={setSelection} />
+			) : (
+				""
+			)}
 		</div>
 	);
 };

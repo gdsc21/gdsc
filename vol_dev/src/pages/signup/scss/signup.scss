@@ -1,0 +1,16 @@
+// import global styles
+@import "../../styles/global.scss";
+@import "../../styles/variables";
+
+@import "./nav";
+@import "./mainpage";
+@import "./orgsignup";
+
+.signup {
+	height: 100vh;
+	width: 100vw;
+	position: relative;
+	background-image: url("../img/bg.svg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}

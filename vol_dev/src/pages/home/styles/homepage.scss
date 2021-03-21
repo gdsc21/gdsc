@@ -1,3 +1,9 @@
+// import global styles
 @import "../../styles/global.scss";
+@import "../../styles/variables";
+
+// import different pages
 @import "./header";
-@import "./variables";
+@import "./sponsors";
+@import "./connect";
+@import "./footer";
