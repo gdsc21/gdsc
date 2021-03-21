@@ -158,6 +158,7 @@ exports.updateDevCommits = (request, response) => {
                         return response.status(501).json({error: err.message})
                 })
         }
+        return response.status(200).json({commits: commitArr})
 
         // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
         // commitDocRef = commitDocCol.doc(authorUid)
