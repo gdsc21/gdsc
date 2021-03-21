@@ -17,7 +17,7 @@ function calcBadges(level) {
 
 }
 
-exports.push = async (request, response) => {
+exports.push = async (request, response, next) => {
     /**
      * Receives the post request from GitHub push event and saves each commits info in commitArr then saves this list
      * in the request body and passes on to the next function
@@ -120,8 +120,8 @@ exports.push = async (request, response) => {
         return response.status(400).json({error: "Commit save to body error"})
     }
 
-    return response.status(200).json({error: "immediate return"})
-    // return next()
+    // return response.status(200).json({error: "immediate return"})
+    return next()
 }
 
 // this function is quite large and doesn't follow the single functionality rule but it is purposefully so in order to
@@ -130,6 +130,7 @@ exports.updateDevCommits = (request, response) => {
     /**
      * Updates the developers xp, level, and badges on their profile document
      */
+    return response.status(200).json({error: "immediate return"})
     let commitArr = request.body.commits
     let authorEmail, authorUid
 

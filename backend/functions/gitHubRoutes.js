@@ -16,6 +16,6 @@ const {
     updateDevCommits
 } = require("./API/gitHub")
 
-ghApp.post("/push", push)
+ghApp.post("/push", push, updateDevCommits)
 
 module.exports = ghApp
