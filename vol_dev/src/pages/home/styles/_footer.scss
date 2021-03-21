@@ -1,0 +1,61 @@
+@import "../../styles/variables";
+
+.footer {
+	background: linear-gradient(329.74deg, $primaryclr 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
+	color: $secondaryclr;
+	font-size: 0.875rem;
+	font-weight: 300;
+
+	.top {
+		display: flex;
+		padding: 1rem $padding;
+	}
+
+	.logo {
+		display: block;
+		margin: auto 0;
+		max-height: 5rem;
+		width: auto;
+	}
+
+	.links {
+		margin-left: 2rem;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		text-align: left;
+		cursor: pointer;
+	}
+
+	.contact-info {
+		flex: 1;
+		text-align: right;
+
+		.email {
+			font-weight: 600;
+			padding-bottom: 0.2rem;
+		}
+	}
+
+	.copyright {
+		flex: 1;
+		padding: 0.5rem 10vw;
+		text-align: center;
+	}
+	@media screen and (max-width: 520px) {
+		.top {
+			flex-direction: column;
+		}
+
+		.logo {
+			transform: scale(0.5);
+		}
+
+		.links,
+		.contact-info {
+			text-align: center;
+			margin: 0;
+			padding: 1rem 0;
+		}
+	}
+}
