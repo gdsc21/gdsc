@@ -3,7 +3,69 @@ const fetch = require("node-fetch")
 const { admin, firestore } = require('../util/admin');
 const { createAppAuth } = require('@octokit/auth-app');
 const fs = require('fs');
+const { Octokit } = require("@octokit/rest");
 
+
+
+exports.push = async (request, response) => {
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    const appOctokit = new Octokit({
+        userAgent: "Push App V1",
+        baseUrl: 'https://api.github.com',
+        authStrategy: createAppAuth,
+        auth: {
+            appId: functions.config().gh.appid,
+            privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
+                "MIIEpAIBAAKCAQEA7YWDF2v8zaJd32CoXV0ZHoFMFYllDxpXNyFlYb3dFN6pdEjD\n" +
+                "pChE8N9gV0kvSoLg32IwLGVR6o+6hqapHjEkpd9MnR4DWQv0n8QdhJbocZcYIorU\n" +
+                "nKyGXSZOLxHTfxhVuw9BiL+hrFz/ElIxS6d4/4ZnPxhoJkce9T6wsMh5yy3qVb2v\n" +
+                "pOsU6oPxpP9TtXQcbCBpLENe826H+WGx9572kNzj2hLB5ghmQLY1xK4CN7YUb+4I\n" +
+                "HZT6wzUdHZUXQa+SNpuxza2RAohDk1uS5wIs41a/xvSW9IGbj6GL98pfFEDk+eKV\n" +
+                "cbP5pE+1644XnwQPKPn5pyUtFVAoab+j3Nza/QIDAQABAoIBAFbprO9sH2RrjmgH\n" +
+                "qXQIdgGYlGupC+a738AXo05huD1DwMQBQD2YUqnFQy6NZBWi0IBNII2OQaxQDZPp\n" +
+                "9iZLGzrq+9DeQ6FY45l2nMqAoeu2uykgne36n2wEcUV+A2MVV4GMcpGEdbdpjBh7\n" +
+                "JPim/nqaBruqxamECsr4tpTpts9meC8iOxGO48+B7XG92mlzAcdlPfxTQsKA+GLG\n" +
+                "yeTbBZ+ep/I15ohdK8/eLeDe+bhb1ZpW61ZONyyVc3XGBZLiWejKYnlk29vKdvwV\n" +
+                "KrknyLyxkTQLAc58p5sxQtDTM2q2WKYLGQvCKWYkCvki9pDwVZWmev0kaDnzw47H\n" +
+                "uxbkT2ECgYEA/19G7TJs/Aml36WlTiZlgQm/gTsl12f0E9hMecyjqI/0xgYwwMXp\n" +
+                "oOX+ivmVPBokN85/rgHpAglli4EneoOL1qNZ1EGOP6dTMsxuEcCsLxNYO5gnbU3k\n" +
+                "ryN4LSGOfrW1cZ5OuZBUxWlmA9WmfXZF6hdmLjEJ3CCpQyRyfAyJiqUCgYEA7hsA\n" +
+                "Gny4Qw/tGfQ23e33DiMz9a9zN717xJGmb8HM9XqGfIymP3Go7+TwYEfOGFphR6Ac\n" +
+                "yW++O0mOJrVA28UGnPqUIANT7A2bPU7MjW7xUMj6NyJMcZiJyu+w7wZV9r7LS226\n" +
+                "XPRqAWyMJfvAV59Hw0jlJJ0Aqs3mv6rJYh1Xl3kCgYAHpydM/HHfq7pY1XH6wZPR\n" +
+                "JiWjDc64gdkCrzy7ebJ93rKLLKxRWp0BwWK7b3dVccMcGQgigtQkx3tPjvNL7J1I\n" +
+                "NWT/w2cr6SvJHe8+gPOoBYBjaM/lqqvrw7haQeMvUOq7GO9rCDRCJkJ0Yva2U9EM\n" +
+                "jt71C2ssOZ5Y8MKtjQKiMQKBgQCepvcGrxvH85C0vnjgn3MCxIoWpnVLKsKRU8tm\n" +
+                "o+eBmcaKrt0HYSCD2DQiszWsHGy9YP5NaluC/ZvuRs+UoE+rwXt5aT4+B0LtMtgx\n" +
+                "VT8N6RxwKDZvaohF5DgszDfzVWX4OID49xK7KCyqEnky6TrT8HpeTw7mwJOEGrRc\n" +
+                "39hBYQKBgQDv4Abq+K6NmT6KXU7ImfIEIn/rlXzJiD+rJVTDLBfPgCWBbQ54Tn9C\n" +
+                "71peY6U5FbtwaWwR7BPpPUDKPOUE8IzVFg1eZnet4EpHLHEc1eDPbyvbveVsozWH\n" +
+                "VFkE5jcwfQJIcqFReq0/22e+zfbXphk4lAXhb0W8+2WDeRPWPFKRWw==\n" +
+                "-----END RSA PRIVATE KEY-----",
+            installationId: data.installation.id,
+            clientId: functions.config().gh.clientid,
+            clientSecret: functions.config().gh.clientsecret
+        }
+    })
+
+    const { token } = await appOctokit.auth({
+        type: "installation",
+    })
+
+    const commitData = await appOctokit.git.getCommit({
+        owner: data.repository.owner.login,
+        repo: data.repository.name,
+        commit_sha: data.commits[0].id
+    })
+
+    return response.status(200).json(commitData)
+    //     let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
+
+}
 // creates a JWT token'
 // async function createJWT(installation_id) {
 //     try {
@@ -16,92 +78,95 @@ const fs = require('fs');
 //
 // }
 //
-exports.push = async (request, response, next) => {
-    let data
-    if (typeof request.body != "object")
-        data = JSON.parse(request.body)
-    else data = request.body
-
-    let commits = data["commits"]
-
-    let appAuth, token
-
-    const auth = createAppAuth({
-        appId: functions.config().gh.appid,
-        privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
-            "MIIEpAIBAAKCAQEA7YWDF2v8zaJd32CoXV0ZHoFMFYllDxpXNyFlYb3dFN6pdEjD\n" +
-            "pChE8N9gV0kvSoLg32IwLGVR6o+6hqapHjEkpd9MnR4DWQv0n8QdhJbocZcYIorU\n" +
-            "nKyGXSZOLxHTfxhVuw9BiL+hrFz/ElIxS6d4/4ZnPxhoJkce9T6wsMh5yy3qVb2v\n" +
-            "pOsU6oPxpP9TtXQcbCBpLENe826H+WGx9572kNzj2hLB5ghmQLY1xK4CN7YUb+4I\n" +
-            "HZT6wzUdHZUXQa+SNpuxza2RAohDk1uS5wIs41a/xvSW9IGbj6GL98pfFEDk+eKV\n" +
-            "cbP5pE+1644XnwQPKPn5pyUtFVAoab+j3Nza/QIDAQABAoIBAFbprO9sH2RrjmgH\n" +
-            "qXQIdgGYlGupC+a738AXo05huD1DwMQBQD2YUqnFQy6NZBWi0IBNII2OQaxQDZPp\n" +
-            "9iZLGzrq+9DeQ6FY45l2nMqAoeu2uykgne36n2wEcUV+A2MVV4GMcpGEdbdpjBh7\n" +
-            "JPim/nqaBruqxamECsr4tpTpts9meC8iOxGO48+B7XG92mlzAcdlPfxTQsKA+GLG\n" +
-            "yeTbBZ+ep/I15ohdK8/eLeDe+bhb1ZpW61ZONyyVc3XGBZLiWejKYnlk29vKdvwV\n" +
-            "KrknyLyxkTQLAc58p5sxQtDTM2q2WKYLGQvCKWYkCvki9pDwVZWmev0kaDnzw47H\n" +
-            "uxbkT2ECgYEA/19G7TJs/Aml36WlTiZlgQm/gTsl12f0E9hMecyjqI/0xgYwwMXp\n" +
-            "oOX+ivmVPBokN85/rgHpAglli4EneoOL1qNZ1EGOP6dTMsxuEcCsLxNYO5gnbU3k\n" +
-            "ryN4LSGOfrW1cZ5OuZBUxWlmA9WmfXZF6hdmLjEJ3CCpQyRyfAyJiqUCgYEA7hsA\n" +
-            "Gny4Qw/tGfQ23e33DiMz9a9zN717xJGmb8HM9XqGfIymP3Go7+TwYEfOGFphR6Ac\n" +
-            "yW++O0mOJrVA28UGnPqUIANT7A2bPU7MjW7xUMj6NyJMcZiJyu+w7wZV9r7LS226\n" +
-            "XPRqAWyMJfvAV59Hw0jlJJ0Aqs3mv6rJYh1Xl3kCgYAHpydM/HHfq7pY1XH6wZPR\n" +
-            "JiWjDc64gdkCrzy7ebJ93rKLLKxRWp0BwWK7b3dVccMcGQgigtQkx3tPjvNL7J1I\n" +
-            "NWT/w2cr6SvJHe8+gPOoBYBjaM/lqqvrw7haQeMvUOq7GO9rCDRCJkJ0Yva2U9EM\n" +
-            "jt71C2ssOZ5Y8MKtjQKiMQKBgQCepvcGrxvH85C0vnjgn3MCxIoWpnVLKsKRU8tm\n" +
-            "o+eBmcaKrt0HYSCD2DQiszWsHGy9YP5NaluC/ZvuRs+UoE+rwXt5aT4+B0LtMtgx\n" +
-            "VT8N6RxwKDZvaohF5DgszDfzVWX4OID49xK7KCyqEnky6TrT8HpeTw7mwJOEGrRc\n" +
-            "39hBYQKBgQDv4Abq+K6NmT6KXU7ImfIEIn/rlXzJiD+rJVTDLBfPgCWBbQ54Tn9C\n" +
-            "71peY6U5FbtwaWwR7BPpPUDKPOUE8IzVFg1eZnet4EpHLHEc1eDPbyvbveVsozWH\n" +
-            "VFkE5jcwfQJIcqFReq0/22e+zfbXphk4lAXhb0W8+2WDeRPWPFKRWw==\n" +
-            "-----END RSA PRIVATE KEY-----",
-        installationId: data.installation.id,
-        clientId: functions.config().gh.clientid,
-        clientSecret: functions.config().gh.clientsecret
-    })
-
-    try {
-        // token = await createJWT(data.installation.id)
-        appAuth = await auth({type: "installation"})
-        token = appAuth.token
-    }
-    catch(error) {
-        console.log({"MainFunc": error})
-    }
-
-    if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
-    console.log(token)
-
-    // request object to pass into fetch api
-    let reqObj = {
-        method: "GET",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "accept": "application/vnd.github.v3+json"
-        }
-    }
-
-    let debugRes
-    let commitArr = []
-
-    let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
-    // let url = `https://api.github.com/repos/${commits[0].author.username}/${data.repository.name}/commits/${commits[0].id}`
-    let url = `https://api.github.com/repos/${data.repository.owner.name}/${data.repository.name}/commits/${commits[0].id}`
-    console.log(url)
-    fetch(url, reqObj)
-        .then((res) => {
-            debugRes = res
-            if (res.ok) {
-                return response.status(200).json({status: res.statusText, body: debugRes.body, json: res.json(), params: params,
-                payload: debugRes.payload, url: Object.keys(debugRes.body)})
-            }
-            else {
-                return response.status(201).json({message: res.statusText, params: params})
-            }
-        })
-        .catch((err) => {
-            return response.status(202).json({error: err, text: debugRes.statusText, params: params})
-        })
+// exports.push = async (request, response, next) => {
+//
+//
+//
+//     let data
+//     if (typeof request.body != "object")
+//         data = JSON.parse(request.body)
+//     else data = request.body
+//
+//     let commits = data["commits"]
+//
+//     let appAuth, token
+//
+//     const auth = createAppAuth({
+//         appId: functions.config().gh.appid,
+//         privateKey: "-----BEGIN RSA PRIVATE KEY-----\n" +
+//             "MIIEpAIBAAKCAQEA7YWDF2v8zaJd32CoXV0ZHoFMFYllDxpXNyFlYb3dFN6pdEjD\n" +
+//             "pChE8N9gV0kvSoLg32IwLGVR6o+6hqapHjEkpd9MnR4DWQv0n8QdhJbocZcYIorU\n" +
+//             "nKyGXSZOLxHTfxhVuw9BiL+hrFz/ElIxS6d4/4ZnPxhoJkce9T6wsMh5yy3qVb2v\n" +
+//             "pOsU6oPxpP9TtXQcbCBpLENe826H+WGx9572kNzj2hLB5ghmQLY1xK4CN7YUb+4I\n" +
+//             "HZT6wzUdHZUXQa+SNpuxza2RAohDk1uS5wIs41a/xvSW9IGbj6GL98pfFEDk+eKV\n" +
+//             "cbP5pE+1644XnwQPKPn5pyUtFVAoab+j3Nza/QIDAQABAoIBAFbprO9sH2RrjmgH\n" +
+//             "qXQIdgGYlGupC+a738AXo05huD1DwMQBQD2YUqnFQy6NZBWi0IBNII2OQaxQDZPp\n" +
+//             "9iZLGzrq+9DeQ6FY45l2nMqAoeu2uykgne36n2wEcUV+A2MVV4GMcpGEdbdpjBh7\n" +
+//             "JPim/nqaBruqxamECsr4tpTpts9meC8iOxGO48+B7XG92mlzAcdlPfxTQsKA+GLG\n" +
+//             "yeTbBZ+ep/I15ohdK8/eLeDe+bhb1ZpW61ZONyyVc3XGBZLiWejKYnlk29vKdvwV\n" +
+//             "KrknyLyxkTQLAc58p5sxQtDTM2q2WKYLGQvCKWYkCvki9pDwVZWmev0kaDnzw47H\n" +
+//             "uxbkT2ECgYEA/19G7TJs/Aml36WlTiZlgQm/gTsl12f0E9hMecyjqI/0xgYwwMXp\n" +
+//             "oOX+ivmVPBokN85/rgHpAglli4EneoOL1qNZ1EGOP6dTMsxuEcCsLxNYO5gnbU3k\n" +
+//             "ryN4LSGOfrW1cZ5OuZBUxWlmA9WmfXZF6hdmLjEJ3CCpQyRyfAyJiqUCgYEA7hsA\n" +
+//             "Gny4Qw/tGfQ23e33DiMz9a9zN717xJGmb8HM9XqGfIymP3Go7+TwYEfOGFphR6Ac\n" +
+//             "yW++O0mOJrVA28UGnPqUIANT7A2bPU7MjW7xUMj6NyJMcZiJyu+w7wZV9r7LS226\n" +
+//             "XPRqAWyMJfvAV59Hw0jlJJ0Aqs3mv6rJYh1Xl3kCgYAHpydM/HHfq7pY1XH6wZPR\n" +
+//             "JiWjDc64gdkCrzy7ebJ93rKLLKxRWp0BwWK7b3dVccMcGQgigtQkx3tPjvNL7J1I\n" +
+//             "NWT/w2cr6SvJHe8+gPOoBYBjaM/lqqvrw7haQeMvUOq7GO9rCDRCJkJ0Yva2U9EM\n" +
+//             "jt71C2ssOZ5Y8MKtjQKiMQKBgQCepvcGrxvH85C0vnjgn3MCxIoWpnVLKsKRU8tm\n" +
+//             "o+eBmcaKrt0HYSCD2DQiszWsHGy9YP5NaluC/ZvuRs+UoE+rwXt5aT4+B0LtMtgx\n" +
+//             "VT8N6RxwKDZvaohF5DgszDfzVWX4OID49xK7KCyqEnky6TrT8HpeTw7mwJOEGrRc\n" +
+//             "39hBYQKBgQDv4Abq+K6NmT6KXU7ImfIEIn/rlXzJiD+rJVTDLBfPgCWBbQ54Tn9C\n" +
+//             "71peY6U5FbtwaWwR7BPpPUDKPOUE8IzVFg1eZnet4EpHLHEc1eDPbyvbveVsozWH\n" +
+//             "VFkE5jcwfQJIcqFReq0/22e+zfbXphk4lAXhb0W8+2WDeRPWPFKRWw==\n" +
+//             "-----END RSA PRIVATE KEY-----",
+//         installationId: data.installation.id,
+//         clientId: functions.config().gh.clientid,
+//         clientSecret: functions.config().gh.clientsecret
+//     })
+//
+//     try {
+//         // token = await createJWT(data.installation.id)
+//         appAuth = await auth({type: "installation"})
+//         token = appAuth.token
+//     }
+//     catch(error) {
+//         console.log({"MainFunc": error})
+//     }
+//
+//     if (token === "undefined") return response.status(500).json({error: "The token app token is invalid"})
+//     console.log(token)
+//
+//     // request object to pass into fetch api
+//     let reqObj = {
+//         method: "GET",
+//         headers: {
+//             "Authorization": "Bearer " + token,
+//             "accept": "application/vnd.github.v3+json"
+//         }
+//     }
+//
+//     let debugRes
+//     let commitArr = []
+//
+//     let params = {owner: data.repository.owner.name, repoName: data.repository.name, id: commits[0].id}
+//     // let url = `https://api.github.com/repos/${commits[0].author.username}/${data.repository.name}/commits/${commits[0].id}`
+//     let url = `https://api.github.com/repos/${data.repository.owner.name}/${data.repository.name}/commits/${commits[0].id}`
+//     console.log(url)
+//     fetch(url, reqObj)
+//         .then((res) => {
+//             debugRes = res
+//             if (res.ok) {
+//                 return response.status(200).json({status: res.statusText, body: debugRes.body, json: res.json(), params: params,
+//                 payload: debugRes.payload, url: Object.keys(debugRes.body)})
+//             }
+//             else {
+//                 return response.status(201).json({message: res.statusText, params: params})
+//             }
+//         })
+//         .catch((err) => {
+//             return response.status(202).json({error: err, text: debugRes.statusText, params: params})
+//         })
 
     //
     //
@@ -153,7 +218,7 @@ exports.push = async (request, response, next) => {
     // request.body = commitArr
     // return response.status(200).json({newData: commitArr})
     // return next()
-}
+// }
 
 // this function is quite large and doesn't follow the single functionality rule but it is purposefully so in order to
 // reduce compute time
