@@ -89,6 +89,7 @@
   padding: 0 3rem;
   color: #16223b;
   text-align: center;
+  cursor: pointer;
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: 13rem 1.5rem 5rem 3.75rem 1rem;

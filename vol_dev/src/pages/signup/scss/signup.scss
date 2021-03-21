@@ -4,16 +4,12 @@
 
 @import "./nav";
 @import "./mainpage";
+@import "./orgsignup";
 
 .signup {
 	height: 100vh;
 	width: 100vw;
 	position: relative;
-	// background: linear-gradient(
-	// 	341.19deg,
-	// 	rgba(252, 163, 17, 0.47) 7.43%,
-	// 	rgba(255, 233, 202, 0.78) 81.27%
-	// );
 	background-image: url("../img/bg.svg");
 	background-repeat: no-repeat;
 	background-size: cover;
