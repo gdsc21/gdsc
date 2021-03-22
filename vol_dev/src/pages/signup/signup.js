@@ -12,9 +12,9 @@ const SignUp = () => {
 	return (
 		<div className="signup">
 			<Header />
-			{selection == "main-page" ? (
+			{selection === "main-page" ? (
 				<MainPage setSelection={setSelection} />
-			) : selection == "org" ? (
+			) : selection === "org" ? (
 				<OrgSignUp setSelection={setSelection} />
 			) : (
 				""

@@ -1,10 +1,52 @@
 import "../scss/signup.scss";
 import keyboard from "../img/dev_keyboard.svg";
 import charity from "../img/charity_icon.svg";
+import {fs} from "../../../firebase";
 
 const MainPage = ({ setSelection }) => {
 	const setDev = () => {
-		console.log("waddup im a developer");
+		let provider = new fs.auth.GithubAuthProvider();
+		let gHtoken, token
+		fs
+			.auth()
+			.signInWithPopup(provider)
+			.then((result) => {
+				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
+				gHtoken = result.credential.accessToken;
+				return result.user.getIdToken();
+			})
+			.then((idToken) => {
+				token = idToken
+				if (token === "undefined") {
+					// TODO: Handle what happens if the token is not returned/there was an error
+				}
+			})
+			.catch((error) => {
+				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError
+				// https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signinwithpopup
+				switch (error.code) {
+					case "auth/account-exists-with-different-credential":
+						// TODO: this error would mean that the users github account uses an email that a non-profit uses
+						// TODO: so this should probably give a message saying contact us or something like that for now
+						break;
+					case "auth/popup-blocked":
+						// TODO: if the popup is block tell them to allow it/pause adblock to sign in
+						break;
+					case "auth/popup-closed-by-user":
+						// TODO: if the popup is closed and signin couldn't be completed then redirect to the sign up page
+						break;
+					default:
+						// TODO: Unkown error occured alert + redirect to signup/try again
+				}
+			});
+
+		let user = {
+			token: token,
+			loggedIn: true,
+			isDev: true,
+		};
+
+		localStorage.setItem("user", user);
 	};
 
 	const setNonprofit = () => {
