@@ -12,7 +12,7 @@ const OrgSignUp = () => {
 	const [Country, setCountry] = useState("")
 
 	const submitForm = (e) => {
-		e.preventDefault();
+		e.preventDefault()
 
 		let token
 		axios.post("https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/np-signup", {
@@ -28,14 +28,14 @@ const OrgSignUp = () => {
 				token = response.data.token
 				console.log(response.data)
 				console.log(token)
-				if (token === "undefined") {}//TODO: Account created but Authentication failed}
+				if (token === "undefined") {}//TODO: Account created but Authentication failed
 
 				// Store it in local storage
-				localStorage.setItem("user", {
+				localStorage.setItem("user", JSON.stringify({
 					token: token,
 					loggedIn: true,
 					isDev: false,
-				});
+				}));
 
 				//TODO: Successfully created an account and signed in -- wut now?
 			})

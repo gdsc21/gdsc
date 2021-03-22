@@ -11,13 +11,15 @@ const devSignup = () => {
         e.preventDefault()
 
         const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/dev-create-profile"
-        const config = {
+
+        let { token } = JSON.parse(localStorage.getItem("user"))
+
+        let config = {
             headers: {
-                // TODO: pass the token to this component
                 Authorization: `Bearer ${token}`
             }
         }
-        const data = {
+        let data = {
             devWebsite: Website,
             devLinkedIn: LinkedIn,
             devGitHub: GitHub

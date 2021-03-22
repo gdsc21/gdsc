@@ -3,7 +3,7 @@ import { Home, SignUp, SignIn, Project, Explore, NonProfit, Dev } from "./pages"
 import { Switch, Route, Redirect } from "react-router-dom";
 
 const App = () => {
-	const [user, setUser] = useState(localStorage.getItem("user"));
+	const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
 	return (
 		<Switch>

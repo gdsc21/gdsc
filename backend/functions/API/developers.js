@@ -43,14 +43,21 @@ exports.devCreateProfile = (request, response) => {
 }
 
 exports.devGetProfile = (request, response) => {
-    let user
+    let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
     else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let uid
+    if ("devUid" in Object.keys(data)) uid = data.devUid
+    else uid = user.uid
 
     fs
         .collection("dev_accounts")
-        .doc(user.uid)
+        .doc(uid)
         .get()
         .then((devDoc) => {
             if (devDoc.exists) return response.status(200).json(devDoc.data())

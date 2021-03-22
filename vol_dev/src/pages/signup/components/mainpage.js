@@ -23,11 +23,11 @@ const MainPage = ({ setSelection }) => {
 					// TODO: Handle what happens if the token is not returned/there was an error
 				}
 
-				localStorage.setItem("user", {
+				localStorage.setItem("user", JSON.stringify({
 					token: token,
 					loggedIn: true,
 					isDev: true
-				});
+				}));
 
 				// TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
 

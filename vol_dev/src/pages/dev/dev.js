@@ -2,11 +2,41 @@ import Sidebar from "./Components/sidebar"
 import userDetails from './Components/data/userDetails'
 import ProjectPanel from "./Components/projectPanel"
 import './styles/dev.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios';
 
 const Dev = () => {
 	const user = userDetails
 	const [hamburger, setHamburger] = useState(false);
+	const [devDisplayName, setdevDisplayName] = useState("");
+	const [devProfileImgUrl, setdevProfileImgUrl] = useState("");
+	const [devLinks, setdevLinks] = useState("");
+	const [devGamification, setdevGamification] = useState("");
+	const [devProjects, setdevProjects] = useState("");
+	const [devCommits, setdevCommits] = useState("");
+
+
+	// TODO: Save the profile info to the app state
+	useEffect(() => {
+		const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile"
+		let { token } = JSON.parse(localStorage.getItem("user"))
+		let config = { headers: { Authorization: `Bearer ${token}`} }
+		let data = {}
+
+		axios
+			.post(url, data, config)
+			.then((response) => {
+				data = response.data
+				setdevDisplayName(data.devDisplayName)
+				setdevProfileImgUrl(data.devProfileImgUrl)
+				setdevProjects(data.devProjects)
+				setdevLinks(data.devLinks)
+				setdevGamification(data.gamification)
+			})
+			.catch((err) => {
+
+			})
+	}, [])
 
 	const hamburgerClick = () => {
 		setHamburger(!hamburger);
