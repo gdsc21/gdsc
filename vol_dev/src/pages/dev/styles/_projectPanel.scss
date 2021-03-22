@@ -1,0 +1,141 @@
+.panel-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 22em;
+    background: linear-gradient(180deg, #16223B 0%, rgba(22, 34, 59, 0.9) 100%);;
+    color: $lightgrey;
+    .devNav {
+        display: flex;
+        margin-left: auto;
+        justify-content: space-around;
+        min-width: 30rem;
+        max-width: 50rem;
+        min-height: 4rem;
+        align-items: center;
+        a {
+            text-decoration: none;
+            text-transform: uppercase;
+            color: $lightgrey;
+            font-weight: 500;
+        }
+    }
+    .curProject, .interestProject {
+        margin-top: 2.5em;
+        display: flex;
+        flex-direction: column;
+        margin-left: 2em;
+        .head {
+            font-size: 1.5em;
+            line-height: 2em;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+        .curProjectDisp, .intProjectDisp {
+            display: flex;
+            flex-direction: row;
+            margin-top: 0;
+            flex-wrap: wrap;
+            .devproject {
+                background: rgba(255, 255, 255, 0.4);
+                border-radius: 1em;
+                margin: 1em;
+                margin-left: 0;
+                width: 15em;
+                height: 20em;
+                display: flex;
+                flex-direction: column;
+                padding: 2em;
+                h1, h4 {
+                    color: $yellow;
+                }
+                h1 {
+                    text-align: center;
+                    font-size: 1.5rem;
+                    padding-bottom: 1em;
+                }
+                h4 {
+                    text-transform: uppercase;
+                }
+                div {
+                    display: flex;
+                    padding: 0.375em;
+                    p {
+                        padding-left: 1em;
+                    }
+                }
+                .description-div {
+                    display: flex;
+                    flex-direction: column;
+                    p {
+                        padding: 0;
+                    }
+                }
+                .progress {
+                    display: block;
+                    progress {
+                        width: 12em;
+                        height: 1em;
+                        margin-right: 1em;
+                        -webkit-appearance: none;
+                        &::-webkit-progress-bar {
+                            background: #FFE9CA;
+                            color: $darkBlue;
+                            border-radius: 4em;
+                        }
+                        &::-webkit-progress-value {
+                            background-color: $yellow;
+                            border-radius: 4em 0 0 4em;
+                        }
+                    }
+                }
+                a {
+                    align-self: center;
+                    position: relative;
+                    margin-top: 2em;
+                    padding: 0.5em 2.5em 0.5em 2.5em;
+                    border-radius: 1em;
+                    vertical-align: middle;
+                    text-decoration: none;
+                    color: $lightgrey;
+                    background-color: $yellow;
+                }
+            }
+        }
+    }
+}
+.ham-header {
+    display: flex;
+    button {
+        display: none;
+        background: none;
+        color: $lightgrey;
+        width: 5em;
+        height: 5em;
+        border: none;
+        cursor: pointer;
+        &:focus {
+            outline: none;
+        }
+    }
+    @media screen and (max-width: 1023px) {
+        background: $darkBlue;
+        button {
+            display: inline-block;
+        }
+        .devNav {
+            margin-left: none;
+            max-width: none;
+            width: 100%;
+            justify-content: space-evenly;
+        }
+        .curProjectDisp{
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            .devproject {
+                background-color: red;
+            }
+        }
+    }
+}
