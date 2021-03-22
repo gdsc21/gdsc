@@ -28,6 +28,15 @@ const OrgSignUp = () => {
 				token = response.data.token
 				console.log(response.data)
 				console.log(token)
+				if (token === "undefined") {}//TODO: Account created but Authentication failed}
+
+				// Store it in local storage
+				localStorage.setItem("user", {
+					token: token,
+					loggedIn: true,
+					isDev: false,
+				});
+
 				//TODO: Successfully created an account and signed in -- wut now?
 			})
 			.catch((err) => {
@@ -61,16 +70,6 @@ const OrgSignUp = () => {
 					console.log(err.config)
 				}
 			})
-
-		if (token === "undefined") {}//TODO: Account created but Authentication failed --- wut now?}
-		let user = {
-			token: token,
-			loggedIn: true,
-			isDev: false,
-		};
-
-		// Store it in local storage
-		localStorage.setItem("user", user);
 	};
 
 	return (
