@@ -18,8 +18,6 @@ exports.devCreateProfile = (request, response) => {
         .collection("dev_accounts")
         .doc(user.uid)
         .set({
-            devName: data.devName,
-            devEmail: user.email,
             devDisplayName: user.displayName, // display name is username while name is the developers actual name
             devProfileImgUrl: user.photoURL,
             devLinks: {
@@ -68,7 +66,6 @@ exports.devUpdateProfile = (request, response, next) => {
      * Updates a developer profile (name, username, email, GitHub, website, LinkedIn).
      * NOT TO BE USED FOR GAMIFICATION/COMMITS/PROJECTS IF FIELD IS NOT BEING UPDATED DO NOT SEND IT AS NULL.
      * DON'T INCLUDE IT IN THE DICTIONARY/OBJECT
-     * e.g. newData = {devEmail: "some@gmail.com"} --- this only updates the email and nothing else
      */
     let user, data
     if (typeof request.user != "object")
@@ -80,7 +77,6 @@ exports.devUpdateProfile = (request, response, next) => {
 
     // newUserData populated with email and display name if available
     let newUserData = {}
-    "devEmail" in data ? newUserData.email = data.devEmail : ""
     "devDisplayName" in data ? newUserData.displayName = data.devDisplayName : ""
 
     // updates the admin database if email or display name is in newUserData
@@ -99,9 +95,7 @@ exports.devUpdateProfile = (request, response, next) => {
     let devDocRef = fs.collection("dev_accounts").doc(user.uid)
 
     // creates updates for each data point that is passed in the request body -- if not include no update is created
-    "devEmail" in data ? batch.update(devDocRef, {"devEmail": data.devEmail}) : ""
     "devDisplayName" in data ? batch.update(devDocRef, {"devDisplayName": data.devDisplayName}) : ""
-    "devName" in data ? batch.update(devDocRef, {"devName": data.devName}) : ""
     if ("devLinks" in data) {
         "devGitHub" in data.devLinks ? batch.update(devDocRef, {"devLinks.devGitHub": data.devLinks.devGitHub}) : ""
         "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""

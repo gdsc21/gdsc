@@ -13,6 +13,8 @@ const MainPage = ({ setSelection }) => {
 			.then((result) => {
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 				gHtoken = result.credential.accessToken;
+
+				console.log(result.user)
 				return result.user.getIdToken();
 			})
 			.then((idToken) => {
@@ -20,6 +22,15 @@ const MainPage = ({ setSelection }) => {
 				if (token === "undefined") {
 					// TODO: Handle what happens if the token is not returned/there was an error
 				}
+
+				localStorage.setItem("user", {
+					token: token,
+					loggedIn: true,
+					isDev: true
+				});
+
+				// TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
+
 			})
 			.catch((error) => {
 				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError
@@ -40,13 +51,7 @@ const MainPage = ({ setSelection }) => {
 				}
 			});
 
-		let user = {
-			token: token,
-			loggedIn: true,
-			isDev: true,
-		};
 
-		localStorage.setItem("user", user);
 	};
 
 	const setNonprofit = () => {
