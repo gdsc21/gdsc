@@ -11,7 +11,7 @@ admin.initializeApp();
 // }
 firebase.initializeApp(config);
 
-const fs = admin.firestore();
+const fs = admin.firestore().settings({ ignoreUndefinedProperties: true });
 const FieldValue = admin.firestore.FieldValue
 
 module.exports = { admin, fs, firebase, FieldValue };

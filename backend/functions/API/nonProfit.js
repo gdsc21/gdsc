@@ -337,6 +337,28 @@ exports.npDeleteProject = (request, response, next) => {
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+}
 
+exports.npUpdateProject = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("np_accounts")
+        .doc(user.uid)
+        .update({
+            [`npProjects.${data.projectId}.description`]: data.title,
+            [`npProjects.${data.projectId}.description`]: data.description
+        })
+        .then(() => {
+            return response.status(200).json({message: "Successfully updated"})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }

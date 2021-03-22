@@ -10,7 +10,8 @@ const {
     npUpdateAccount,
     npUpdateProfileImg,
     npAddProject,
-    npDeleteProject
+    npDeleteProject,
+    npUpdateProject
 } = require("./API/nonProfit")
 
 const {
@@ -23,7 +24,9 @@ const {
     projLoad,
     projUpdateNpInfo,
     projAddDev,
-    projRemoveDev
+    projRemoveDev,
+    projGetAll,
+    projUpdate
 } = require("./API/projects")
 
 const {
@@ -68,5 +71,10 @@ userApp.post("add-dev-to-project", auth, projAddDev, devAddProject)
 
 // removes a developer from a project -- only available to non-profits -- updates project/developer docs
 userApp.post("remove-dev-from-project", auth, projRemoveDev, devDeleteProject)
+
+// returns all the projects that have been created
+userApp.get("get-all-projects", auth, projGetAll)
+
+userApp.post("update-project", auth, projUpdate, npUpdateProject)
 
 module.exports = userApp

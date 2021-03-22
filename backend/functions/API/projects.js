@@ -32,8 +32,8 @@ exports.projCreate = (request, response, next) => {
                 npUid: user.uid
             }
 
-            fs
-                .collection("projects")
+            let projectColRef = fs.collection("projects")
+            projectColRef
                 .add({
                     title: data.title,
                     description: data.description,
@@ -45,12 +45,40 @@ exports.projCreate = (request, response, next) => {
                     // must reassign request.body since request.body.projectId does not work to create a new key in body
                     data.projectId = projectDoc.id
                     request.body = data
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+
+            // adds the newly created project info to the all projects document
+            projectColRef
+                .doc("allProjects")
+                .set({
+                    [data.projectId]: {
+                        title: data.title,
+                        description: data.description
+                    }
+                }, { merge: true })
+                .then(() => {
                     return next()
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
                 })
 
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
+
+exports.projGetAll = (request, response) => {
+    fs
+        .collection("projects")
+        .doc("allProjects")
+        .then((doc) => {
+            let data = doc.data()
+            return response.status(200).json(data)
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -70,16 +98,29 @@ exports.projDelete = (request, response) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-    fs
-        .collection("projects")
+    let projectColRef = fs.collection("projects")
+
+    // deletes the project document
+    projectColRef
         .doc(data.projectId)
         .delete()
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+
+    // deletes the project info from the all projects document
+    projectColRef
+        .doc("allProjects")
+        .update({
+            [data.projectId]: FieldValue.delete()
+        })
         .then(() => {
             return response.status(200).json({message: "Project deleted"})
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+
 }
 
 exports.projLoad = (request, response) => {
@@ -151,8 +192,47 @@ exports.projUpdateNpInfo = (request, response) => {
             console.log(err.code)
             return response.status(500).json({error: err.message})
         })
+}
 
+exports.projUpdate = (request, response, next) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    let projectRef = fs.collection("projects").doc(data.projectId)
+
+    projectRef
+        .get()
+        .then((doc) => {
+            let docData = doc.data()
+            if (docData.npInfo.npUid != user.uid) return response.status(404).json({error: "Unauthorized"})
+            else {
+                // updates the project document
+                projectRef
+                    .update({
+                        title: data.title,
+                        description: data.description
+                    })
+                // updates the allProject document
+                fs
+                    .collection("projects")
+                    .doc("allProjects")
+                    .update({
+                        [`${data.projectId}.title`]: data.title,
+                        [`${data.projectId}.description`]: data.description
+                    })
+            }
+        })
+        .then(() => {
+            return next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 exports.projUpdateDevInfo = (request, response) => {
