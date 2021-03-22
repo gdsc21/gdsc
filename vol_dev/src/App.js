@@ -8,7 +8,8 @@ const App = () => {
 	return (
 		<Switch>
 			<Route path="/dashboard">
-				{
+				<Dev />
+				{/* {
 					// if the user is logged in and is a developer,
 					// then take them to the developer dashboard
 					user && user.loggedIn && user.isDev && <Dev />
@@ -21,7 +22,7 @@ const App = () => {
 				{
 					// if the user is not logged in, redirect them to the homepage
 					(!user || !user.loggedIn) && <Redirect to="/" />
-				}
+				} */}
 			</Route>
 			<Route path="/signup">
 				{

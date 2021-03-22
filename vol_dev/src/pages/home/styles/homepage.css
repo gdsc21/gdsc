@@ -87,7 +87,7 @@ a {
 }
 
 .header .nav .signup-btn {
-  color: white;
+  color: #ffffff;
   background: #16223b;
 }
 
@@ -145,7 +145,7 @@ a {
   border: 2px solid #16223b;
   padding: 0.3rem 0.8rem;
   border-radius: 2rem;
-  color: white;
+  color: #ffffff;
   background: #16223b;
   font-weight: 500;
 }
@@ -222,7 +222,7 @@ a {
   line-height: 1.5rem;
   text-align: center;
   text-transform: uppercase;
-  color: white;
+  color: #ffffff;
   max-width: 15rem;
   padding-top: 1rem;
 }
@@ -326,14 +326,14 @@ a {
     z-index: 3;
   }
   .header .navlinks .btn {
-    border: 2px solid white;
-    color: white;
+    border: 2px solid #ffffff;
+    color: #ffffff;
     padding: 0.3rem 0.8rem;
     border-radius: 2rem;
   }
   .header .navlinks .signup-btn {
     color: #16223b;
-    background: white;
+    background: #ffffff;
   }
   .header .navlinks .link {
     opacity: 0;
@@ -372,7 +372,7 @@ a {
   }
   .header .open .line {
     z-index: 4;
-    background: white;
+    background: #ffffff;
   }
   .header .open .line:nth-child(1) {
     -webkit-transform: rotate(45deg) translateY(5px);
@@ -487,7 +487,7 @@ a {
 .connect button {
   background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
   border-radius: 2rem;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 0.5rem 1rem;
   -ms-grid-column-align: center;
@@ -508,7 +508,7 @@ a {
 
 .footer {
   background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
-  color: white;
+  color: #ffffff;
   font-size: 0.875rem;
   font-weight: 300;
 }

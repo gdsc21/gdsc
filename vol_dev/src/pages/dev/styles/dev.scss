@@ -1,63 +1,71 @@
-@import './variables';
-@import './navbar';
-@import './projectPanel';
+// import global styles
+@import "../../styles/global.scss";
 
+// import different pages
+@import "./navbar";
+@import "./projectPanel";
 
 * {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
+
 .dev {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    @media screen and (max-width: 1023px) {
-        .sidebar{
-            display: none;
-            height: 100%;
-        }
-        .s-open {
-            display: flex;
-            position: fixed;
-        }
-        .panel-container {
-            margin-left: 0;
-        }
-        .p-open {
-            margin-left: 22em;
-        }
-        .ham-header {
-            width: 100vw;
-        }
-        .h-open {
-            display: none;
-        }
-        .c-open {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .curProject, .interestProject{
-            align-items: center;
-            .curProjectDisp, .intProjectDisp {
-                justify-content: center;
-            }
-        }
-    }
-    @media only screen and (max-width: 500px) {
-        .sidebar{
-            display: none;
-            height: 100%;
-            width: 100%;
-        }
-        .s-open {
-            display: flex;
-        }
-        .p-open {
-            display: none;
-        }
-        .ham-header {
-            width: 100%;
-        }
-    }
+	background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
+
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+
+	@media screen and (max-width: 1023px) {
+		.sidebar {
+			display: none;
+			height: 100%;
+		}
+
+		.s-open {
+			display: flex;
+			position: fixed;
+		}
+
+		.panel-container {
+			margin-left: 0;
+		}
+
+		.p-open {
+			margin-left: 22em;
+		}
+
+		.ham-header {
+			width: 100vw;
+		}
+
+		.h-open {
+			display: none;
+		}
+
+		.c-open {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	@media only screen and (max-width: 500px) {
+		.sidebar {
+			display: none;
+			height: 100%;
+			width: 100%;
+		}
+		.s-open {
+			display: flex;
+		}
+		.p-open {
+			display: none;
+		}
+		.ham-header {
+			width: 100%;
+		}
+	}
 }

@@ -1,3 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 .sidebar {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -11,8 +20,9 @@
       -ms-flex-align: stretch;
           align-items: stretch;
   height: 100%;
-  background-color: #141B28;
+  background-color: #141b28;
   color: #eae8fd;
+  width: 25em;
 }
 
 .sidebar .ham-close {
@@ -35,6 +45,12 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   padding: 3em;
 }
 
@@ -58,10 +74,22 @@
 .sidebar .profile .user a {
   -ms-flex-item-align: end;
       align-self: flex-end;
+  color: #ffffff;
+  font-size: 0.75rem;
+}
+
+.sidebar .profile .user h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.sidebar .profile .user h3 {
+  font-size: 1rem;
+  font-weight: 300;
 }
 
 .sidebar .achievements {
-  background-color: #F0A63E;
+  background-color: #f0a63e;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -70,11 +98,13 @@
       -ms-flex-direction: column;
           flex-direction: column;
   height: 65%;
-  color: #141B28;
+  color: #141b28;
   padding: 5%;
 }
 
-.sidebar .achievements .xp, .sidebar .achievements .badges, .sidebar .achievements .starproject {
+.sidebar .achievements .xp,
+.sidebar .achievements .badges,
+.sidebar .achievements .starproject {
   margin-bottom: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -83,86 +113,112 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.47);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   padding: 1rem;
 }
 
-.sidebar .achievements .xp h3, .sidebar .achievements .badges h3, .sidebar .achievements .starproject h3 {
+.sidebar .achievements .xp h3,
+.sidebar .achievements .badges h3,
+.sidebar .achievements .starproject h3 {
   color: #fca311;
   padding-bottom: 0.5rem;
 }
 
-.sidebar .achievements .xp h5, .sidebar .achievements .badges h5, .sidebar .achievements .starproject h5 {
-  color: #141B28;
+.sidebar .achievements .xp h5,
+.sidebar .achievements .badges h5,
+.sidebar .achievements .starproject h5 {
+  color: #141b28;
   font-size: 1.3em;
   font-weight: 500;
   padding-bottom: 0.5em;
 }
 
-.sidebar .achievements .xp .user-progress, .sidebar .achievements .badges .user-progress, .sidebar .achievements .starproject .user-progress {
+.sidebar .achievements .xp .user-progress,
+.sidebar .achievements .badges .user-progress,
+.sidebar .achievements .starproject .user-progress {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.sidebar .achievements .xp .user-progress h5, .sidebar .achievements .badges .user-progress h5, .sidebar .achievements .starproject .user-progress h5 {
+.sidebar .achievements .xp .user-progress h5,
+.sidebar .achievements .badges .user-progress h5,
+.sidebar .achievements .starproject .user-progress h5 {
   font-weight: 500;
   font-size: 1em;
 }
 
-.sidebar .achievements .xp p, .sidebar .achievements .badges p, .sidebar .achievements .starproject p {
+.sidebar .achievements .xp p,
+.sidebar .achievements .badges p,
+.sidebar .achievements .starproject p {
   text-transform: uppercase;
   font-size: 0.75em;
   font-weight: bold;
   color: rgba(22, 34, 59, 0.6);
 }
 
-.sidebar .achievements .xp progress, .sidebar .achievements .badges progress, .sidebar .achievements .starproject progress {
+.sidebar .achievements .xp progress,
+.sidebar .achievements .badges progress,
+.sidebar .achievements .starproject progress {
   width: 12em;
   height: 1em;
   margin-right: 1em;
   -webkit-appearance: none;
 }
 
-.sidebar .achievements .xp progress::-webkit-progress-bar, .sidebar .achievements .badges progress::-webkit-progress-bar, .sidebar .achievements .starproject progress::-webkit-progress-bar {
-  background: #FFE9CA;
-  color: #141B28;
+.sidebar .achievements .xp progress::-webkit-progress-bar,
+.sidebar .achievements .badges progress::-webkit-progress-bar,
+.sidebar .achievements .starproject progress::-webkit-progress-bar {
+  background: #ffe9ca;
+  color: #141b28;
   border-radius: 4em;
 }
 
-.sidebar .achievements .xp progress::-webkit-progress-value, .sidebar .achievements .badges progress::-webkit-progress-value, .sidebar .achievements .starproject progress::-webkit-progress-value {
-  background-color: #141B28;
+.sidebar .achievements .xp progress::-webkit-progress-value,
+.sidebar .achievements .badges progress::-webkit-progress-value,
+.sidebar .achievements .starproject progress::-webkit-progress-value {
+  background-color: #141b28;
   border-radius: 4em 0 0 4em;
 }
 
-.sidebar .achievements .xp .proj, .sidebar .achievements .badges .proj, .sidebar .achievements .starproject .proj {
+.sidebar .achievements .xp .proj,
+.sidebar .achievements .badges .proj,
+.sidebar .achievements .starproject .proj {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.sidebar .achievements .xp .proj h4, .sidebar .achievements .badges .proj h4, .sidebar .achievements .starproject .proj h4 {
+.sidebar .achievements .xp .proj h4,
+.sidebar .achievements .badges .proj h4,
+.sidebar .achievements .starproject .proj h4 {
   font-size: 1.3em;
 }
 
-.sidebar .achievements .xp .proj h5, .sidebar .achievements .badges .proj h5, .sidebar .achievements .starproject .proj h5 {
+.sidebar .achievements .xp .proj h5,
+.sidebar .achievements .badges .proj h5,
+.sidebar .achievements .starproject .proj h5 {
   padding-top: 0.25em;
   font-size: 1em;
   font-weight: normal;
   text-transform: uppercase;
 }
 
-.sidebar .achievements .xp .proj .proj-icon, .sidebar .achievements .badges .proj .proj-icon, .sidebar .achievements .starproject .proj .proj-icon {
+.sidebar .achievements .xp .proj .proj-icon,
+.sidebar .achievements .badges .proj .proj-icon,
+.sidebar .achievements .starproject .proj .proj-icon {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
 }
 
-.sidebar .achievements .xp .proj .proj-icon a, .sidebar .achievements .badges .proj .proj-icon a, .sidebar .achievements .starproject .proj .proj-icon a {
+.sidebar .achievements .xp .proj .proj-icon a,
+.sidebar .achievements .badges .proj .proj-icon a,
+.sidebar .achievements .starproject .proj .proj-icon a {
   margin-left: 0.25em;
   padding: 0.25em;
-  color: #141B28;
+  color: #141b28;
   background-color: #fca311;
   border-radius: 50%;
 }
@@ -185,16 +241,13 @@
 
 .sidebar .sign-out a {
   background-color: #eae8fd;
-  color: #141B28;
+  color: #141b28;
   padding: 0.5em 2em 0.5em 2em;
   border-radius: 1rem;
   text-decoration: none;
 }
 
 .panel-container {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -202,9 +255,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-left: 22em;
-  background: -webkit-gradient(linear, left top, left bottom, from(#16223B), to(rgba(22, 34, 59, 0.9)));
-  background: linear-gradient(180deg, #16223B 0%, rgba(22, 34, 59, 0.9) 100%);
   color: #eae8fd;
 }
 
@@ -230,8 +280,8 @@
   font-weight: 500;
 }
 
-.panel-container .curProject, .panel-container .interestProject {
-  margin-top: 2.5em;
+.panel-container .curProject,
+.panel-container .interestProject {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -239,39 +289,27 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-left: 2em;
+  margin-left: 30%;
 }
 
-.panel-container .curProject .head, .panel-container .interestProject .head {
+.panel-container .curProject .head,
+.panel-container .interestProject .head {
   font-size: 1.5em;
   line-height: 2em;
   text-transform: uppercase;
-  margin-bottom: 0;
 }
 
-.panel-container .curProject .curProjectDisp, .panel-container .curProject .intProjectDisp, .panel-container .interestProject .curProjectDisp, .panel-container .interestProject .intProjectDisp {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  margin-top: 0;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-.panel-container .curProject .curProjectDisp .devproject, .panel-container .curProject .intProjectDisp .devproject, .panel-container .interestProject .curProjectDisp .devproject, .panel-container .interestProject .intProjectDisp .devproject {
+.panel-container .curProject .curProjectDisp .devproject,
+.panel-container .curProject .intProjectDisp .devproject,
+.panel-container .interestProject .curProjectDisp .devproject,
+.panel-container .interestProject .intProjectDisp .devproject {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 1em;
   margin: 1em;
-  margin-left: 0;
-  width: 15em;
-  height: 20em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  max-width: 20rem;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -279,32 +317,48 @@
   padding: 2em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h1, .panel-container .curProject .curProjectDisp .devproject h4, .panel-container .curProject .intProjectDisp .devproject h1, .panel-container .curProject .intProjectDisp .devproject h4, .panel-container .interestProject .curProjectDisp .devproject h1, .panel-container .interestProject .curProjectDisp .devproject h4, .panel-container .interestProject .intProjectDisp .devproject h1, .panel-container .interestProject .intProjectDisp .devproject h4 {
+.panel-container .curProject .curProjectDisp .devproject h3,
+.panel-container .curProject .curProjectDisp .devproject h4,
+.panel-container .curProject .intProjectDisp .devproject h3,
+.panel-container .curProject .intProjectDisp .devproject h4,
+.panel-container .interestProject .curProjectDisp .devproject h3,
+.panel-container .interestProject .curProjectDisp .devproject h4,
+.panel-container .interestProject .intProjectDisp .devproject h3,
+.panel-container .interestProject .intProjectDisp .devproject h4 {
   color: #fca311;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h1, .panel-container .curProject .intProjectDisp .devproject h1, .panel-container .interestProject .curProjectDisp .devproject h1, .panel-container .interestProject .intProjectDisp .devproject h1 {
+.panel-container .curProject .curProjectDisp .devproject h3,
+.panel-container .curProject .intProjectDisp .devproject h3,
+.panel-container .interestProject .curProjectDisp .devproject h3,
+.panel-container .interestProject .intProjectDisp .devproject h3 {
   text-align: center;
   font-size: 1.5rem;
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h4, .panel-container .curProject .intProjectDisp .devproject h4, .panel-container .interestProject .curProjectDisp .devproject h4, .panel-container .interestProject .intProjectDisp .devproject h4 {
+.panel-container .curProject .curProjectDisp .devproject h4,
+.panel-container .curProject .intProjectDisp .devproject h4,
+.panel-container .interestProject .curProjectDisp .devproject h4,
+.panel-container .interestProject .intProjectDisp .devproject h4 {
   text-transform: uppercase;
+  padding-right: 1em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject div, .panel-container .curProject .intProjectDisp .devproject div, .panel-container .interestProject .curProjectDisp .devproject div, .panel-container .interestProject .intProjectDisp .devproject div {
+.panel-container .curProject .curProjectDisp .devproject div,
+.panel-container .curProject .intProjectDisp .devproject div,
+.panel-container .interestProject .curProjectDisp .devproject div,
+.panel-container .interestProject .intProjectDisp .devproject div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding: 0.375em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject div p, .panel-container .curProject .intProjectDisp .devproject div p, .panel-container .interestProject .curProjectDisp .devproject div p, .panel-container .interestProject .intProjectDisp .devproject div p {
-  padding-left: 1em;
-}
-
-.panel-container .curProject .curProjectDisp .devproject .description-div, .panel-container .curProject .intProjectDisp .devproject .description-div, .panel-container .interestProject .curProjectDisp .devproject .description-div, .panel-container .interestProject .intProjectDisp .devproject .description-div {
+.panel-container .curProject .curProjectDisp .devproject .description-div,
+.panel-container .curProject .intProjectDisp .devproject .description-div,
+.panel-container .interestProject .curProjectDisp .devproject .description-div,
+.panel-container .interestProject .intProjectDisp .devproject .description-div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -312,35 +366,47 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  text-align: left;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .description-div p, .panel-container .curProject .intProjectDisp .devproject .description-div p, .panel-container .interestProject .curProjectDisp .devproject .description-div p, .panel-container .interestProject .intProjectDisp .devproject .description-div p {
-  padding: 0;
-}
-
-.panel-container .curProject .curProjectDisp .devproject .progress, .panel-container .curProject .intProjectDisp .devproject .progress, .panel-container .interestProject .curProjectDisp .devproject .progress, .panel-container .interestProject .intProjectDisp .devproject .progress {
+.panel-container .curProject .curProjectDisp .devproject .progress,
+.panel-container .curProject .intProjectDisp .devproject .progress,
+.panel-container .interestProject .curProjectDisp .devproject .progress,
+.panel-container .interestProject .intProjectDisp .devproject .progress {
   display: block;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress, .panel-container .curProject .intProjectDisp .devproject .progress progress, .panel-container .interestProject .curProjectDisp .devproject .progress progress, .panel-container .interestProject .intProjectDisp .devproject .progress progress {
+.panel-container .curProject .curProjectDisp .devproject .progress progress,
+.panel-container .curProject .intProjectDisp .devproject .progress progress,
+.panel-container .interestProject .curProjectDisp .devproject .progress progress,
+.panel-container .interestProject .intProjectDisp .devproject .progress progress {
   width: 12em;
   height: 1em;
   margin-right: 1em;
   -webkit-appearance: none;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar, .panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar, .panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar, .panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar {
-  background: #FFE9CA;
-  color: #141B28;
+.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
+.panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar,
+.panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
+.panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar {
+  background: #ffe9ca;
+  color: #141b28;
   border-radius: 4em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-value, .panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-value, .panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-value, .panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-value {
+.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
+.panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-value,
+.panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
+.panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-value {
   background-color: #fca311;
   border-radius: 4em 0 0 4em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject a, .panel-container .curProject .intProjectDisp .devproject a, .panel-container .interestProject .curProjectDisp .devproject a, .panel-container .interestProject .intProjectDisp .devproject a {
+.panel-container .curProject .curProjectDisp .devproject .goto-btn,
+.panel-container .curProject .intProjectDisp .devproject .goto-btn,
+.panel-container .interestProject .curProjectDisp .devproject .goto-btn,
+.panel-container .interestProject .intProjectDisp .devproject .goto-btn {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -376,7 +442,7 @@
 
 @media screen and (max-width: 1023px) {
   .ham-header {
-    background: #141B28;
+    background: #141b28;
   }
   .ham-header button {
     display: inline-block;
@@ -389,24 +455,18 @@
         -ms-flex-pack: space-evenly;
             justify-content: space-evenly;
   }
-  .ham-header .curProjectDisp {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    margin: 0;
-    padding: 0;
-  }
-  .ham-header .curProjectDisp .devproject {
-    background-color: red;
-  }
 }
 
 * {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .dev {
+  background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
+  background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -450,16 +510,6 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-  }
-  .dev .curProject, .dev .interestProject {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
-  .dev .curProject .curProjectDisp, .dev .curProject .intProjectDisp, .dev .interestProject .curProjectDisp, .dev .interestProject .intProjectDisp {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
   }
 }
 
