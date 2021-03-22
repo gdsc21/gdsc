@@ -15,22 +15,54 @@ const OrgSignUp = () => {
 		e.preventDefault();
 
 		let token
-		axios.post("", {
+		axios.post("https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/np-signup", {
 			npEmail: Email,
 			npPhoneNumber: Phone,
 			npPassword: Password,
 			npConfirmPassword: cPassword,
 			npDisplayName: Name,
+			npWebsite: Website,
 			npCountry: Country
 		})
 			.then((response) => {
 				token = response.data.token
+				console.log(response.data)
+				console.log(token)
+				//TODO: Successfully created an account and signed in -- wut now?
 			})
 			.catch((err) => {
 				console.log(err)
+				console.log(err.response.data)
+				console.log(err.response.status)
+				console.log(err.response.headers)
+
+				if (err.response) {
+					//TODO: Handle password too short, email taken, passwords don't match, etc errors
+					switch (err.response.error) {
+						case "The email address is already in use by another account.":
+							break;
+						case "Email cannot be empty":
+							break;
+						case "Email is invalid":
+							break;
+						case "Name cannot be empty":
+							break;
+						case "Password cannot be empty":
+							break;
+						case "Passowrds do not match":
+							break;
+					}
+
+				} else if (err.request) {
+					// request made but no response from server
+					console.log(err.request)
+				} else {
+					// error occurred before request was sent
+					console.log(err.config)
+				}
 			})
 
-		if (token === "undefined") {}//TODO: Authentication failed --- wut now?}
+		if (token === "undefined") {}//TODO: Account created but Authentication failed --- wut now?}
 		let user = {
 			token: token,
 			loggedIn: true,
@@ -54,7 +86,7 @@ const OrgSignUp = () => {
 				</div>
 				<div className="form-field">
 					<label htmlFor="orgPass">Enter Password</label>
-					<input type="password" id="orgPass" value{Password} onChange={e => setPassword(e.target.value)}/>
+					<input type="password" id="orgPass" value={Password} onChange={e => setPassword(e.target.value)}/>
 				</div>
 				<div className="form-field">
 					<label htmlFor="orgcPass">Enter Password</label>
@@ -69,7 +101,7 @@ const OrgSignUp = () => {
 					<input type="text" id="orgPhone" value={Phone} onChange={e => setPhone(e.target.value)}/>
 				</div>
 				<div className="form-field">
-					<label htmlFor="orgPhone">Organization Website</label>
+					<label htmlFor="orgPhone">Country</label>
 					<input type="text" id="orgPhone" value={Country} onChange={e => setCountry(e.target.value)}/>
 				</div>
 				<button className="signupButton">Sign Up</button>

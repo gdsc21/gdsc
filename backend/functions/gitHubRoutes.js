@@ -11,6 +11,11 @@ const ghApp = require('express')();
 //     next()
 // })
 //
+
+const cors = require('cors');
+
+ghApp.use(cors({origin: true}))
+
 const {
     push,
     updateDevCommits

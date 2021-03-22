@@ -1,4 +1,7 @@
 const userApp = require('express')();
+const cors = require('cors');
+
+userApp.use(cors({origin: true}))
 
 const {
     npSignUp,

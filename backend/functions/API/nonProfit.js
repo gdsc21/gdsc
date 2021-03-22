@@ -18,8 +18,8 @@ exports.npSignUp = (request, response, next) => {
     else newCredentials = request.body
 
     // validate data and return 400 error if data is invalid
-    const { valid, errors } = validateNpSignUp(newCredentials);
-    if (!valid) return response.status(400).json(errors);
+    const { valid, error } = validateNpSignUp(newCredentials);
+    if (!valid) return response.status(400).json({error: error});
 
     // checks if the email is already in use
     if (checkUserExist(newCredentials.npEmail))
@@ -73,8 +73,8 @@ exports.npLogin = (request, response) => {
     else np = request.body
 
     // validates email and password
-    const { valid, errors } = validateNpLogin(np);
-    if (!valid) return response.status(400).json({errors: errors});
+    const { valid, error } = validateNpLogin(np);
+    if (!valid) return response.status(400).json({error: error});
 
     firebase
         .auth()
@@ -134,8 +134,8 @@ exports.npUpdateAccount = (request, response, next) => {
     else data = request.body
 
     // validate data and return 400 error if data is invalid
-    const { valid, errors } = validateNpCredentials(data);
-    if (!valid) return response.status(400).json(errors);
+    const { valid, error } = validateNpCredentials(data);
+    if (!valid) return response.status(400).json({error: error});
 
     // newUserData populated with email and display name if available
     let newUserData = {}

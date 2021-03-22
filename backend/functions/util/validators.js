@@ -14,50 +14,37 @@ function isEmpty(some_string) {
 }
 
 exports.validateNpSignUp = (data) => {
-    let errors = {}
     if (isEmpty(data.npEmail)) {
-        errors.npEmail = 'Must not be empty';
+        return { valid: false, error: "Email cannot be empty"}
     } else if (!isEmail(data.npEmail)) {
-        errors.npEmail = 'Must be valid npEmail address';
+        return { valid: false, error: "Email is invalid"}
     }
 
-    if (isEmpty(data.npName)) errors.npName = 'Must not be empty';
-    if (isEmpty(data.npUsername)) errors.npUsername = 'Must not be empty';
-    if (isEmpty(data.npCountry)) errors.npCountry = 'Must not be empty';
+    if (isEmpty(data.npDisplayName)) return { valid: false, error: "Name cannot be empty"}
 
-    if (isEmpty(data.npPassword)) errors.npPassword = 'Must not be empty';
-    if (data.npPassword !== data.npConfirmPassword) errors.npConfirmPassword = 'Passowrds must be the same';
-    return {
-        errors,
-        valid: Object.keys(errors).length === 0
-    };
+    if (isEmpty(data.npPassword)) return { valid: false, error: "Password cannot be empty"}
+    if (data.npPassword !== data.npConfirmPassword) return {valid: false, error: 'Passowrds do not match'}
+
+    return { valid: true, error: ""}
 }
 
 exports.validateNpLogin = (data) => {
-    let errors = {};
-    if (isEmpty(data.npEmail)) errors.npEmail = 'Must not be empty';
-    if (isEmpty(data.npPassword)) errors.npPassword = 'Must not be  empty';
-    return {
-        errors,
-        valid: Object.keys(errors).length === 0
-    };
+    if (isEmpty(data.npEmail)) return { valid: false, error: "Email cannot be empty"}
+    if (isEmpty(data.npPassword)) return { valid: false, error: "Password cannot be empty"}
+
+    return { valid: true, error: ""}
 }
 
 exports.validateNpCredentials = (data) => {
-    let errors = {}
     if (isEmpty(data.npEmail)) {
-        errors.npEmail = 'Must not be empty';
+        return { valid: false, error: "Email cannot be empty"}
     } else if (!isEmail(data.npEmail)) {
-        errors.npEmail = 'Must be valid npEmail address';
+        return { valid: false, error: "Email is invalid"}
     }
 
-    if (isEmpty(data.npDisplayName)) errors.npDisplayName = 'Must not be empty';
-    if (isEmpty(data.npCountry)) errors.npCountry = 'Must not be empty';
+    if (isEmpty(data.npDisplayName)) return { valid: false, error: "Name cannot be empty"}
 
-    return {
-        errors,
-        valid: Object.keys(errors).length === 0
-    }
+    return { valid: true, error: ""}
 }
 
 exports.checkUserExist = (email) => {
