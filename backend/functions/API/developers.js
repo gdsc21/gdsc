@@ -43,16 +43,16 @@ exports.devCreateProfile = (request, response) => {
 }
 
 exports.devGetProfile = (request, response) => {
-    let user, data
+    let user, params
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
     else user = request.user
-    if (typeof request.body != "object")
-        data = JSON.parse(request.body)
-    else data = request.body
+    if (typeof request.params != "object")
+        params = JSON.parse(request.params)
+    else params = request.params
 
     let uid
-    if ("devUid" in Object.keys(data)) uid = data.devUid
+    if ("devUid" in Object.keys(params)) uid = params.devUid
     else uid = user.uid
 
     fs

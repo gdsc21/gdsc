@@ -16,15 +16,14 @@ const Dev = () => {
 	const [devCommits, setdevCommits] = useState("");
 
 
-	// TODO: Save the profile info to the app state
 	useEffect(() => {
 		const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile"
 		let { token } = JSON.parse(localStorage.getItem("user"))
 		let config = { headers: { Authorization: `Bearer ${token}`} }
-		let data = {}
+		let data
 
 		axios
-			.post(url, data, config)
+			.get(url, config)
 			.then((response) => {
 				data = response.data
 				setdevDisplayName(data.devDisplayName)

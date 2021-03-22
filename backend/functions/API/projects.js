@@ -70,32 +70,6 @@ exports.projDelete = (request, response) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-    // delete project from non profit account document
-    // let projects
-    // let npDocRef = fs.collection("np_accounts").doc(user.uid)
-    // npDocRef
-    //     .get()
-    //     .then((npDoc) => {
-    //         projects = npDoc.data().npProjects
-    //         if (!(projectId in projects)) {
-    //             return response.status(400).json({message: "Cannot delete this project"})
-    //         } else {
-    //             delete projects[projectId]
-    //             npDocRef
-    //                 .update({"npProjects": projects})
-    //                 .then(() => {
-    //                     return response.status(200).json({message: "Successfully deleted the project!"})
-    //                 })
-    //                 .catch((err) => {
-    //                     return response.status(500).json({error: err.message})
-    //                 })
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         return response.status(500).json({error: err.message})
-    //     })
-
-    // delete project document
     fs
         .collection("projects")
         .doc(data.projectId)
@@ -116,15 +90,16 @@ exports.projLoad = (request, response) => {
      *          failure: status=404 --- json={message: Project not found} OR
      *          failure: status=500 --- json={error: err.message}
      */
-    let data
-    if (typeof request.body != "object")
-        data = JSON.parse(request.body)
-    else data = request.body
+    let params
+    if (typeof request.params != "object")
+        params = JSON.parse(request.params)
+    else params = request.params
 
-    if (!("projectId" in data)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
+    if (!("projectId" in params)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
+
     fs
         .collection("projects")
-        .doc(data.projectId)
+        .doc(params.projectId)
         .get()
         .then((projectDoc) => {
             if (projectDoc.exists) {

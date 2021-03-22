@@ -61,7 +61,7 @@ userApp.post("/delete-project", auth, npDeleteProject, projDelete)
 userApp.post("/dev-create-profile", auth, devCreateProfile)
 
 // retrieves a developer document -- only available to logged in users
-userApp.post("/get-dev-profile", auth, devGetProfile)
+userApp.get("/get-dev-profile", auth, devGetProfile)
 
 // adds a developer to a project -- only available to non-profits -- updates project/developer docs
 userApp.post("add-dev-to-project", auth, projAddDev, devAddProject)
