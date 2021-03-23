@@ -32,8 +32,8 @@ const OrgSignUp = () => {
 				if (token === "undefined") {}//TODO: Account created but Authentication failed
 
 				// Store it in session storage
-				setStorageSessionExpire("isDev", false, 3540)
-				setStorageSessionExpire("token", token, 3540)
+				setStorageSessionExpire("isDev", false, 3600000)
+				setStorageSessionExpire("token", token, 3600000)
 
 				//TODO: Successfully created an account and signed in -- wut now?
 			})

@@ -46,8 +46,8 @@ const SignIn = () => {
                     // TODO: Handle what happens if the token is not returned/there was an error
                 }
 
-                setStorageSessionExpire("isDev", true, 3540)
-                setStorageSessionExpire("token", token, 3540)
+                setStorageSessionExpire("isDev", true, 3600000)
+                setStorageSessionExpire("token", token, 3600000)
 
                 // TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
 
