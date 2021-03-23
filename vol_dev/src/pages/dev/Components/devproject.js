@@ -1,7 +1,6 @@
 const Devproject = (props) => {
     const project = props.project
-    console.log(project)
-    return ( 
+    return (
         <div className="devproject">
             <h1>{project.org}</h1>
             <div>

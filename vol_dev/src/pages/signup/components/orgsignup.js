@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from 'axios';
 import "../scss/signup.scss";
+import { setStorageSessionExpire } from "../../../utils";
 
 const OrgSignUp = () => {
 	const [Name, setName] = useState("")
@@ -30,12 +31,9 @@ const OrgSignUp = () => {
 				console.log(token)
 				if (token === "undefined") {}//TODO: Account created but Authentication failed
 
-				// Store it in local storage
-				localStorage.setItem("user", JSON.stringify({
-					token: token,
-					loggedIn: true,
-					isDev: false,
-				}));
+				// Store it in session storage
+				setStorageSessionExpire("isDev", false, 3540)
+				setStorageSessionExpire("token", token, 3540)
 
 				//TODO: Successfully created an account and signed in -- wut now?
 			})

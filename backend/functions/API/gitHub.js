@@ -146,9 +146,9 @@ exports.updateDevCommits = (request, response) => {
 
             admin
                 .auth()
-                // TODO: therein lies the error
-                .getUserByEmail(commit.id.authorEmail)
+                .getUserByEmail(authorEmail)
                 .then((userRecord) => {
+                    console.log("UID:", userRecord.uid)
                     authorUid = userRecord.uid
                     commit.id.authorUid = authorUid
                     // remove the email so it is not included in the commit info in firestore

@@ -3,7 +3,8 @@ import userDetails from './Components/data/userDetails'
 import ProjectPanel from "./Components/projectPanel"
 import './styles/dev.css'
 import { useState, useEffect } from 'react'
-import axios from 'axios';
+import { getSessionStorageExpire } from "../../utils";
+import axios from "axios";
 
 const Dev = () => {
 	const user = userDetails
@@ -15,10 +16,9 @@ const Dev = () => {
 	const [devProjects, setdevProjects] = useState("");
 	const [devCommits, setdevCommits] = useState("");
 
-
 	useEffect(() => {
 		const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile"
-		let { token } = JSON.parse(localStorage.getItem("user"))
+		let token = getSessionStorageExpire("token")
 		let config = { headers: { Authorization: `Bearer ${token}`} }
 		let data
 

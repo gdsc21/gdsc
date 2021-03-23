@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import { useState, useEffect } from 'react'
+import { getSessionStorageExpire } from "../../utils";
 
 import axios from "axios";
 
@@ -13,7 +14,7 @@ const Project = () => {
 	// TODO: make id be a value passed to this component as a prop -- this function will run once the comp is rendered
 	useEffect((id) => {
 		const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-project"
-		let { token } = JSON.parse(localStorage.getItem("user"))
+		let token = getSessionStorageExpire("token")
 		let config = {
 			headers: { Authorization: `Bearer ${token}` },
 			params: { projectId: id}

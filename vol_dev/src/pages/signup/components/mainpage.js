@@ -1,20 +1,23 @@
 import "../scss/signup.scss";
 import keyboard from "../img/dev_keyboard.svg";
 import charity from "../img/charity_icon.svg";
-import {fs} from "../../../firebase";
+import { fbApp, fs, fb } from "../../../firebase";
+import { setStorageSessionExpire } from "../../../utils";
+
 
 const MainPage = ({ setSelection }) => {
 	const setDev = () => {
-		let provider = new fs.auth.GithubAuthProvider();
+		let provider = new fb.auth.GithubAuthProvider();
 		let gHtoken, token
-		fs
+		fbApp
 			.auth()
-			.signInWithPopup(provider)
+			.setPersistence(fb.auth.Auth.Persistence.SESSION)
+			.then(() => {
+				return fbApp.auth().signInWithPopup(provider)
+			})
 			.then((result) => {
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 				gHtoken = result.credential.accessToken;
-
-				console.log(result.user)
 				return result.user.getIdToken();
 			})
 			.then((idToken) => {
@@ -23,14 +26,10 @@ const MainPage = ({ setSelection }) => {
 					// TODO: Handle what happens if the token is not returned/there was an error
 				}
 
-				localStorage.setItem("user", JSON.stringify({
-					token: token,
-					loggedIn: true,
-					isDev: true
-				}));
+				setStorageSessionExpire("isDev", true, 3540)
+				setStorageSessionExpire("token", token, 3540)
 
 				// TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
-
 			})
 			.catch((error) => {
 				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError

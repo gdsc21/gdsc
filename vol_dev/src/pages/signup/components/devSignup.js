@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from "react";
+import { getSessionStorageExpire } from "../../../utils";
 
 
 const devSignup = () => {
@@ -12,7 +13,7 @@ const devSignup = () => {
 
         const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/dev-create-profile"
 
-        let { token } = JSON.parse(localStorage.getItem("user"))
+        let token = getSessionStorageExpire("token")
 
         let config = {
             headers: {
