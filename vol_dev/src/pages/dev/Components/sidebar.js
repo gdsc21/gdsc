@@ -1,7 +1,17 @@
 import Achievements from "./achievements"
 import img from '../defaultUser.png'
+import { fbApp } from "../../../firebase";
+import { removeSessionStorage } from "../../../utils";
+import { Switch, Route, Redirect, Link } from "react-router-dom";
+
 
 const Sidebar = (props) => {
+    function signOut() {
+        fbApp.auth().signOut().then(() => {
+            removeSessionStorage("token")
+        })
+    }
+
     const user = props.user
     const hamCloseClick = props.hamCloseClick
     return (
@@ -19,7 +29,11 @@ const Sidebar = (props) => {
                 </div>
             </div>
             <Achievements user={user} />
-            <div className="sign-out"><a href="/">sign out</a></div>
+            <div className="sign-out">
+                <Link to="/" onClick={signOut}>
+                    Sign Out
+                </Link>
+            </div>
         </div>
     )
 }

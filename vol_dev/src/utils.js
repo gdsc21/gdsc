@@ -38,3 +38,13 @@ export const getSessionStorageExpire = (key) => {
 
     return data.value
 }
+
+export const removeSessionStorage = (key) => {
+    try {
+        sessionStorage.removeItem(key)
+    } catch {
+        console.warn("Failed to remove", key, "from session storage")
+        return null
+    }
+    return true
+}
