@@ -22,7 +22,10 @@
   height: 100%;
   background-color: #141b28;
   color: #eae8fd;
-  width: 25em;
+  width: 25rem;
+  -webkit-transition: all 100ms ease;
+  transition: all 100ms ease;
+  z-index: 2;
 }
 
 .sidebar .ham-close {
@@ -256,6 +259,9 @@
       -ms-flex-direction: column;
           flex-direction: column;
   color: #eae8fd;
+  margin-left: 25rem;
+  max-width: calc(100vw - 25rem);
+  overflow-x: hidden;
 }
 
 .panel-container .devNav {
@@ -280,8 +286,7 @@
   font-weight: 500;
 }
 
-.panel-container .curProject,
-.panel-container .interestProject {
+.panel-container .curProject {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -289,27 +294,23 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-left: 30%;
 }
 
-.panel-container .curProject .head,
-.panel-container .interestProject .head {
+.panel-container .curProject .head {
   font-size: 1.5em;
   line-height: 2em;
   text-transform: uppercase;
+  padding: 0 2rem;
 }
 
-.panel-container .curProject .curProjectDisp .devproject,
-.panel-container .curProject .intProjectDisp .devproject,
-.panel-container .interestProject .curProjectDisp .devproject,
-.panel-container .interestProject .intProjectDisp .devproject {
+.panel-container .curProject .devproject {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 1em;
   margin: 1em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  max-width: 20rem;
+  width: 20rem;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -317,48 +318,30 @@
   padding: 2em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h3,
-.panel-container .curProject .curProjectDisp .devproject h4,
-.panel-container .curProject .intProjectDisp .devproject h3,
-.panel-container .curProject .intProjectDisp .devproject h4,
-.panel-container .interestProject .curProjectDisp .devproject h3,
-.panel-container .interestProject .curProjectDisp .devproject h4,
-.panel-container .interestProject .intProjectDisp .devproject h3,
-.panel-container .interestProject .intProjectDisp .devproject h4 {
+.panel-container .curProject .devproject h3,
+.panel-container .curProject .devproject h4 {
   color: #fca311;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h3,
-.panel-container .curProject .intProjectDisp .devproject h3,
-.panel-container .interestProject .curProjectDisp .devproject h3,
-.panel-container .interestProject .intProjectDisp .devproject h3 {
+.panel-container .curProject .devproject h3 {
   text-align: center;
   font-size: 1.5rem;
   padding-bottom: 0.5em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h4,
-.panel-container .curProject .intProjectDisp .devproject h4,
-.panel-container .interestProject .curProjectDisp .devproject h4,
-.panel-container .interestProject .intProjectDisp .devproject h4 {
+.panel-container .curProject .devproject h4 {
   text-transform: uppercase;
   padding-right: 1em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject div,
-.panel-container .curProject .intProjectDisp .devproject div,
-.panel-container .interestProject .curProjectDisp .devproject div,
-.panel-container .interestProject .intProjectDisp .devproject div {
+.panel-container .curProject .devproject div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding: 0.375em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .description-div,
-.panel-container .curProject .intProjectDisp .devproject .description-div,
-.panel-container .interestProject .curProjectDisp .devproject .description-div,
-.panel-container .interestProject .intProjectDisp .devproject .description-div {
+.panel-container .curProject .devproject .description-div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -369,44 +352,29 @@
   text-align: left;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress,
-.panel-container .curProject .intProjectDisp .devproject .progress,
-.panel-container .interestProject .curProjectDisp .devproject .progress,
-.panel-container .interestProject .intProjectDisp .devproject .progress {
+.panel-container .curProject .devproject .progress {
   display: block;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress,
-.panel-container .curProject .intProjectDisp .devproject .progress progress,
-.panel-container .interestProject .curProjectDisp .devproject .progress progress,
-.panel-container .interestProject .intProjectDisp .devproject .progress progress {
+.panel-container .curProject .devproject .progress progress {
   width: 12em;
   height: 1em;
   margin-right: 1em;
   -webkit-appearance: none;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
-.panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar,
-.panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
-.panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar {
+.panel-container .curProject .devproject .progress progress::-webkit-progress-bar {
   background: #ffe9ca;
   color: #141b28;
   border-radius: 4em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
-.panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-value,
-.panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
-.panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-value {
+.panel-container .curProject .devproject .progress progress::-webkit-progress-value {
   background-color: #fca311;
   border-radius: 4em 0 0 4em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .goto-btn,
-.panel-container .curProject .intProjectDisp .devproject .goto-btn,
-.panel-container .interestProject .curProjectDisp .devproject .goto-btn,
-.panel-container .interestProject .intProjectDisp .devproject .goto-btn {
+.panel-container .curProject .devproject .goto-btn {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -418,6 +386,13 @@
   text-decoration: none;
   color: #eae8fd;
   background-color: #fca311;
+}
+
+@media screen and (max-width: 1023px) {
+  .panel-container {
+    margin-left: 0;
+    max-width: unset;
+  }
 }
 
 .ham-header {
@@ -454,6 +429,8 @@
     -webkit-box-pack: space-evenly;
         -ms-flex-pack: space-evenly;
             justify-content: space-evenly;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
   }
 }
 
@@ -474,19 +451,23 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  height: 100%;
+  height: 100vh;
 }
 
 @media screen and (max-width: 1023px) {
   .dev .sidebar {
     display: none;
     height: 100%;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
   }
   .dev .s-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     position: fixed;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
   }
   .dev .panel-container {
     margin-left: 0;

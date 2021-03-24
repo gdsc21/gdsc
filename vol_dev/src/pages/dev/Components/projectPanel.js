@@ -28,13 +28,13 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 			</div>
 
 			{/* Projects that may interest the user */}
-			<div className="interestProject">
+			<div className="curProject">
 				<h1 className="head">Projects that may interest you</h1>
-				<div className="intProjectDisp">
+				<Carousel show={3}>
 					{user.interestProjects.map((project, id) => {
 						return <Devproject key={id} project={project} />;
 					})}
-				</div>
+				</Carousel>
 			</div>
 		</div>
 	);

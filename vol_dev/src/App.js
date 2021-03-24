@@ -22,7 +22,10 @@ const App = () => {
 				{
 					// if user is logged in and a developer go to Dev if not a developer go to NonProfit
 					// if user is not logged in go to home
-					!!user ? isDev ? <Dev /> : <NonProfit /> : <Redirect to="/" />
+					// !!user ? isDev ? <Dev /> : <NonProfit /> : <Redirect to="/" />
+
+					// for debugging the dashboard
+					<Dev />
 				}
 			</Route>
 			<Route path="/signup">

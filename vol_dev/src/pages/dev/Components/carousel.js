@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import "../styles/carousel.css";
 
-export const Carousel = ({ children, show, infiniteLoop }) => {
+export const Carousel = (props) => {
+	const { children, show, infiniteLoop } = props;
+
 	// Functionality of swiping
 	const [currentIndex, setCurrentIndex] = useState(infiniteLoop ? show : 0);
 	const [length, setLength] = useState(children.length);
@@ -61,10 +63,11 @@ export const Carousel = ({ children, show, infiniteLoop }) => {
 
 	const handleTransitionEnd = () => {
 		if (isRepeating) {
-			setTransitionEnabled(false);
 			if (currentIndex === 0) {
+				setTransitionEnabled(false);
 				setCurrentIndex(length);
 			} else if (currentIndex === length + show) {
+				setTransitionEnabled(false);
 				setCurrentIndex(show);
 			}
 		}
@@ -107,10 +110,10 @@ export const Carousel = ({ children, show, infiniteLoop }) => {
 					onTouchMove={handleTouchMove}
 				>
 					<div
-						className={`carousel-content show-${show} curProjectDisp`}
+						className={`carousel-content show-${show}`}
 						style={{
-							transform: `translateX(-${currentIndex * (100 / show)}%)`,
-							transition: transitionEnabled ? undefined : "none",
+							transform: `translateX(-${currentIndex * 28}rem)`,
+							transition: !transitionEnabled ? "none" : undefined,
 						}}
 						onTransitionEnd={() => handleTransitionEnd()}
 					>

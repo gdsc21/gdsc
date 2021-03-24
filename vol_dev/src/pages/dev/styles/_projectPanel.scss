@@ -1,8 +1,10 @@
 .panel-container {
 	display: flex;
 	flex-direction: column;
-	// background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
 	color: $lightgrey;
+	margin-left: 25rem;
+	max-width: calc(100vw - 25rem);
+	overflow-x: hidden;
 
 	.devNav {
 		display: flex;
@@ -21,91 +23,92 @@
 		}
 	}
 
-	.curProject,
-	.interestProject {
+	.curProject {
 		display: flex;
 		flex-direction: column;
-		margin-left: 30%;
 
 		.head {
 			font-size: 1.5em;
 			line-height: 2em;
 			text-transform: uppercase;
+			padding: 0 2rem;
 		}
 
-		.curProjectDisp,
-		.intProjectDisp {
-			.devproject {
-				background: rgba(255, 255, 255, 0.4);
-				border-radius: 1em;
-				margin: 1em;
+		.devproject {
+			background: rgba(255, 255, 255, 0.4);
+			border-radius: 1em;
+			margin: 1em;
+			display: flex;
+			width: 20rem;
+			flex-direction: column;
+			padding: 2em;
+
+			h3,
+			h4 {
+				color: $yellow;
+			}
+
+			h3 {
+				text-align: center;
+				font-size: 1.5rem;
+				padding-bottom: 0.5em;
+			}
+
+			h4 {
+				text-transform: uppercase;
+				padding-right: 1em;
+			}
+
+			div {
 				display: flex;
-				max-width: 20rem;
+				padding: 0.375em;
+			}
+
+			.description-div {
+				display: flex;
 				flex-direction: column;
-				padding: 2em;
+				text-align: left;
+			}
 
-				h3,
-				h4 {
-					color: $yellow;
-				}
+			.progress {
+				display: block;
 
-				h3 {
-					text-align: center;
-					font-size: 1.5rem;
-					padding-bottom: 0.5em;
-				}
+				progress {
+					width: 12em;
+					height: 1em;
+					margin-right: 1em;
+					-webkit-appearance: none;
 
-				h4 {
-					text-transform: uppercase;
-					padding-right: 1em;
-				}
+					&::-webkit-progress-bar {
+						background: #ffe9ca;
+						color: $darkBlue;
+						border-radius: 4em;
+					}
 
-				div {
-					display: flex;
-					padding: 0.375em;
-				}
-
-				.description-div {
-					display: flex;
-					flex-direction: column;
-					text-align: left;
-				}
-
-				.progress {
-					display: block;
-
-					progress {
-						width: 12em;
-						height: 1em;
-						margin-right: 1em;
-						-webkit-appearance: none;
-
-						&::-webkit-progress-bar {
-							background: #ffe9ca;
-							color: $darkBlue;
-							border-radius: 4em;
-						}
-
-						&::-webkit-progress-value {
-							background-color: $yellow;
-							border-radius: 4em 0 0 4em;
-						}
+					&::-webkit-progress-value {
+						background-color: $yellow;
+						border-radius: 4em 0 0 4em;
 					}
 				}
+			}
 
-				.goto-btn {
-					align-self: center;
-					position: relative;
-					margin-top: 2em;
-					padding: 0.5em 2.5em 0.5em 2.5em;
-					border-radius: 1em;
-					vertical-align: middle;
-					text-decoration: none;
-					color: $lightgrey;
-					background-color: $yellow;
-				}
+			.goto-btn {
+				align-self: center;
+				position: relative;
+				margin-top: 2em;
+				padding: 0.5em 2.5em 0.5em 2.5em;
+				border-radius: 1em;
+				vertical-align: middle;
+				text-decoration: none;
+				color: $lightgrey;
+				background-color: $yellow;
 			}
 		}
+	}
+
+	@media screen and (max-width: 1023px) {
+		margin-left: 0;
+		max-width: unset;
 	}
 }
 
@@ -136,6 +139,7 @@
 			max-width: none;
 			width: 100%;
 			justify-content: space-evenly;
+			transition: all 100ms ease;
 		}
 	}
 }
