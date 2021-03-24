@@ -2,7 +2,8 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-const firebaseConfig = {
+
+export const fbApp = firebase.initializeApp({
     apiKey: "AIzaSyCvI2NbM36HQIpHn6pmQzxGUylosYCyiWk",
     authDomain: "sunlit-webbing-305321.firebaseapp.com",
     databaseURL: "https://sunlit-webbing-305321-default-rtdb.firebaseio.com",
@@ -11,9 +12,7 @@ const firebaseConfig = {
     messagingSenderId: "923742233240",
     appId: "1:923742233240:web:b63166bf7603c323ed66ed",
     measurementId: "G-XL5JEH9Q9Y"
-};
+})
 
-
-firebase.initializeApp(firebaseConfig);
-export const fs = firebase
-export const firestore = firebase.firestore();
+export const fs = fbApp.firestore()
+export const fb = firebase

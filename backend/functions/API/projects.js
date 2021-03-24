@@ -1,14 +1,7 @@
-const { admin, fs } = require('../util/admin');
-const config = require('../util/config');
-const firebase = require('firebase');
+const { fs, FieldValue } = require('../util/admin');
 
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(config);
-}else {
-    firebase.app(); // if already initialized, use that one
-}
-
+// TODO: Perform title name validation so that the title can be easily converted to a repo name
 exports.projCreate = (request, response, next) => {
     /**
      * Creates a new project document with a random uid as the file name and inserts a title, description and npInfo
@@ -39,8 +32,8 @@ exports.projCreate = (request, response, next) => {
                 npUid: user.uid
             }
 
-            fs
-                .collection("projects")
+            let projectColRef = fs.collection("projects")
+            projectColRef
                 .add({
                     title: data.title,
                     description: data.description,
@@ -52,12 +45,40 @@ exports.projCreate = (request, response, next) => {
                     // must reassign request.body since request.body.projectId does not work to create a new key in body
                     data.projectId = projectDoc.id
                     request.body = data
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+
+            // adds the newly created project info to the all projects document
+            projectColRef
+                .doc("allProjects")
+                .set({
+                    [data.projectId]: {
+                        title: data.title,
+                        description: data.description
+                    }
+                }, { merge: true })
+                .then(() => {
                     return next()
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
                 })
 
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
+
+exports.projGetAll = (request, response) => {
+    fs
+        .collection("projects")
+        .doc("allProjects")
+        .then((doc) => {
+            let data = doc.data()
+            return response.status(200).json(data)
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -72,47 +93,34 @@ exports.projDelete = (request, response) => {
      * @return success: status=200 --- json={message: Successfully deleted the project}
      *          failure: status=500 --- json={error: err.message}
      */
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
+    let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
 
-    // delete project from non profit account document
-    // let projects
-    // let npDocRef = fs.collection("np_accounts").doc(user.uid)
-    // npDocRef
-    //     .get()
-    //     .then((npDoc) => {
-    //         projects = npDoc.data().npProjects
-    //         if (!(projectId in projects)) {
-    //             return response.status(400).json({message: "Cannot delete this project"})
-    //         } else {
-    //             delete projects[projectId]
-    //             npDocRef
-    //                 .update({"npProjects": projects})
-    //                 .then(() => {
-    //                     return response.status(200).json({message: "Successfully deleted the project!"})
-    //                 })
-    //                 .catch((err) => {
-    //                     return response.status(500).json({error: err.message})
-    //                 })
-    //         }
-    //     })
-    //     .catch((err) => {
-    //         return response.status(500).json({error: err.message})
-    //     })
+    let projectColRef = fs.collection("projects")
 
-    // delete project document
-    fs
-        .collection("projects")
+    // deletes the project document
+    projectColRef
         .doc(data.projectId)
         .delete()
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+
+    // deletes the project info from the all projects document
+    projectColRef
+        .doc("allProjects")
+        .update({
+            [data.projectId]: FieldValue.delete()
+        })
+        .then(() => {
+            return response.status(200).json({message: "Project deleted"})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+
 }
 
 exports.projLoad = (request, response) => {
@@ -123,10 +131,16 @@ exports.projLoad = (request, response) => {
      *          failure: status=404 --- json={message: Project not found} OR
      *          failure: status=500 --- json={error: err.message}
      */
-    const data = JSON.parse(request.body)
+    let params
+    if (typeof request.params != "object")
+        params = JSON.parse(request.params)
+    else params = request.params
+
+    if (!("projectId" in params)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
+
     fs
         .collection("projects")
-        .doc(data.projectId)
+        .doc(params.projectId)
         .get()
         .then((projectDoc) => {
             if (projectDoc.exists) {
@@ -164,14 +178,60 @@ exports.projUpdateNpInfo = (request, response) => {
                 "npCountry" in data ? batch.update(doc.ref, {"npInfo.npCountry": data.npCountry}) : ""
             })
         })
-
-    batch
-        .commit()
         .then(() => {
-            return response.status(200).json({message: "Profile updated"})
+            batch
+                .commit()
+                .then(() => {
+                    return response.status(200).json({message: "Profile updated"})
+                })
+                .catch((err) => {
+                    return response.status(500).json({message: err.message})
+                })
         })
         .catch((err) => {
-            return response.status(500).json({message: err.message})
+            console.log(err.code)
+            return response.status(500).json({error: err.message})
+        })
+}
+
+exports.projUpdate = (request, response, next) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    let projectRef = fs.collection("projects").doc(data.projectId)
+
+    projectRef
+        .get()
+        .then((doc) => {
+            let docData = doc.data()
+            if (docData.npInfo.npUid != user.uid) return response.status(404).json({error: "Unauthorized"})
+            else {
+                // updates the project document
+                projectRef
+                    .update({
+                        title: data.title,
+                        description: data.description
+                    })
+                // updates the allProject document
+                fs
+                    .collection("projects")
+                    .doc("allProjects")
+                    .update({
+                        [`${data.projectId}.title`]: data.title,
+                        [`${data.projectId}.description`]: data.description
+                    })
+            }
+        })
+        .then(() => {
+            return next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
         })
 }
 
@@ -321,7 +381,7 @@ exports.projRemoveDev = (request, response, next) => {
     // deletes the developer profile from the project page
     projDocRef
         .update({
-            [`devProfiles.${data.devUid}`]: firebase.firestore.FieldValue.delete()
+            [`devProfiles.${data.devUid}`]: FieldValue.delete()
         })
         .then(() => {
             return next()
@@ -336,6 +396,11 @@ exports.projRemoveDev = (request, response, next) => {
 
 exports.addCommit = (request, response) => {
 
+}
+
+exports.createProjectRepo = (request, response) => {
+    // use github app to create project repo with project title as repo name
+    // TODO: add repo id to the project created page so that the github function that adds commit history can find it
 }
 
 

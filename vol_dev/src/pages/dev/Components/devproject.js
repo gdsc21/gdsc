@@ -8,6 +8,7 @@ const Devproject = ({ project }) => {
 				<h4>Title</h4>
 				<p className="title">{project.title}</p>
 			</div>
+
 			<div className="description-div">
 				<h4>Description</h4>
 				<p className="description">{project.title}</p>

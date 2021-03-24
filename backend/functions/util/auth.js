@@ -1,4 +1,4 @@
-const { admin, fs } = require('../util/admin');
+let admin = require("../util/admin").admin;
 
 // checks if an authorized token is included in the request if so store correct npUsername in request and pass to next
 exports.auth = (request, response, next) => {

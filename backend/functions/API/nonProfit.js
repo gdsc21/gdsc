@@ -1,10 +1,6 @@
-const { admin, fs } = require('../util/admin');
-const config = require('../util/config');
-const firebase = require('firebase');
+const { admin, fs, firebase, FieldValue } = require('../util/admin');
 const { validateNpSignUp, validateNpLogin, validateNpCredentials, checkUserExist } = require('../util/validators');
 
-
-firebase.initializeApp(config);
 
 exports.npSignUp = (request, response, next) => {
     /**
@@ -16,11 +12,14 @@ exports.npSignUp = (request, response, next) => {
      *          failure: status=400/409/500 --- json={message/error: ""/err.message}
      */
         // extract data from form post request -- if field is optional and nothing is passed leave it empty
-    let newCredentials = request.body
+    let newCredentials
+    if (typeof request.body != "object")
+        newCredentials= JSON.parse(request.body)
+    else newCredentials = request.body
 
     // validate data and return 400 error if data is invalid
-    const { valid, errors } = validateNpSignUp(newCredentials);
-    if (!valid) return response.status(400).json(errors);
+    const { valid, error } = validateNpSignUp(newCredentials);
+    if (!valid) return response.status(400).json({error: error});
 
     // checks if the email is already in use
     if (checkUserExist(newCredentials.npEmail))
@@ -74,8 +73,8 @@ exports.npLogin = (request, response) => {
     else np = request.body
 
     // validates email and password
-    const { valid, errors } = validateNpLogin(np);
-    if (!valid) return response.status(400).json({errors: errors});
+    const { valid, error } = validateNpLogin(np);
+    if (!valid) return response.status(400).json({error: error});
 
     firebase
         .auth()
@@ -92,14 +91,16 @@ exports.npLogin = (request, response) => {
 }
 
 exports.npGetAccount = (request, response) => {
-    let data
+    let data, user
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
 
     let retrieveUID
-    console.log(data.npUid)
-    if (!("npUid" in data)) return response.status(400).json({message: "npUid cannot be undefined"})
+    if ("npUid" in data) retrieveUID = user.uid
     else retrieveUID = data.npUid
     retrieveUID = String(retrieveUID)
 
@@ -133,8 +134,8 @@ exports.npUpdateAccount = (request, response, next) => {
     else data = request.body
 
     // validate data and return 400 error if data is invalid
-    const { valid, errors } = validateNpCredentials(data);
-    if (!valid) return response.status(400).json(errors);
+    const { valid, error } = validateNpCredentials(data);
+    if (!valid) return response.status(400).json({error: error});
 
     // newUserData populated with email and display name if available
     let newUserData = {}
@@ -320,14 +321,42 @@ exports.npDeleteProject = (request, response, next) => {
             if (!npDoc.exists) return response.status(400).json({message: "Non-profit doesn't exist"})
             let projects = npDoc.data().npProjects
             if (!(data.projectId in projects)) return response.status(500).json({message: "Unauthorized or project doesn't exist"})
-        })
 
-    npDocRef
+            npDocRef
+                .update({
+                    [`npProjects.${data.projectId}`]: FieldValue.delete()
+                })
+                .then(() => {
+                    return next()
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
+
+exports.npUpdateProject = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    fs
+        .collection("np_accounts")
+        .doc(user.uid)
         .update({
-            [`npProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
+            [`npProjects.${data.projectId}.description`]: data.title,
+            [`npProjects.${data.projectId}.description`]: data.description
         })
         .then(() => {
-            return next()
+            return response.status(200).json({message: "Successfully updated"})
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})

@@ -1,13 +1,4 @@
-const { admin, fs } = require('../util/admin');
-const config = require('../util/config');
-const firebase = require('firebase');
-
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(config);
-}else {
-    firebase.app(); // if already initialized, use that one
-}
+const { admin, fs, firebase, FieldValue} = require('../util/admin');
 
 
 exports.devCreateProfile = (request, response) => {
@@ -27,8 +18,6 @@ exports.devCreateProfile = (request, response) => {
         .collection("dev_accounts")
         .doc(user.uid)
         .set({
-            devName: data.devName,
-            devEmail: user.email,
             devDisplayName: user.displayName, // display name is username while name is the developers actual name
             devProfileImgUrl: user.photoURL,
             devLinks: {
@@ -54,14 +43,21 @@ exports.devCreateProfile = (request, response) => {
 }
 
 exports.devGetProfile = (request, response) => {
-    let user
+    let user, params
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
     else user = request.user
+    if (typeof request.params != "object")
+        params = JSON.parse(request.params)
+    else params = request.params
+
+    let uid
+    if ("devUid" in Object.keys(params)) uid = params.devUid
+    else uid = user.uid
 
     fs
         .collection("dev_accounts")
-        .doc(user.uid)
+        .doc(uid)
         .get()
         .then((devDoc) => {
             if (devDoc.exists) return response.status(200).json(devDoc.data())
@@ -77,7 +73,6 @@ exports.devUpdateProfile = (request, response, next) => {
      * Updates a developer profile (name, username, email, GitHub, website, LinkedIn).
      * NOT TO BE USED FOR GAMIFICATION/COMMITS/PROJECTS IF FIELD IS NOT BEING UPDATED DO NOT SEND IT AS NULL.
      * DON'T INCLUDE IT IN THE DICTIONARY/OBJECT
-     * e.g. newData = {devEmail: "some@gmail.com"} --- this only updates the email and nothing else
      */
     let user, data
     if (typeof request.user != "object")
@@ -89,7 +84,6 @@ exports.devUpdateProfile = (request, response, next) => {
 
     // newUserData populated with email and display name if available
     let newUserData = {}
-    "devEmail" in data ? newUserData.email = data.devEmail : ""
     "devDisplayName" in data ? newUserData.displayName = data.devDisplayName : ""
 
     // updates the admin database if email or display name is in newUserData
@@ -108,9 +102,7 @@ exports.devUpdateProfile = (request, response, next) => {
     let devDocRef = fs.collection("dev_accounts").doc(user.uid)
 
     // creates updates for each data point that is passed in the request body -- if not include no update is created
-    "devEmail" in data ? batch.update(devDocRef, {"devEmail": data.devEmail}) : ""
     "devDisplayName" in data ? batch.update(devDocRef, {"devDisplayName": data.devDisplayName}) : ""
-    "devName" in data ? batch.update(devDocRef, {"devName": data.devName}) : ""
     if ("devLinks" in data) {
         "devGitHub" in data.devLinks ? batch.update(devDocRef, {"devLinks.devGitHub": data.devLinks.devGitHub}) : ""
         "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""
@@ -181,10 +173,7 @@ exports.devAddProject = (request, response) => {
 }
 
 exports.devDeleteProject = (request, response) => {
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
+    let data
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
@@ -193,7 +182,7 @@ exports.devDeleteProject = (request, response) => {
         .collection("dev_accounts")
         .doc(data.devUid)
         .update({
-            [`devProjects.${data.projectId}`]: firebase.firestore.FieldValue.delete()
+            [`devProjects.${data.projectId}`]: FieldValue.delete()
         })
         .then(() => {
             return response.status(200).json({message: "Developer removed from project"})
@@ -203,17 +192,6 @@ exports.devDeleteProject = (request, response) => {
         })
 }
 
-exports.addCommit = (request, response) => {
-
-}
-
-exports.addXP = (request, response) => {
-
-}
-
-exports.removeXP = (request, response) => {
-
-}
 
 exports.addBadge = (request, response) => {
 
