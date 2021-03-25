@@ -30,7 +30,7 @@
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
-		padding: 3em;
+		padding: 2em 1em;
 
 		img {
 			border-radius: 50%;
@@ -65,9 +65,9 @@
 		background-color: $lightyellow;
 		display: flex;
 		flex-direction: column;
-		height: 65%;
 		color: $darkBlue;
-		padding: 5%;
+		padding: 1em;
+		flex: 1;
 
 		.xp,
 		.badges,
@@ -81,7 +81,7 @@
 
 			h3 {
 				color: $yellow;
-				padding-bottom: 0.5rem;
+				text-transform: uppercase;
 			}
 
 			h5 {
@@ -93,10 +93,13 @@
 
 			.user-progress {
 				display: flex;
+				align-items: center;
 
 				h5 {
 					font-weight: 500;
 					font-size: 1em;
+					padding: 0;
+					margin: 0;
 				}
 			}
 
@@ -108,7 +111,7 @@
 			}
 
 			progress {
-				width: 12em;
+				flex: 1;
 				height: 1em;
 				margin-right: 1em;
 				-webkit-appearance: none;
@@ -141,25 +144,44 @@
 
 				.proj-icon {
 					align-self: center;
+					display: flex;
+					justify-content: space-between;
+					width: 4rem;
+					margin-left: auto;
 
 					a {
-						margin-left: 0.25em;
-						padding: 0.25em;
+						display: grid;
+						place-items: center;
+						height: 1.75rem;
+						width: 1.75rem;
+						border-radius: 50%;
 						color: $darkBlue;
 						background-color: $yellow;
-						border-radius: 50%;
 					}
+				}
+			}
+
+			.no-starred {
+				h5 {
+					font-size: 0.75em;
+					font-weight: bold;
+					color: rgba(22, 34, 59, 0.6);
+					text-transform: uppercase;
+				}
+
+				p {
+					font-weight: normal;
+					text-transform: none;
 				}
 			}
 		}
 	}
 
 	.sign-out {
-		flex: 1;
 		display: flex;
-		height: 100%;
 		justify-content: center;
 		align-items: center;
+		padding: 2em 1em;
 
 		a {
 			background-color: $lightgrey;

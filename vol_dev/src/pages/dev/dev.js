@@ -1,5 +1,4 @@
 import Sidebar from "./Components/sidebar";
-import userDetails from "./Components/data/userDetails";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
 import { useState, useEffect } from "react";
@@ -7,15 +6,13 @@ import { getSessionStorageExpire } from "../../utils";
 import axios from "axios";
 
 const Dev = () => {
-	const user = userDetails;
-	const [hamburger, setHamburger] = useState(false);
-	const [devDisplayName, setdevDisplayName] = useState("");
-	const [devProfileImgUrl, setdevProfileImgUrl] = useState("");
-	const [devLinks, setdevLinks] = useState("");
-	const [devGamification, setdevGamification] = useState("");
-	const [devProjects, setdevProjects] = useState("");
-	const [devCommits, setdevCommits] = useState("");
+	// Dummy user details for frontend tests
+	const user = require("./Components/data/userDetails").default;
 
+	// TODO: test user from backend (uncomment the folowing lines and remove dummy user)
+
+	/*
+	const [user, setUser] = useState(null);
 	useEffect(() => {
 		const url =
 			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
@@ -27,14 +24,20 @@ const Dev = () => {
 			.get(url, config)
 			.then((response) => {
 				data = response.data;
-				setdevDisplayName(data.devDisplayName);
-				setdevProfileImgUrl(data.devProfileImgUrl);
-				setdevProjects(data.devProjects);
-				setdevLinks(data.devLinks);
-				setdevGamification(data.gamification);
+				const deLinks = data.devLinks;
+				const gamification = data.gamification;
+				const fetchedUser = {
+					name: data.devDisplayName,
+					imgUrl: data.devProfileImgUrl,
+					projects: data.devProjects,
+				};
+				setUser(fetchedUser);
 			})
 			.catch((err) => {});
-	}, []);
+	}, [user]);
+	*/
+
+	const [hamburger, setHamburger] = useState(false);
 
 	const hamburgerClick = () => {
 		setHamburger(!hamburger);
@@ -46,12 +49,12 @@ const Dev = () => {
 		if (hamburger) {
 			sidebar.classList.remove("s-open");
 			hburger.classList.remove("h-open");
-			panelContainer.classList.remove("p-open");
+			// panelContainer.classList.remove("p-open");
 			hamclose.classList.remove("c-open");
 		} else {
 			sidebar.classList.add("s-open");
 			hburger.classList.add("h-open");
-			panelContainer.classList.add("p-open");
+			// panelContainer.classList.add("p-open");
 			hamclose.classList.add("c-open");
 		}
 	};
@@ -67,8 +70,8 @@ const Dev = () => {
 				crossorigin="anonymous"
 			/>
 
-			<Sidebar user={user[0]} hamCloseClick={hamburgerClick} />
-			<ProjectPanel user={user[0]} hamburger={hamburgerClick} />
+			<Sidebar user={user} hamCloseClick={hamburgerClick} />
+			<ProjectPanel user={user} hamburger={hamburgerClick} />
 		</div>
 	);
 };
