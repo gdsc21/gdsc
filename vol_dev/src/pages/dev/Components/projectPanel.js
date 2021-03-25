@@ -1,5 +1,5 @@
 import Devproject from "./devproject";
-import { Carousel } from "./carousel";
+import { Link } from "react-router-dom";
 
 const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 	return (
@@ -10,32 +10,39 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 					<i className="fas fa-bars"></i>
 				</button>
 				<nav className="devNav">
-					<a href="/">Dashboard</a>
-					<a href="/">Notifications</a>
-					<a href="/">Messages</a>
-					<a href="/">Explore</a>
+					{
+						//TODO: add notifications and messaging
+					}
+					<Link to="/dashboard">Dashboard</Link>
+					<Link to="/">Notifications</Link>
+					<Link to="/">Messages</Link>
+					<Link to="/explore">Explore</Link>
 				</nav>
 			</div>
 
 			{/* Current user projects */}
 			<div className="curProject">
 				<h1 className="head">Current Projects</h1>
-				<Carousel show={3}>
+				<div className="curProjectDisp">
 					{user.projects.map((project, id) => {
 						return <Devproject key={id} project={project} />;
 					})}
-				</Carousel>
+				</div>
 			</div>
 
-			{/* Projects that may interest the user */}
-			<div className="curProject">
+			{
+				//TODO: add an algorithm that determines projects the user might be interested in
+				/* Projects that may interest the user 
+			<div className="interestProject">
 				<h1 className="head">Projects that may interest you</h1>
-				<Carousel show={3}>
+				<div className="intProjectDisp">
 					{user.interestProjects.map((project, id) => {
 						return <Devproject key={id} project={project} />;
 					})}
-				</Carousel>
+				</div>
 			</div>
+			*/
+			}
 		</div>
 	);
 };
