@@ -9,11 +9,9 @@ const Dev = () => {
 	// Dummy user details for frontend tests
 	const user = require("./Components/data/userDetails").default;
 
-	// TODO: test user from backend (uncomment the folowing lines and remove dummy user)
-
-	/*
-	const [user, setUser] = useState(null);
+	const [user1, setUser1] = useState(null);
 	useEffect(() => {
+		// TODO get user details from the user auth (from signing in) instead of get API call to enable instant render
 		const url =
 			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
 		let token = getSessionStorageExpire("token");
@@ -31,11 +29,13 @@ const Dev = () => {
 					imgUrl: data.devProfileImgUrl,
 					projects: data.devProjects,
 				};
-				setUser(fetchedUser);
+				console.log(data)
+				setUser1(fetchedUser);
 			})
-			.catch((err) => {});
-	}, [user]);
-	*/
+			.catch((err) => {
+				console.log(err)
+			});
+	}, []);
 
 	const [hamburger, setHamburger] = useState(false);
 

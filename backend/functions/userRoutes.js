@@ -61,7 +61,7 @@ userApp.get("/get-project", auth, projLoad)
 userApp.post("/delete-project", auth, npDeleteProject, projDelete)
 
 // creates a developer profile -- must be called immediately after signup with GitHub -- creates developer document
-userApp.post("/dev-create-profile", auth, devCreateProfile)
+// userApp.post("/dev-create-profile", auth, devCreateProfile)
 
 // retrieves a developer document -- only available to logged in users
 userApp.get("/get-dev-profile", auth, devGetProfile)
