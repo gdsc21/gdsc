@@ -108,6 +108,9 @@ exports.devUpdateProfile = (request, response, next) => {
         "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""
         "devLinkedIn" in data.devLinks ? batch.update(devDocRef, {"devLinks.devLinkedIn": data.devLinks.devLinkedIn}) : ""
     }
+    "devTitle" in data ? batch.update(devDocRef, {"devTitle": data.devTitle}) : ""
+    "devBio" in data ? batch.update(devDocRef, {"devBio": data.devBio}) : ""
+
 
     // commit the updates and return
     batch

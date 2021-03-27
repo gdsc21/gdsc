@@ -8,6 +8,8 @@ exports.createDevDoc = functions.auth.user().onCreate((user) => {
         .doc(user.uid)
         .set({
             devDisplayName: user.displayName,
+            devTitle: "",
+            devBio: "",
             devProfileImgUrl: user.photoURL,
             devLinks: {
                 devWebsite: "",

@@ -2,15 +2,13 @@ import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
 import { useState, useEffect } from "react";
+import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { getSessionStorageExpire } from "../../utils";
 import axios from "axios";
 
 const Dev = () => {
-	// Dummy user details for frontend tests
-	const user = require("./Components/data/userDetails").default;
+	const [user, setUser] = useState(null);
 
-	const [DevData, setDevData] = useState(null)
-	const [user1, setUser1] = useState(null);
 	useEffect(() => {
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1
@@ -28,16 +26,8 @@ const Dev = () => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					setDevData(data)
-					const deLinks = data.devLinks;
-					const gamification = data.gamification;
-					const fetchedUser = {
-						name: data.devDisplayName,
-						imgUrl: data.devProfileImgUrl,
-						projects: data.devProjects,
-					};
 					console.log(data)
-					setUser1(fetchedUser);
+					setUser(data);
 				})
 				.then(() => {
 					// stops the loop
@@ -45,6 +35,10 @@ const Dev = () => {
 				})
 				.catch((err) => {
 					console.log(err)
+					if (err.statusCode === 403) {
+						// TODO: Enable automatic token refresh if user is still active
+						return <Redirect to="/signin"/>
+					}
 				});
 		}, 2000)
 
@@ -74,7 +68,7 @@ const Dev = () => {
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	if (DevData === null) {
+	if (user === null) {
 		return (
 			<div>
 				<h1>Hold on while we get your profile</h1>
@@ -87,7 +81,7 @@ const Dev = () => {
 					rel="stylesheet"
 					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 					integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-					crossorigin="anonymous"
+					crossOrigin="anonymous"
 				/>
 
 				<Sidebar user={user} hamCloseClick={hamburgerClick} />

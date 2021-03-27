@@ -1,4 +1,5 @@
 import Achievements from "./achievements";
+import StarredProject from "./starredProject";
 import img from "../defaultUser.png";
 import { fbApp } from "../../../firebase";
 import { removeSessionStorage } from "../../../utils";
@@ -21,17 +22,18 @@ const Sidebar = ({ user, hamCloseClick }) => {
 			</button>
 
 			<div className="profile">
-				<img src={user.img || img} />
+				<img src={user.devProfileImgUrl || img} />
 				<div className="user">
 					<a src="/">
 						<span>edit info</span>
 					</a>
-					<h1>{user.name}</h1>
-					<h3>{user.title}</h3>
+					<h1>{user.devDisplayName}</h1>
+					<h3>{user.devTitle}</h3>
 				</div>
 			</div>
 
-			<Achievements user={user} />
+			<Achievements game={user.gamification} />
+			<StarredProject project={{}} />
 
 			<div className="sign-out">
 				<Link to="/" onClick={signOut}>
