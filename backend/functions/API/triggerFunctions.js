@@ -23,10 +23,11 @@ exports.createDevDoc = functions.auth.user().onCreate((user) => {
             devProjects: {},
             devCommits: {}
         })
-        .then(() => {})
         .catch((err) => {
             console.log("Error:", err.statusCode, "Message:", err.message)
+            return false
         })
+    return true
 })
 
 exports.DeleteDevAccount = functions.auth.user().onDelete((user) => {

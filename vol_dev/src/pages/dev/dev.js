@@ -9,32 +9,45 @@ const Dev = () => {
 	// Dummy user details for frontend tests
 	const user = require("./Components/data/userDetails").default;
 
+	const [DevData, setDevData] = useState(null)
 	const [user1, setUser1] = useState(null);
 	useEffect(() => {
-		// TODO get user details from the user auth (from signing in) instead of get API call to enable instant render
-		const url =
-			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
-		let token = getSessionStorageExpire("token");
-		let config = { headers: { Authorization: `Bearer ${token}` } };
-		let data;
+		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
+		let counter = 1
+		const fetchProfile = setInterval(() => {
+			if (counter >= 3) clearInterval(fetchProfile)
+			else ++counter
 
-		axios
-			.get(url, config)
-			.then((response) => {
-				data = response.data;
-				const deLinks = data.devLinks;
-				const gamification = data.gamification;
-				const fetchedUser = {
-					name: data.devDisplayName,
-					imgUrl: data.devProfileImgUrl,
-					projects: data.devProjects,
-				};
-				console.log(data)
-				setUser1(fetchedUser);
-			})
-			.catch((err) => {
-				console.log(err)
-			});
+			const url =
+				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
+			let token = getSessionStorageExpire("token");
+			let config = { headers: { Authorization: `Bearer ${token}` } };
+			let data;
+
+			axios
+				.get(url, config)
+				.then((response) => {
+					data = response.data;
+					setDevData(data)
+					const deLinks = data.devLinks;
+					const gamification = data.gamification;
+					const fetchedUser = {
+						name: data.devDisplayName,
+						imgUrl: data.devProfileImgUrl,
+						projects: data.devProjects,
+					};
+					console.log(data)
+					setUser1(fetchedUser);
+				})
+				.then(() => {
+					// stops the loop
+					clearInterval(fetchProfile)
+				})
+				.catch((err) => {
+					console.log(err)
+				});
+		}, 2000)
+
 	}, []);
 
 	const [hamburger, setHamburger] = useState(false);
@@ -61,19 +74,29 @@ const Dev = () => {
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	return (
-		<div className="dev">
-			<link
-				rel="stylesheet"
-				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-				integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-				crossorigin="anonymous"
-			/>
+	if (DevData === null) {
+		return (
+			<div>
+				<h1>Hold on while we get your profile</h1>
+			</div>
+		)
+	} else {
+		return (
+			<div className="dev">
+				<link
+					rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+					integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+					crossorigin="anonymous"
+				/>
 
-			<Sidebar user={user} hamCloseClick={hamburgerClick} />
-			<ProjectPanel user={user} hamburger={hamburgerClick} />
-		</div>
-	);
+				<Sidebar user={user} hamCloseClick={hamburgerClick} />
+				<ProjectPanel user={user} hamburger={hamburgerClick} />
+			</div>
+		);
+	}
+
+
 };
 
 export default Dev;
