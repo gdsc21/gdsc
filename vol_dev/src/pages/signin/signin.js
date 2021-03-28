@@ -1,96 +1,40 @@
-import { useState } from "react";
-import axios from 'axios';
-import { fbApp, fs, fb } from "../../firebase"
-import { setStorageSessionExpire } from "../../utils";
+import React, { useState } from "react";
+import "./styles/signin.css";
+import { Link } from "react-router-dom";
+
+// Import components
+import Header from "./components/header";
+import MainPage from "./components/mainpage";
+import OrgSignIn from "./components/orgSignin";
 
 const SignIn = () => {
-    const [Email, setEmail] = useState("")
-    const [Password, setPassword] = useState("")
+	const [selection, setSelection] = useState("main-page");
 
-    const orgLogin = (e) => {
-        e.preventDefault()
+	return (
+		<div className="signin">
+			<link
+				rel="stylesheet"
+				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+				integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+				crossorigin="anonymous"
+			/>
 
-        let token
-        fbApp
-            .auth()
-            .setPersistence(fb.auth.Auth.Persistence.SESSION)
-            .signInWithEmailAndPassword(Email, Password)
-            .then((userCredential) => {
-                return userCredential.user.getIdToken(true)
-            })
-            .then((newToken) => {
-                token = newToken
-            })
-            .catch((err) => {
-                // TODO: Sign in error
-            })
-    }
+			<Header />
+			{selection === "main-page" ? (
+				<MainPage setSelection={setSelection} />
+			) : selection === "org" ? (
+				<OrgSignIn setSelection={setSelection} />
+			) : (
+				""
+			)}
 
-    const devLogin = () => {
-        let provider = new fb.auth.GithubAuthProvider();
-        let gHtoken, token
-        fbApp
-            .auth()
-            .setPersistence(fb.auth.Auth.Persistence.SESSION)
-            .signInWithPopup(provider)
-            .then((result) => {
-                // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-                gHtoken = result.credential.accessToken;
-
-                console.log(result.user)
-                return result.user.getIdToken();
-            })
-            .then((idToken) => {
-                token = idToken
-                if (token === "undefined") {
-                    // TODO: Handle what happens if the token is not returned/there was an error
-                }
-
-                setStorageSessionExpire("isDev", true, 3600000)
-                setStorageSessionExpire("token", token, 3600000)
-
-                // TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
-
-            })
-            .catch((error) => {
-                // https://firebase.google.com/docs/reference/js/firebase.auth.AuthError
-                // https://firebase.google.com/docs/reference/js/firebase.auth.Auth#signinwithpopup
-                switch (error.code) {
-                    case "auth/account-exists-with-different-credential":
-                        // TODO: this error would mean that the users github account uses an email that a non-profit uses
-                        // TODO: so this should probably give a message saying contact us or something like that for now
-                        break;
-                    case "auth/popup-blocked":
-                        // TODO: if the popup is block tell them to allow it/pause adblock to sign in
-                        break;
-                    case "auth/popup-closed-by-user":
-                        // TODO: if the popup is closed and signin couldn't be completed then redirect to the sign up page
-                        break;
-                    default:
-                    // TODO: Unkown error occured alert + redirect to signup/try again
-                }
-            });
-    }
-
-
-    return (
-        <div className="orglogin">
-            <form onSubmit={ orgLogin }>
-                <div className="form-field">
-                    <label htmlFor="orgemail">Enter your email</label>
-                    <input type="text" id="orgname" value={Email} onChange={e => setEmail(e.target.value)}/>
-                    <br />
-                </div>
-                <div className="form-field">
-                    <label htmlFor="orgpass">Enter password</label>
-                    <input type="text" id="orgpass" value={Password} onChange={e => setPassword(e.target.value)}/>
-                    <br />
-                </div>
-                <button className="loginButton">Log In</button>
-            </form>
-        </div>
-
-    );
+			<div className="have-account">
+				<Link className="have-account" to="/signup">
+					Don't have an account?
+				</Link>
+			</div>
+		</div>
+	);
 };
 
 export default SignIn;
