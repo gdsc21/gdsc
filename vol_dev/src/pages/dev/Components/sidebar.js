@@ -2,7 +2,7 @@ import Achievements from "./achievements";
 import img from "../defaultUser.png";
 import { fbApp } from "../../../firebase";
 import { removeSessionStorage } from "../../../utils";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ user, hamCloseClick }) => {
 	function signOut() {
