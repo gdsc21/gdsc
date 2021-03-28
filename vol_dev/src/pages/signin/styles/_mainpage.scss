@@ -1,0 +1,67 @@
+.main_signin .heading {
+	font-weight: 500;
+	font-size: 1.2rem;
+	text-align: center;
+	text-transform: uppercase;
+	opacity: 0.9;
+}
+
+.main_signin .cards {
+	display: flex;
+	justify-content: space-around;
+	padding: 1rem 15vw;
+}
+
+.main_signin .choice__card {
+	z-index: 2;
+	background: linear-gradient(
+		115.35deg,
+		rgba(255, 255, 255, 0.6) 3.11%,
+		rgba(255, 255, 255, 0.3) 96.88%
+	);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	backdrop-filter: blur(40px);
+	border-radius: 53px;
+	margin: 1rem 0;
+	padding: 1rem 4rem;
+	color: $primaryclr;
+	text-align: center;
+
+	cursor: pointer;
+
+	display: grid;
+	grid-template-rows: 13rem 1.5rem 5rem;
+
+	img {
+		place-self: center;
+		height: 7rem;
+		width: auto;
+	}
+
+	.ima {
+		font-weight: 500;
+		font-size: 1.25rem;
+		opacity: 0.9;
+		line-height: 1;
+	}
+
+	.title {
+		font-weight: 800;
+		font-size: 2rem;
+		text-transform: uppercase;
+		line-height: 1;
+	}
+}
+
+.main_signin {
+	@media screen and (max-width: 1000px) {
+		.cards {
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.choice__card {
+			width: 20rem;
+		}
+	}
+}

@@ -1,5 +1,4 @@
 import Achievements from "./achievements";
-import StarredProject from "./starredProject";
 import img from "../defaultUser.png";
 import { fbApp } from "../../../firebase";
 import { removeSessionStorage } from "../../../utils";
@@ -12,6 +11,7 @@ const Sidebar = ({ user, hamCloseClick }) => {
 			.signOut()
 			.then(() => {
 				removeSessionStorage("token");
+				window.location.href = "/";
 			});
 	}
 
@@ -22,18 +22,17 @@ const Sidebar = ({ user, hamCloseClick }) => {
 			</button>
 
 			<div className="profile">
-				<img src={user.devProfileImgUrl || img} />
+				<img src={user.img || img} />
 				<div className="user">
 					<a src="/">
 						<span>edit info</span>
 					</a>
-					<h1>{user.devDisplayName}</h1>
-					<h3>{user.devTitle}</h3>
+					<h1>{user.name}</h1>
+					<h3>{user.title}</h3>
 				</div>
 			</div>
 
-			<Achievements game={user.gamification} />
-			<StarredProject project={{}} />
+			<Achievements user={user} />
 
 			<div className="sign-out">
 				<Link to="/" onClick={signOut}>
@@ -43,4 +42,5 @@ const Sidebar = ({ user, hamCloseClick }) => {
 		</div>
 	);
 };
+
 export default Sidebar;

@@ -4,16 +4,15 @@ import charity from "../img/charity_icon.svg";
 import { fbApp, fs, fb } from "../../../firebase";
 import { setStorageSessionExpire } from "../../../utils";
 
-
 const MainPage = ({ setSelection }) => {
 	const setDev = () => {
 		let provider = new fb.auth.GithubAuthProvider();
-		let gHtoken, token
+		let gHtoken, token;
 		fbApp
 			.auth()
 			.setPersistence(fb.auth.Auth.Persistence.SESSION)
 			.then(() => {
-				return fbApp.auth().signInWithPopup(provider)
+				return fbApp.auth().signInWithPopup(provider);
 			})
 			.then((result) => {
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
@@ -21,13 +20,13 @@ const MainPage = ({ setSelection }) => {
 				return result.user.getIdToken();
 			})
 			.then((idToken) => {
-				token = idToken
+				token = idToken;
 				if (token === "undefined") {
 					// TODO: Handle what happens if the token is not returned/there was an error
 				}
 
-				setStorageSessionExpire("isDev", true, 3600000)
-				setStorageSessionExpire("token", token, 3600000)
+				setStorageSessionExpire("isDev", true, 3600000);
+				setStorageSessionExpire("token", token, 3600000);
 
 				// TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
 			})
@@ -46,11 +45,9 @@ const MainPage = ({ setSelection }) => {
 						// TODO: if the popup is closed and signin couldn't be completed then redirect to the sign up page
 						break;
 					default:
-						// TODO: Unkown error occured alert + redirect to signup/try again
+					// TODO: Unkown error occured alert + redirect to signup/try again
 				}
 			});
-
-
 	};
 
 	const setNonprofit = () => {
