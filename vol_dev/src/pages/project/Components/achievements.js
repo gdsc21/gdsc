@@ -7,7 +7,7 @@ const Achievements = ({ user }) => {
 				rel="stylesheet"
 				href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 				integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-				crossorigin="anonymous"
+				crossOrigin="anonymous"
 			/>
 
 			<div className="xp">
@@ -44,11 +44,11 @@ const Achievements = ({ user }) => {
 							{/* // TODO: add links to these icons */}
 
 							<Link to="/" name="project page">
-								<i class="fa fa-info"></i>
+								<i className="fa fa-info"></i>
 							</Link>
 
 							<Link to="/" name="github page">
-								<i class="fab fa-github"></i>
+								<i className="fab fa-github"></i>
 							</Link>
 						</div>
 					</div>

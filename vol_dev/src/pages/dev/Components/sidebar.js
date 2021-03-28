@@ -18,7 +18,7 @@ const Sidebar = ({ user, hamCloseClick }) => {
 	return (
 		<div className="sidebar">
 			<button className="ham-close" onClick={hamCloseClick}>
-				<i class="fas fa-times"></i>
+				<i className="fas fa-times"></i>
 			</button>
 
 			<div className="profile">

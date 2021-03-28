@@ -1,15 +1,19 @@
 import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
-import { useState, useEffect } from "react";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
+import {useState, useEffect, useContext} from "react";
+import { Redirect } from "react-router-dom";
 import { getSessionStorageExpire } from "../../utils";
 import axios from "axios";
+import { Context } from "../../store";
 
 const Dev = () => {
 	const [user, setUser] = useState(null);
+	const { store, dispatch } = useContext(Context)
 
 	useEffect(() => {
+		if (store != null) return
+
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1
 		const fetchProfile = setInterval(() => {
@@ -27,6 +31,7 @@ const Dev = () => {
 				.then((response) => {
 					data = response.data;
 					console.log(data)
+					dispatch({ type: "set", payload: data})
 					setUser(data);
 				})
 				.then(() => {
@@ -68,7 +73,7 @@ const Dev = () => {
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	if (user === null) {
+	if (store === null) {
 		return (
 			<div>
 				<h1>Hold on while we get your profile</h1>
@@ -84,8 +89,8 @@ const Dev = () => {
 					crossOrigin="anonymous"
 				/>
 
-				<Sidebar user={user} hamCloseClick={hamburgerClick} />
-				<ProjectPanel user={user} hamburger={hamburgerClick} />
+				<Sidebar user={store} hamCloseClick={hamburgerClick} />
+				<ProjectPanel user={store} hamburger={hamburgerClick} />
 			</div>
 		);
 	}
