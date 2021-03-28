@@ -41,9 +41,9 @@ const App = () => {
 				{
 					// if user is logged in, do to the project page
 					// if user is not logged in go to home
-					// !!user ? <Project /> : <Redirect to="/" />
+					!!user ? <Project /> : <Redirect to="/" />
 
-					<Project /> // for Project page debugging
+					// <Project /> // for Project page debugging
 				}
 			</Route>
 			<Route exact path="/explore">
