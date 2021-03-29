@@ -1,0 +1,323 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.container {
+  background-color: #141b28;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: white;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.container .np-dash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container .np-dash .devNav {
+  display: none;
+}
+
+.container .np-dash .profile {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.container .np-dash .profile .profile-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.container .np-dash .profile .profile-image img {
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 50%;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  width: 5em;
+  height: 5em;
+}
+
+.container .np-dash .profile .profile-image .user {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-left: 2em;
+}
+
+.container .np-dash .profile .profile-image .user h1 {
+  font-weight: normal;
+  font-size: 1.8em;
+}
+
+.container .np-dash .profile .profile-image .user h3 {
+  font-weight: normal;
+  font-size: 1em;
+  line-height: 1em;
+  text-transform: uppercase;
+}
+
+.container .np-dash .profile .create-edit-mobile {
+  display: none;
+}
+
+.container .np-dash .profile a {
+  margin-top: 1em;
+  background-color: #fca311;
+  color: #141b28;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 1em;
+}
+
+.container .np-dash .profile a span {
+  padding: 0.25em;
+  text-transform: lowercase;
+}
+
+.container .np-dash .dash-option {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.container .np-dash .dash-option .devNav {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.container .np-dash .dash-option .devNav a {
+  padding-left: 2em;
+}
+
+.container .np-dash .dash-option .devNav a span {
+  font-size: 1.1em;
+  text-transform: uppercase;
+}
+
+.container .np-dash .dash-option .create-edit a {
+  margin-top: 1em;
+  background-color: white;
+  color: #141b28;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 1em;
+  width: 20em;
+}
+
+.container .np-dash .dash-option .create-edit a span {
+  padding: 0.25em;
+  text-transform: lowercase;
+}
+
+.container .carousel-3 .carousel-container {
+  margin-top: 2em;
+}
+
+.container .carousel-1 {
+  display: none;
+}
+
+.container .carousel-1 .carousel-container {
+  margin-top: 2em;
+}
+
+.hamburger, .sidebar {
+  display: none;
+}
+
+@media screen and (max-width: 1242px) {
+  .container {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container .np-dash {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .container .np-dash .profile .profile-image {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .container .np-dash .profile .create-edit-mobile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .container .np-dash .profile .create-edit-mobile a {
+    background-color: white;
+  }
+  .container .np-dash .devNav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    top: 2em;
+    left: 0;
+    width: 100%;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+  }
+  .container .np-dash .devNav a span {
+    font-size: 1.3em;
+    text-transform: uppercase;
+  }
+  .container .np-dash .dash-option {
+    display: none;
+  }
+  .container .carousel-3 {
+    display: none;
+  }
+  .container .carousel-1 {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container .hamburger {
+    display: inline;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    width: 2em;
+    height: 2em;
+    color: white;
+    background-color: #141b28;
+    border: none;
+  }
+  .container .sidebar {
+    display: none;
+  }
+  .container .h-open {
+    display: none;
+  }
+  .container .n-open {
+    display: none;
+  }
+  .container .s-open {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .container .s-open .c-open {
+    display: inline;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    height: 1em;
+    width: 1em;
+    color: white;
+    background-color: #141b28;
+    border: none;
+  }
+  .container .s-open .devNav {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: relative;
+  }
+  .container .s-open .devNav div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 100%;
+    padding-bottom: 1em;
+    border-bottom: solid white 1px;
+  }
+  .container .s-open .devNav div a {
+    margin-top: 2em;
+  }
+  .container .s-open .devNav div a span {
+    color: white;
+    font-size: 1.5em;
+  }
+  .container .np-dash .devNav {
+    display: none;
+  }
+}
+/*# sourceMappingURL=np.css.map */
