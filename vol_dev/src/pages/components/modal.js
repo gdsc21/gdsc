@@ -2,10 +2,6 @@ import { useEffect } from "react";
 import "./styles/modal.css";
 
 const Modal = ({ open, setOpen, title, children }) => {
-	useEffect(() => {
-		console.log(open);
-	}, [open]);
-
 	if (open) {
 		return (
 			<div

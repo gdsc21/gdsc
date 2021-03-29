@@ -4,7 +4,7 @@ import charity from "../img/charity_icon.svg";
 
 const MainPage = ({ setSelection }) => {
 	const setDev = () => {
-		// TODO: Do dev signup backend
+		// TODO: Do dev signin backend
 	};
 
 	const setNonprofit = () => {

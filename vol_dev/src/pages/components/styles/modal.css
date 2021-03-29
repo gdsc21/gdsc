@@ -59,7 +59,8 @@
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  margin: 0.5rem 3rem;
+  margin: 0.5rem 0;
+  text-align: center;
   text-transform: uppercase;
   color: #16223b;
 }

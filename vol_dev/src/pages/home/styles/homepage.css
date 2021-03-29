@@ -249,6 +249,7 @@ a {
   -webkit-backdrop-filter: blur(15px);
           backdrop-filter: blur(15px);
   border-radius: 22px;
+  max-width: 22rem;
 }
 
 .home__header #homepage-featured-projects .project h3 {

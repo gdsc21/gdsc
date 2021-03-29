@@ -11,7 +11,7 @@ import msgLogo from "../img/msgLogo.png";
 import abstract from "../img/abstract.svg";
 
 // Upload data
-import projectData from "./projectData";
+import projectData from "./featureProjectData";
 
 // Upload css
 import "../styles/homepage.css";
@@ -135,7 +135,7 @@ const Header = () => {
 					))}
 				</div>
 
-				<h2 className="project-title">Awesome Projects Built on Smth Smth </h2>
+				<h2 className="project-title">Awesome Projects Built on Relite</h2>
 
 				{/* Project components */}
 				<div className="projects" id="homepage-featured-projects">

@@ -2,9 +2,11 @@ import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
 import { useState, useEffect } from "react";
-import { Switch, Route, Redirect, Link } from "react-router-dom";
-import { getSessionStorageExpire } from "../../utils";
+import { getSessionStorageExpire, removeSessionStorage } from "../../utils";
+import { fbApp } from "../../firebase";
 import axios from "axios";
+import Modal from "../components/modal";
+import EditProfile from "./Components/EditProfile";
 
 const Dev = () => {
 	// const user = require("./Components/data/userDetails").default;
@@ -36,16 +38,26 @@ const Dev = () => {
 					clearInterval(fetchProfile);
 				})
 				.catch((err) => {
+					fbApp
+						.auth()
+						.signOut()
+						.then(() => {
+							removeSessionStorage("token");
+							window.location.href = "/signin";
+						});
+
 					console.log(err);
 					if (err.statusCode === 403) {
 						// TODO: Enable automatic token refresh if user is still active
-						return <Redirect to="/signin" />;
+						// return <Redirect to="/signin" />;
+						window.location.href = "/signin";
 					}
 				});
 		}, 2000);
 	}, []);
 
 	const [hamburger, setHamburger] = useState(false);
+	const [showEditProfile, setShowEditProfile] = useState(false);
 
 	const hamburgerClick = () => {
 		setHamburger(!hamburger);
@@ -112,8 +124,14 @@ const Dev = () => {
 					integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
 					crossOrigin="anonymous"
 				/>
-
-				<Sidebar user={user} hamCloseClick={hamburgerClick} />
+				<Modal open={showEditProfile} setOpen={setShowEditProfile} title="Edit Profile">
+					<EditProfile user={user} setShowEditProfile={setShowEditProfile} />
+				</Modal>
+				<Sidebar
+					user={user}
+					hamCloseClick={hamburgerClick}
+					setShowEditProfile={setShowEditProfile}
+				/>
 				<ProjectPanel user={user} hamburger={hamburgerClick} />
 			</div>
 		);

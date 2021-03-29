@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import "../scss/signup.scss";
 import { setStorageSessionExpire } from "../../../utils";
-import { Link } from "react-router-dom";
 import Country from "./country";
 
 const OrgSignUp = ({ setSelection }) => {

@@ -532,6 +532,78 @@
   }
 }
 
+.developer__dashboard .dev__edit-profile {
+  min-width: 50vw;
+}
+
+.developer__dashboard .dev__edit-profile input,
+.developer__dashboard .dev__edit-profile textarea {
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 28px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  font-size: 0.875rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+
+.developer__dashboard .dev__edit-profile input:focus,
+.developer__dashboard .dev__edit-profile textarea:focus {
+  border: 2px solid #16223b;
+}
+
+.developer__dashboard .dev__edit-profile textarea {
+  display: block;
+  min-height: 5rem;
+}
+
+.developer__dashboard .dev__edit-profile label {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: block;
+}
+
+.developer__dashboard .dev__edit-profile button {
+  background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
+  border-radius: 2rem;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.developer__dashboard .dev__edit-profile .error {
+  color: red;
+  font-size: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.developer__dashboard .dev__edit-profile .form-error {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.developer__dashboard .dev__edit-profile .edit-profile__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1rem 0;
+}
+
+.developer__dashboard .dev__edit-profile .edit-profile__buttons .edit-profile__cancel {
+  background: linear-gradient(329.74deg, rgba(139, 30, 30, 0.86) 18.42%, rgba(139, 59, 30, 0.86) 81.58%);
+}
+
 .developer__dashboard {
   background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
   background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
