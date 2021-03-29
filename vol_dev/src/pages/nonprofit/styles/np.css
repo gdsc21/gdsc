@@ -12,9 +12,10 @@ a {
   color: white;
 }
 
-.container {
+.np-container {
   background-color: #141b28;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -30,17 +31,79 @@ a {
   padding-right: 20%;
 }
 
-.container .np-dash {
+.np-container .np-curProject {
+  margin-top: 3%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.np-container .np-curProject .devproject {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 1em;
+  margin: 0.5em 1em 0.5em 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 19rem;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 2em 1.5em;
+}
+
+.np-container .np-curProject .devproject h3,
+.np-container .np-curProject .devproject h4 {
+  color: #fca311;
+}
+
+.np-container .np-curProject .devproject h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  padding-bottom: 0.5em;
+}
+
+.np-container .np-curProject .devproject h4 {
+  text-transform: uppercase;
+  padding-right: 1em;
+}
+
+.np-container .np-curProject .devproject div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0.375em;
+}
+
+.np-container .np-curProject .devproject .description-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: left;
+}
+
+.np-container .np-dash {
+  margin-top: 5%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.container .np-dash .devNav {
+.np-container .np-dash .np-devnav {
   display: none;
 }
 
-.container .np-dash .profile {
+.np-container .np-dash .np-profile {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -50,13 +113,13 @@ a {
           flex-direction: column;
 }
 
-.container .np-dash .profile .profile-image {
+.np-container .np-dash .np-profile .np-profile-image {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.container .np-dash .profile .profile-image img {
+.np-container .np-dash .np-profile .np-profile-image img {
   background-color: white;
   padding: 0.5em;
   border-radius: 50%;
@@ -67,7 +130,7 @@ a {
   height: 5em;
 }
 
-.container .np-dash .profile .profile-image .user {
+.np-container .np-dash .np-profile .np-profile-image .np-user {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -78,23 +141,23 @@ a {
   margin-left: 2em;
 }
 
-.container .np-dash .profile .profile-image .user h1 {
+.np-container .np-dash .np-profile .np-profile-image .np-user h1 {
   font-weight: normal;
   font-size: 1.8em;
 }
 
-.container .np-dash .profile .profile-image .user h3 {
+.np-container .np-dash .np-profile .np-profile-image .np-user h3 {
   font-weight: normal;
   font-size: 1em;
   line-height: 1em;
   text-transform: uppercase;
 }
 
-.container .np-dash .profile .create-edit-mobile {
+.np-container .np-dash .np-profile .np-create-edit-mobile {
   display: none;
 }
 
-.container .np-dash .profile a {
+.np-container .np-dash .np-profile a {
   margin-top: 1em;
   background-color: #fca311;
   color: #141b28;
@@ -107,12 +170,12 @@ a {
   border-radius: 1em;
 }
 
-.container .np-dash .profile a span {
+.np-container .np-dash .np-profile a span {
   padding: 0.25em;
   text-transform: lowercase;
 }
 
-.container .np-dash .dash-option {
+.np-container .np-dash .np-dash-option {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -126,7 +189,7 @@ a {
           align-items: flex-end;
 }
 
-.container .np-dash .dash-option .devNav {
+.np-container .np-dash .np-dash-option .np-devnav {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -136,16 +199,16 @@ a {
           justify-content: flex-end;
 }
 
-.container .np-dash .dash-option .devNav a {
+.np-container .np-dash .np-dash-option .np-devnav a {
   padding-left: 2em;
 }
 
-.container .np-dash .dash-option .devNav a span {
+.np-container .np-dash .np-dash-option .np-devnav a span {
   font-size: 1.1em;
   text-transform: uppercase;
 }
 
-.container .np-dash .dash-option .create-edit a {
+.np-container .np-dash .np-dash-option .np-create-edit a {
   margin-top: 1em;
   background-color: white;
   color: #141b28;
@@ -159,53 +222,42 @@ a {
   width: 20em;
 }
 
-.container .np-dash .dash-option .create-edit a span {
+.np-container .np-dash .np-dash-option .np-create-edit a span {
   padding: 0.25em;
   text-transform: lowercase;
 }
 
-.container .carousel-3 .carousel-container {
-  margin-top: 2em;
-}
-
-.container .carousel-1 {
-  display: none;
-}
-
-.container .carousel-1 .carousel-container {
-  margin-top: 2em;
-}
-
-.hamburger, .sidebar {
+.np-hamburger, .np-sidebar {
   display: none;
 }
 
 @media screen and (max-width: 1242px) {
-  .container {
+  .np-container {
     padding-left: 10%;
     padding-right: 10%;
   }
 }
 
 @media screen and (max-width: 900px) {
-  .container {
+  .np-container {
     padding-left: 5%;
     padding-right: 5%;
   }
 }
 
 @media screen and (max-width: 800px) {
-  .container .np-dash {
+  .np-container .np-dash {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 15%;
+  }
+  .np-container .np-dash .np-profile .np-profile-image {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
   }
-  .container .np-dash .profile .profile-image {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
-  .container .np-dash .profile .create-edit-mobile {
+  .np-container .np-dash .np-profile .np-create-edit-mobile {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -214,37 +266,31 @@ a {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .container .np-dash .profile .create-edit-mobile a {
+  .np-container .np-dash .np-profile .np-create-edit-mobile a {
     background-color: white;
   }
-  .container .np-dash .devNav {
+  .np-container .np-dash .np-devnav {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     position: absolute;
-    top: 2em;
+    top: 5%;
     left: 0;
     width: 100%;
     -ms-flex-pack: distribute;
         justify-content: space-around;
   }
-  .container .np-dash .devNav a span {
+  .np-container .np-dash .np-devnav a span {
     font-size: 1.3em;
     text-transform: uppercase;
   }
-  .container .np-dash .dash-option {
+  .np-container .np-dash .np-dash-option {
     display: none;
-  }
-  .container .carousel-3 {
-    display: none;
-  }
-  .container .carousel-1 {
-    display: block;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .container .hamburger {
+  .np-container .np-hamburger {
     display: inline;
     position: absolute;
     top: 1em;
@@ -255,21 +301,19 @@ a {
     background-color: #141b28;
     border: none;
   }
-  .container .sidebar {
+  .np-container .np-sidebar {
     display: none;
   }
-  .container .h-open {
+  .np-container .h-open {
     display: none;
   }
-  .container .n-open {
-    display: none;
-  }
-  .container .s-open {
+  .np-container .s-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    z-index: 1;
   }
-  .container .s-open .c-open {
+  .np-container .s-open .c-open {
     display: inline;
     position: absolute;
     top: 1em;
@@ -280,7 +324,7 @@ a {
     background-color: #141b28;
     border: none;
   }
-  .container .s-open .devNav {
+  .np-container .s-open .np-devnav {
     width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -294,7 +338,7 @@ a {
             align-items: center;
     position: relative;
   }
-  .container .s-open .devNav div {
+  .np-container .s-open .np-devnav div {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -309,14 +353,14 @@ a {
     padding-bottom: 1em;
     border-bottom: solid white 1px;
   }
-  .container .s-open .devNav div a {
+  .np-container .s-open .np-devnav div a {
     margin-top: 2em;
   }
-  .container .s-open .devNav div a span {
+  .np-container .s-open .np-devnav div a span {
     color: white;
     font-size: 1.5em;
   }
-  .container .np-dash .devNav {
+  .np-container .np-dash .np-devnav {
     display: none;
   }
 }

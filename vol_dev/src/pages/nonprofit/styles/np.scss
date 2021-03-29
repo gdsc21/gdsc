@@ -4,24 +4,68 @@ a{
     text-decoration: none;
     color: $white;
 }
-.container {
+.np-container {
     background-color: $darkBlue;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     color: $white;
     justify-content: center;
     padding-left: 20%;
     padding-right: 20%;
-    .np-dash {
+    .np-curProject {
+        margin-top: 3%;
         display: flex;
-        .devNav {
+        flex-wrap: wrap;
+        justify-content: center;
+            .devproject {
+				background: rgba(255, 255, 255, 0.4);
+				border-radius: 1em;
+				margin: 0.5em 1em 0.5em 0;
+				display: flex;
+				width: 19rem;
+				flex-direction: column;
+				padding: 2em 1.5em;
+
+				h3,
+				h4 {
+					color: $yellow;
+				}
+
+				h3 {
+					text-align: center;
+					font-size: 1.5rem;
+					padding-bottom: 0.5em;
+				}
+
+				h4 {
+					text-transform: uppercase;
+					padding-right: 1em;
+				}
+
+				div {
+					display: flex;
+					padding: 0.375em;
+				}
+
+				.description-div {
+					display: flex;
+					flex-direction: column;
+					text-align: left;
+                }
+            }
+        }
+    .np-dash {
+        margin-top: 5%;
+        display: flex;
+        .np-devnav {
             display: none;
         }
-        .profile {
+        .np-profile {
             display: flex;
             flex-direction: column;
-            .profile-image {
+            .np-profile-image {
                 display: flex;
                 img {
                     background-color: $white;
@@ -31,7 +75,7 @@ a{
                     width: 5em;
                     height: 5em;
                 }
-                .user{
+                .np-user{
                     display: flex;
                     flex-direction: column;
                     margin-left: 2em;
@@ -47,7 +91,7 @@ a{
                     }
                 }
             }
-            .create-edit-mobile {
+            .np-create-edit-mobile {
                 display: none;
             }
             a {
@@ -63,12 +107,12 @@ a{
                 }
             }
         }
-        .dash-option {
+        .np-dash-option {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            .devNav {
+            .np-devnav {
                 width: 100%;
                 display: flex;
                 justify-content: flex-end;
@@ -80,7 +124,7 @@ a{
                     }
                 }
             }
-            .create-edit {
+            .np-create-edit {
                 a {
                     margin-top: 1em;
                     background-color: $white;
@@ -97,42 +141,32 @@ a{
             }
         }
     }
-    .carousel-3 {
-        .carousel-container {
-            margin-top: 2em;
-        }
-    }
-    .carousel-1 {
-        display: none;
-        .carousel-container {
-            margin-top: 2em;
-        }
-    }
 }
-.hamburger, .sidebar {
+.np-hamburger, .np-sidebar {
     display: none;
 }
 @media screen and (max-width: 1242px) {
-    .container {
+    .np-container {
         padding-left: 10%;
         padding-right: 10%;
     }
 }
 @media screen and (max-width: 900px) {
-    .container {
+    .np-container {
         padding-left: 5%;
         padding-right: 5%;
     }
 }
 @media screen and (max-width: 800px) {
-    .container {
+    .np-container {
         .np-dash {
             justify-content: center;
-            .profile {
-                .profile-image {
+            margin-top: 15%;
+            .np-profile {
+                .np-profile-image {
                     justify-content: center;
                 }
-                .create-edit-mobile {
+                .np-create-edit-mobile {
                     display: flex;
                     flex-direction: column;
                     a {
@@ -140,10 +174,10 @@ a{
                     }
                 }
             }
-            .devNav {
+            .np-devnav {
                 display: flex;
                 position: absolute;
-                top: 2em;
+                top: 5%;
                 left: 0;
                 width: 100%;
                 justify-content: space-around;
@@ -154,21 +188,15 @@ a{
                     }
                 }
             }
-            .dash-option {
+            .np-dash-option {
                 display: none;
             }
-        }
-        .carousel-3 {
-            display: none;
-        }
-        .carousel-1 {
-            display: block;
         }
     }
 }
 @media screen and (max-width: 500px) {
-    .container {
-        .hamburger {
+    .np-container {
+        .np-hamburger {
             display: inline;
             position: absolute;
             top: 1em;
@@ -179,17 +207,15 @@ a{
             background-color: $darkBlue;
             border: none;
         }
-        .sidebar {
+        .np-sidebar {
             display: none;
         }
         .h-open {
             display: none;
         }
-        .n-open {
-            display: none;
-        }
         .s-open {
             display: flex;
+            z-index: 1;
             .c-open {
                 display: inline;
                 position: absolute;
@@ -201,7 +227,7 @@ a{
                 background-color: $darkBlue;
                 border: none;
             }
-            .devNav {
+            .np-devnav {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
@@ -225,7 +251,7 @@ a{
             }
         }
         .np-dash {
-            .devNav {
+            .np-devnav {
                 display: none;
             }
         }

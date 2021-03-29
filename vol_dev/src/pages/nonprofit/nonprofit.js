@@ -1,5 +1,3 @@
-
-//import "./styles/dev.css";
 import "./styles/np.css"
 import { useState, useEffect } from "react";
 import { getSessionStorageExpire } from "../../utils";
