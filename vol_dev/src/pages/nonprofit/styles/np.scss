@@ -1,233 +1,258 @@
 @import "../../styles/global.scss";
 
-a{
-    text-decoration: none;
-    color: $white;
-}
-.container {
-    background-color: $darkBlue;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    color: $white;
-    justify-content: center;
-    padding-left: 20%;
-    padding-right: 20%;
-    .np-dash {
-        display: flex;
-        .devNav {
-            display: none;
-        }
-        .profile {
-            display: flex;
-            flex-direction: column;
-            .profile-image {
-                display: flex;
-                img {
-                    background-color: $white;
-                    padding: 0.5em;
-                    border-radius: 50%;
-                    align-self: center;
-                    width: 5em;
-                    height: 5em;
-                }
-                .user{
-                    display: flex;
-                    flex-direction: column;
-                    margin-left: 2em;
-                    h1 {
-                        font-weight: normal;
-                        font-size: 1.8em;
-                    }
-                    h3 {
-                        font-weight: normal;
-                        font-size: 1em;
-                        line-height: 1em;
-                        text-transform: uppercase;
-                    }
-                }
-            }
-            .create-edit-mobile {
-                display: none;
-            }
-            a {
-                margin-top: 1em;
-                background-color: $yellow;
-                color: $darkBlue;
-                display: flex;
-                justify-content: center;
-                border-radius: 1em;
-                span {
-                    padding: 0.25em;
-                    text-transform: lowercase;
-                }
-            }
-        }
-        .dash-option {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            .devNav {
-                width: 100%;
-                display: flex;
-                justify-content: flex-end;
-                a {
-                    padding-left: 2em;
-                    span {
-                        font-size: 1.1em;
-                        text-transform: uppercase;
-                    }
-                }
-            }
-            .create-edit {
-                a {
-                    margin-top: 1em;
-                    background-color: $white;
-                    color: $darkBlue;
-                    display: flex;
-                    justify-content: center;
-                    border-radius: 1em;
-                    width: 20em;
-                    span {
-                        padding: 0.25em;
-                        text-transform: lowercase;
-                    }
-                }
-            }
-        }
-    }
-    .carousel-3 {
-        .carousel-container {
-            margin-top: 2em;
-        }
-    }
-    .carousel-1 {
-        display: none;
-        .carousel-container {
-            margin-top: 2em;
-        }
-    }
-}
-.hamburger, .sidebar {
-    display: none;
-}
-@media screen and (max-width: 1242px) {
-    .container {
-        padding-left: 10%;
-        padding-right: 10%;
-    }
-}
-@media screen and (max-width: 900px) {
-    .container {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-}
-@media screen and (max-width: 800px) {
-    .container {
-        .np-dash {
-            justify-content: center;
-            .profile {
-                .profile-image {
-                    justify-content: center;
-                }
-                .create-edit-mobile {
-                    display: flex;
-                    flex-direction: column;
-                    a {
-                        background-color: $white
-                    }
-                }
-            }
-            .devNav {
-                display: flex;
-                position: absolute;
-                top: 2em;
-                left: 0;
-                width: 100%;
-                justify-content: space-around;
-                a {
-                    span {
-                        font-size: 1.3em;
-                        text-transform: uppercase;
-                    }
-                }
-            }
-            .dash-option {
-                display: none;
-            }
-        }
-        .carousel-3 {
-            display: none;
-        }
-        .carousel-1 {
-            display: block;
-        }
-    }
-}
-@media screen and (max-width: 500px) {
-    .container {
-        .hamburger {
-            display: inline;
-            position: absolute;
-            top: 1em;
-            left: 1em;
-            width: 2em;
-            height: 2em;
-            color: $white;
-            background-color: $darkBlue;
-            border: none;
-        }
-        .sidebar {
-            display: none;
-        }
-        .h-open {
-            display: none;
-        }
-        .n-open {
-            display: none;
-        }
-        .s-open {
-            display: flex;
-            .c-open {
-                display: inline;
-                position: absolute;
-                top: 1em;
-                left: 1em;
-                height: 1em;
-                width: 1em;
-                color: $white;
-                background-color: $darkBlue;
-                border: none;
-            }
-            .devNav {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                position: relative;
-                div {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 100%;
-                    padding-bottom: 1em;
-                    border-bottom: solid $white 1px;
-                    a {
-                        margin-top: 2em;
-                        span {
-                            color: $white;
-                            font-size: 1.5em;
-                        }
-                    }
-                }
-            }
-        }
-        .np-dash {
-            .devNav {
-                display: none;
-            }
-        }
-    }
+.nonprofit__dashboard {
+	a {
+		text-decoration: none;
+		color: $white;
+	}
+	.container {
+		background-color: $darkBlue;
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		color: $white;
+		justify-content: center;
+		padding-left: 20%;
+		padding-right: 20%;
+
+		.np-dash {
+			display: flex;
+
+			.devNav {
+				display: none;
+			}
+
+			.profile {
+				display: flex;
+				flex-direction: column;
+
+				.profile-image {
+					display: flex;
+
+					img {
+						background-color: $white;
+						padding: 0.5em;
+						border-radius: 50%;
+						align-self: center;
+						width: 5em;
+						height: 5em;
+					}
+
+					.user {
+						display: flex;
+						flex-direction: column;
+						margin-left: 2em;
+
+						h1 {
+							font-weight: normal;
+							font-size: 1.8em;
+						}
+
+						h3 {
+							font-weight: normal;
+							font-size: 1em;
+							line-height: 1em;
+							text-transform: uppercase;
+						}
+					}
+				}
+
+				.create-edit-mobile {
+					display: none;
+				}
+
+				a {
+					margin-top: 1em;
+					background-color: $yellow;
+					color: $darkBlue;
+					display: flex;
+					justify-content: center;
+					border-radius: 1em;
+
+					span {
+						padding: 0.25em;
+						text-transform: lowercase;
+					}
+				}
+			}
+
+			.dash-option {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+
+				.devNav {
+					width: 100%;
+					display: flex;
+					justify-content: flex-end;
+
+					a {
+						padding-left: 2em;
+
+						span {
+							font-size: 1.1em;
+							text-transform: uppercase;
+						}
+					}
+				}
+
+				.create-edit {
+					a {
+						margin-top: 1em;
+						background-color: $white;
+						color: $darkBlue;
+						display: flex;
+						justify-content: center;
+						border-radius: 1em;
+						width: 20em;
+
+						span {
+							padding: 0.25em;
+							text-transform: lowercase;
+						}
+					}
+				}
+			}
+		}
+		.carousel-3 {
+			.carousel-container {
+				margin-top: 2em;
+			}
+		}
+		.carousel-1 {
+			display: none;
+			.carousel-container {
+				margin-top: 2em;
+			}
+		}
+	}
+
+	.hamburger,
+	.sidebar {
+		display: none;
+	}
+
+	@media screen and (max-width: 1242px) {
+		.container {
+			padding-left: 10%;
+			padding-right: 10%;
+		}
+	}
+
+	@media screen and (max-width: 900px) {
+		.container {
+			padding-left: 5%;
+			padding-right: 5%;
+		}
+	}
+
+	@media screen and (max-width: 800px) {
+		.container {
+			.np-dash {
+				justify-content: center;
+				.profile {
+					.profile-image {
+						justify-content: center;
+					}
+					.create-edit-mobile {
+						display: flex;
+						flex-direction: column;
+						a {
+							background-color: $white;
+						}
+					}
+				}
+				.devNav {
+					display: flex;
+					position: absolute;
+					top: 2em;
+					left: 0;
+					width: 100%;
+					justify-content: space-around;
+					a {
+						span {
+							font-size: 1.3em;
+							text-transform: uppercase;
+						}
+					}
+				}
+				.dash-option {
+					display: none;
+				}
+			}
+			.carousel-3 {
+				display: none;
+			}
+			.carousel-1 {
+				display: block;
+			}
+		}
+	}
+
+	@media screen and (max-width: 500px) {
+		.container {
+			.hamburger {
+				display: inline;
+				position: absolute;
+				top: 1em;
+				left: 1em;
+				width: 2em;
+				height: 2em;
+				color: $white;
+				background-color: $darkBlue;
+				border: none;
+			}
+			.sidebar {
+				display: none;
+			}
+			.h-open {
+				display: none;
+			}
+			.n-open {
+				display: none;
+			}
+			.s-open {
+				display: flex;
+				.c-open {
+					display: inline;
+					position: absolute;
+					top: 1em;
+					left: 1em;
+					height: 1em;
+					width: 1em;
+					color: $white;
+					background-color: $darkBlue;
+					border: none;
+				}
+				.devNav {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					position: relative;
+					div {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						width: 100%;
+						padding-bottom: 1em;
+						border-bottom: solid $white 1px;
+						a {
+							margin-top: 2em;
+							span {
+								color: $white;
+								font-size: 1.5em;
+							}
+						}
+					}
+				}
+			}
+			.np-dash {
+				.devNav {
+					display: none;
+				}
+			}
+		}
+	}
 }

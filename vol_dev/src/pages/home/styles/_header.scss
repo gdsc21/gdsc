@@ -4,7 +4,7 @@ a {
 	text-decoration: none;
 }
 
-.header {
+.home__header {
 	& > * {
 		color: $primaryclr;
 	}
@@ -174,7 +174,7 @@ a {
 		text-transform: uppercase;
 	}
 
-	.project {
+	#homepage-featured-projects .project {
 		z-index: 2;
 		padding: 2rem;
 		background: linear-gradient(

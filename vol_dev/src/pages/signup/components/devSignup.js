@@ -2,17 +2,15 @@ import axios from "axios";
 import { useState } from "react";
 import { getSessionStorageExpire } from "../../../utils";
 
-export default devSignup = () => {
+export default DevSignup = () => {
 	const [Website, setWebsite] = useState("");
 	const [LinkedIn, setLinkedIn] = useState("");
 	const [GitHub, setGitHub] = useState("");
 
-	const createDevProfile = (e) => {
+	const finishDevProfile = (e) => {
 		e.preventDefault();
-
 		const url =
 			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/dev-create-profile";
-
 		let token = getSessionStorageExpire("token");
 
 		let config = {
@@ -20,6 +18,7 @@ export default devSignup = () => {
 				Authorization: `Bearer ${token}`,
 			},
 		};
+
 		let data = {
 			devWebsite: Website,
 			devLinkedIn: LinkedIn,

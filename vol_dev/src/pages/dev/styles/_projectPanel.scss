@@ -1,4 +1,4 @@
-.panel-container {
+.developer__dashboard .panel-container {
 	display: flex;
 	flex: 1;
 	flex-direction: column;
@@ -10,7 +10,7 @@
 		display: flex;
 		margin-left: auto;
 		margin-right: 2rem;
-		justify-content: space-around;
+		justify-content: space-evenly;
 		min-width: 30rem;
 		max-width: 50rem;
 		min-height: 4rem;
@@ -21,6 +21,10 @@
 			text-transform: uppercase;
 			color: $lightgrey;
 			font-weight: 500;
+		}
+
+		.navlink__icon {
+			display: none;
 		}
 	}
 
@@ -119,10 +123,14 @@
 	@media screen and (max-width: 1023px) {
 		margin-left: 0;
 		max-width: unset;
+
+		.curProject {
+			margin-top: 1rem;
+		}
 	}
 }
 
-.panel-container .ham-header {
+.developer__dashboard .panel-container .ham-header {
 	display: flex;
 
 	button {
@@ -133,6 +141,7 @@
 		height: 5em;
 		border: none;
 		cursor: pointer;
+
 		&:focus {
 			outline: none;
 		}
@@ -146,17 +155,10 @@
 		}
 
 		.devNav {
-			margin-left: none;
-			max-width: none;
+			margin-left: 0;
 			width: 100%;
-			// flex: 1;
+			min-width: unset;
 			justify-content: space-evenly;
-		}
-
-		.curProjectDisp {
-			justify-content: center;
-			margin: 0;
-			padding: 0;
 		}
 	}
 }
