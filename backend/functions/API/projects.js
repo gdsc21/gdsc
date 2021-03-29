@@ -261,6 +261,8 @@ exports.projUpdateDevInfo = (request, response) => {
             "devWebsite" in data.devLinks ? batch.update(docRef, {[`devProfiles.${user.uid}.devLinks.devWebsite`]: data.devLinks.devWebsite}) : ""
             "devLinkedIn" in data.devLinks ? batch.update(docRef, {[`devProfiles.${user.uid}.devLinks.devLinkedIn`]: data.devLinks.devLinkedIn}) : ""
         }
+
+        "devTitle" in data ? batch.update(docRef, {"devTitle": data.devTitle}) : ""
     })
 
     batch
@@ -337,6 +339,8 @@ exports.projAddDev = (request, response, next) => {
             "devProfiles": {
                 [user.uid]: {
                     "devDisplayName": devProfile.devDisplayName,
+                    "devTitle": devProfile.devTitle,
+                    "devProfileImgUrl": devProfile.devProfileImgUrl,
                     "devLinks": {
                         "devWebsite": devProfile.devLinks.devWebsite,
                         "devGitHub": devProfile.devLinks.devGitHub,

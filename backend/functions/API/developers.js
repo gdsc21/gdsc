@@ -1,46 +1,46 @@
 const { admin, fs, firebase, FieldValue} = require('../util/admin');
 
 
-exports.devCreateProfile = (request, response) => {
-    /**
-     * Takes a token retrieved through Github auth - verifies it and then uses the returned user object to create an
-     * associated developer document containing all the data passed in the body
-     */
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
-    if (typeof request.body != "object")
-        data = JSON.parse(request.body)
-    else data = request.body
-
-    fs
-        .collection("dev_accounts")
-        .doc(user.uid)
-        .set({
-            devDisplayName: user.displayName, // display name is username while name is the developers actual name
-            devProfileImgUrl: user.photoURL,
-            devLinks: {
-                devWebsite: data.devWebsite,
-                devGitHub: data.devGitHub,
-                devLinkedIn: data.devLinkedIn,
-            },
-            gamification: {
-                devLevel: 0,
-                devXP: 0,
-                devRole: "developer",
-                devBadges: {}
-            },
-            devProjects: {},
-            devCommits: {}
-        })
-        .then(() => {
-            return response.status(201).json({message: "Account successfully created!"})
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
-}
+// exports.devCreateProfile = (request, response) => {
+//     /**
+//      * Takes a token retrieved through Github auth - verifies it and then uses the returned user object to create an
+//      * associated developer document containing all the data passed in the body
+//      */
+//     let user, data
+//     if (typeof request.user != "object")
+//         user = JSON.parse(request.user)
+//     else user = request.user
+//     if (typeof request.body != "object")
+//         data = JSON.parse(request.body)
+//     else data = request.body
+//
+//     fs
+//         .collection("dev_accounts")
+//         .doc(user.uid)
+//         .set({
+//             devDisplayName: user.displayName, // display name is username while name is the developers actual name
+//             devProfileImgUrl: user.photoURL,
+//             devLinks: {
+//                 devWebsite: data.devWebsite,
+//                 devGitHub: data.devGitHub,
+//                 devLinkedIn: data.devLinkedIn,
+//             },
+//             gamification: {
+//                 devLevel: 0,
+//                 devXP: 0,
+//                 devRole: "developer",
+//                 devBadges: {}
+//             },
+//             devProjects: {},
+//             devCommits: {}
+//         })
+//         .then(() => {
+//             return response.status(201).json({message: "Account successfully created!"})
+//         })
+//         .catch((err) => {
+//             return response.status(500).json({error: err.message})
+//         })
+// }
 
 exports.devGetProfile = (request, response) => {
     let user, params
@@ -108,6 +108,9 @@ exports.devUpdateProfile = (request, response, next) => {
         "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""
         "devLinkedIn" in data.devLinks ? batch.update(devDocRef, {"devLinks.devLinkedIn": data.devLinks.devLinkedIn}) : ""
     }
+    "devTitle" in data ? batch.update(devDocRef, {"devTitle": data.devTitle}) : ""
+    "devBio" in data ? batch.update(devDocRef, {"devBio": data.devBio}) : ""
+
 
     // commit the updates and return
     batch

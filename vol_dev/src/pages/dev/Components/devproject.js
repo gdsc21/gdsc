@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 
-const Devproject = ({ project }) => {
-	const projectURL = project.id ? `/project/${project.id}` : "/";
+// key should be the projectID
+const Devproject = ({ key, project }) => {
+	// const projectURL = project.id ? `/project/${project.id}` : "/";
+	const projectURL = key ? `/project/${key}` : "/";
 
 	return (
 		<div className="devproject">
@@ -13,13 +15,15 @@ const Devproject = ({ project }) => {
 
 			<div className="description-div">
 				<h4>Description</h4>
-				<p className="description">{project.title}</p>
+				<p className="description">{project.description}</p>
 			</div>
-
-			<div>
-				<h4>Role</h4>
-				<p className="role">{project.role}</p>
-			</div>
+			{
+				// TODO: There are no roles for projects yet but we need to add the github repo link and the non-profits name
+			}
+			{/*<div>*/}
+			{/*	<h4>Role</h4>*/}
+			{/*	<p className="role">{project.role}</p>*/}
+			{/*</div>*/}
 
 			{
 				// TODO: Add a way to quantify the project's progess
@@ -28,7 +32,7 @@ const Devproject = ({ project }) => {
 				// 	<progress value={project.progress} max={100} />
 				// 	{project.progress}%
 				// </div>
-				// TODO: Add a link that takes you to that project's page //
+				// TODO: Add a link that takes you to that project component which makes a request to get the project from its id
 				// Currently, it takes you to the project's id, and ot the homepage if it's not there
 			}
 

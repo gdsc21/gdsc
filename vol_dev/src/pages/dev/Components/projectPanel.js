@@ -24,9 +24,16 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 			<div className="curProject">
 				<h1 className="head">Current Projects</h1>
 				<div className="curProjectDisp">
-					{user.projects.map((project, id) => {
-						return <Devproject key={id} project={project} />;
-					})}
+					{
+						// Object.entries(user.projects).map((id, projInfo) => {
+						// 	return <Devproject key={id} project={projInfo} />;
+						// })
+					}
+					{/*{*/}
+					{/*	user.projects.map((project, id) => {*/}
+					{/*		return <Devproject key={id} project={project} />;*/}
+					{/*	})*/}
+					{/*}*/}
 				</div>
 			</div>
 

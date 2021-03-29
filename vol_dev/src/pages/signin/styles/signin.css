@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-.signup_header .nav {
+.signin_header .nav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -20,7 +20,7 @@
           align-items: center;
 }
 
-.signup_header .nav .links {
+.signin_header .nav .links {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -33,23 +33,23 @@
           align-items: center;
 }
 
-.signup_header .nav .btn {
+.signin_header .nav .btn {
   color: #16223b;
   font-weight: 400;
   border: none;
 }
 
-.signup_header .nav .signin-btn {
+.signin_header .nav .signup-btn {
   border: 2px solid #16223b;
   border-radius: 2rem;
   padding: 0.2rem 0.75rem;
 }
 
-.signup_header .heading {
+.signin_header .heading {
   text-align: center;
 }
 
-.signup_header .have-account {
+.signin_header .have-account {
   position: fixed;
   text-align: center;
   left: 50%;
@@ -59,7 +59,7 @@
   color: #16223b;
 }
 
-.main_signup .heading {
+.main_signin .heading {
   font-weight: 500;
   font-size: 1.2rem;
   text-align: center;
@@ -67,7 +67,7 @@
   opacity: 0.9;
 }
 
-.main_signup .cards {
+.main_signin .cards {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -76,7 +76,7 @@
   padding: 1rem 15vw;
 }
 
-.main_signup .choice__card {
+.main_signin .choice__card {
   z-index: 2;
   background: linear-gradient(115.35deg, rgba(255, 255, 255, 0.6) 3.11%, rgba(255, 255, 255, 0.3) 96.88%);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -84,52 +84,39 @@
   -webkit-backdrop-filter: blur(40px);
           backdrop-filter: blur(40px);
   border-radius: 53px;
-  width: 23rem;
-  height: 28rem;
-  padding: 0 3rem;
+  margin: 1rem 0;
+  padding: 1rem 4rem;
   color: #16223b;
   text-align: center;
   cursor: pointer;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: 13rem 1.5rem 5rem 3.75rem 1rem;
-      grid-template-rows: 13rem 1.5rem 5rem 3.75rem 1rem;
+  -ms-grid-rows: 13rem 1.5rem 5rem;
+      grid-template-rows: 13rem 1.5rem 5rem;
 }
 
-.main_signup .choice__card img {
+.main_signin .choice__card img {
   place-self: center;
   height: 7rem;
   width: auto;
 }
 
-.main_signup .choice__card .ima {
+.main_signin .choice__card .ima {
   font-weight: 500;
   font-size: 1.25rem;
   opacity: 0.9;
   line-height: 1;
 }
 
-.main_signup .choice__card .title {
+.main_signin .choice__card .title {
   font-weight: 800;
   font-size: 2rem;
   text-transform: uppercase;
   line-height: 1;
 }
 
-.main_signup .choice__card .description,
-.main_signup .choice__card .subdescription {
-  font-weight: 300;
-  font-size: 1.125rem;
-  line-height: 1.5;
-}
-
-.main_signup .choice__card .subdescription {
-  font-size: 0.75rem;
-  line-height: 2.5;
-}
-
 @media screen and (max-width: 1000px) {
-  .main_signup .cards {
+  .main_signin .cards {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -138,12 +125,12 @@
         -ms-flex-align: center;
             align-items: center;
   }
-  .main_signup .choice__card {
+  .main_signin .choice__card {
     width: 20rem;
   }
 }
 
-.orgsignup {
+.orgsignin {
   background: linear-gradient(115.35deg, rgba(255, 255, 255, 0.6) 3.11%, rgba(255, 255, 255, 0.3) 96.88%);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -154,17 +141,17 @@
   margin: 2rem 10vw;
 }
 
-.orgsignup > * {
+.orgsignin > * {
   color: #16223b;
 }
 
-.orgsignup .back-btn {
+.orgsignin .back-btn {
   float: left;
   font-size: 1.5rem;
   cursor: pointer;
 }
 
-.orgsignup .title {
+.orgsignin .title {
   text-transform: uppercase;
   text-align: center;
   font-weight: 600;
@@ -172,8 +159,7 @@
   margin-bottom: 1rem;
 }
 
-.orgsignup input,
-.orgsignup select {
+.orgsignin input {
   display: block;
   background: rgba(255, 255, 255, 0.6);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -185,22 +171,13 @@
   padding: 0.5rem 1rem;
 }
 
-.orgsignup .password,
-.orgsignup .additional-info {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr;
-      grid-template-columns: 1fr 1fr;
-  grid-gap: 3rem;
-}
-
-.orgsignup label {
+.orgsignin label {
   font-weight: 500;
   font-size: 1rem;
   line-height: 1;
 }
 
-.orgsignup button {
+.orgsignin button {
   background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
   border-radius: 2rem;
   color: #ffffff;
@@ -215,31 +192,18 @@
   margin: 0 auto;
 }
 
-.orgsignup .error {
+.orgsignin .error {
   color: red;
-  font-size: 0.75rem;
   padding-bottom: 0.75rem;
+  font-size: 0.75rem;
 }
 
-.orgsignup .form-error {
+.orgsignin .form-error {
   font-size: 1rem;
   text-align: center;
 }
 
-@media only screen and (max-width: 600px) {
-  .orgsignup .password,
-  .orgsignup .additional-info {
-    display: -ms-grid;
-    display: grid;
-    -ms-grid-rows: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-    -ms-grid-columns: unset;
-        grid-template-columns: unset;
-    grid-gap: unset;
-  }
-}
-
-.signup {
+.signin {
   min-height: 100vh;
   height: 100%;
   position: relative;
@@ -249,10 +213,10 @@
   background-size: cover;
 }
 
-.signup .have-account {
+.signin .have-account {
   color: #16223b;
   text-align: center;
   margin: 0 auto;
   padding-bottom: 5rem;
 }
-/*# sourceMappingURL=signup.css.map */
+/*# sourceMappingURL=signin.css.map */

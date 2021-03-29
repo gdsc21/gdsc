@@ -1,0 +1,38 @@
+.signin_header .nav {
+	display: flex;
+	padding: 2rem 10vw;
+	justify-content: space-between;
+	align-items: center;
+
+	.links {
+		display: flex;
+		justify-content: space-between;
+		min-width: 10rem;
+		align-items: center;
+	}
+
+	.btn {
+		color: $primaryclr;
+		font-weight: 400;
+		border: none;
+	}
+
+	.signup-btn {
+		border: 2px solid $primaryclr;
+		border-radius: 2rem;
+		padding: 0.2rem 0.75rem;
+	}
+}
+
+.signin_header .heading {
+	text-align: center;
+}
+
+.signin_header .have-account {
+	position: fixed;
+	text-align: center;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 5rem;
+	color: $primaryclr;
+}

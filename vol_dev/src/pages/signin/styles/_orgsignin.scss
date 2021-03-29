@@ -1,4 +1,4 @@
-.orgsignup {
+.orgsignin {
 	background: linear-gradient(
 		115.35deg,
 		rgba(255, 255, 255, 0.6) 3.11%,
@@ -28,8 +28,7 @@
 		margin-bottom: 1rem;
 	}
 
-	input,
-	select {
+	input {
 		display: block;
 		background: rgba(255, 255, 255, 0.6);
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -38,16 +37,6 @@
 		font-size: 0.875rem;
 		width: 100%;
 		padding: 0.5rem 1rem;
-	}
-
-	.country {
-	}
-
-	.password,
-	.additional-info {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 3rem;
 	}
 
 	label {
@@ -72,22 +61,12 @@
 
 	.error {
 		color: red;
-		font-size: 0.75rem;
 		padding-bottom: 0.75rem;
+		font-size: 0.75rem;
 	}
 
 	.form-error {
 		font-size: 1rem;
 		text-align: center;
-	}
-
-	@media only screen and (max-width: 600px) {
-		.password,
-		.additional-info {
-			display: grid;
-			grid-template-rows: 1fr 1fr;
-			grid-template-columns: unset;
-			grid-gap: unset;
-		}
 	}
 }

@@ -2,40 +2,47 @@ import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
 import { useState, useEffect } from "react";
+import { Switch, Route, Redirect, Link } from "react-router-dom";
 import { getSessionStorageExpire } from "../../utils";
 import axios from "axios";
 
 const Dev = () => {
-	// Dummy user details for frontend tests
-	const user = require("./Components/data/userDetails").default;
-
-	// TODO: test user from backend (uncomment the folowing lines and remove dummy user)
-
-	/*
 	const [user, setUser] = useState(null);
-	useEffect(() => {
-		const url =
-			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
-		let token = getSessionStorageExpire("token");
-		let config = { headers: { Authorization: `Bearer ${token}` } };
-		let data;
 
-		axios
-			.get(url, config)
-			.then((response) => {
-				data = response.data;
-				const deLinks = data.devLinks;
-				const gamification = data.gamification;
-				const fetchedUser = {
-					name: data.devDisplayName,
-					imgUrl: data.devProfileImgUrl,
-					projects: data.devProjects,
-				};
-				setUser(fetchedUser);
-			})
-			.catch((err) => {});
-	}, [user]);
-	*/
+	useEffect(() => {
+		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
+		let counter = 1
+		const fetchProfile = setInterval(() => {
+			if (counter >= 3) clearInterval(fetchProfile)
+			else ++counter
+
+			const url =
+				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
+			let token = getSessionStorageExpire("token");
+			let config = { headers: { Authorization: `Bearer ${token}` } };
+			let data;
+
+			axios
+				.get(url, config)
+				.then((response) => {
+					data = response.data;
+					console.log(data)
+					setUser(data);
+				})
+				.then(() => {
+					// stops the loop
+					clearInterval(fetchProfile)
+				})
+				.catch((err) => {
+					console.log(err)
+					if (err.statusCode === 403) {
+						// TODO: Enable automatic token refresh if user is still active
+						return <Redirect to="/signin"/>
+					}
+				});
+		}, 2000)
+
+	}, []);
 
 	const [hamburger, setHamburger] = useState(false);
 
@@ -61,19 +68,29 @@ const Dev = () => {
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	return (
-		<div className="dev">
-			<link
-				rel="stylesheet"
-				href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-				integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
-				crossorigin="anonymous"
-			/>
+	if (user === null) {
+		return (
+			<div>
+				<h1>Hold on while we get your profile</h1>
+			</div>
+		)
+	} else {
+		return (
+			<div className="dev">
+				<link
+					rel="stylesheet"
+					href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+					integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+					crossOrigin="anonymous"
+				/>
 
-			<Sidebar user={user} hamCloseClick={hamburgerClick} />
-			<ProjectPanel user={user} hamburger={hamburgerClick} />
-		</div>
-	);
+				<Sidebar user={user} hamCloseClick={hamburgerClick} />
+				<ProjectPanel user={user} hamburger={hamburgerClick} />
+			</div>
+		);
+	}
+
+
 };
 
 export default Dev;
