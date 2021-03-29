@@ -12,7 +12,7 @@ const Dev = () => {
 	const { store, dispatch } = useContext(Context)
 
 	useEffect(() => {
-		if (store != null) return
+		if (store) return
 
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1
@@ -73,7 +73,7 @@ const Dev = () => {
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	if (store === null) {
+	if (!store) {
 		return (
 			<div>
 				<h1>Hold on while we get your profile</h1>

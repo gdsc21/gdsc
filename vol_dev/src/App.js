@@ -22,7 +22,7 @@ const App = () => {
 		fbApp.auth().onAuthStateChanged(setUser);
 		try {
 			setDev(user.providerData[0].providerId === "github.com");
-			console.log(user)
+			// console.log(user)
 		} catch {}
 	}, [user]);
 
@@ -46,6 +46,8 @@ const App = () => {
 						// if user is logged in and a developer go to Dev if not a developer go to NonProfit
 						// if user is not logged in go to home
 						!!user ? isDev ? <Dev /> : <NonProfit /> : <Redirect to="/" />
+						// console.log(!!user) || <Dev/>
+
 
 						// <Dev /> // for debugging the dashboard
 					}
