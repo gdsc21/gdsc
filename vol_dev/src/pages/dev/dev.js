@@ -1,24 +1,27 @@
 import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getSessionStorageExpire, removeSessionStorage } from "../../utils";
 import { fbApp } from "../../firebase";
 import axios from "axios";
+import { Context } from "../../store";
+import { AuthContext} from "../../Auth";
 import Modal from "../components/modal";
 import EditProfile from "./Components/EditProfile";
 
 const Dev = () => {
-	// const user = require("./Components/data/userDetails").default;
-
 	const [user, setUser] = useState(null);
+	const { store, dispatch } = useContext(Context)
 
 	useEffect(() => {
+		if (store) return
+
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
-		let counter = 1;
+		let counter = 1
 		const fetchProfile = setInterval(() => {
-			if (counter >= 3) clearInterval(fetchProfile);
-			else ++counter;
+			if (counter >= 3) clearInterval(fetchProfile)
+			else ++counter
 
 			const url =
 				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
@@ -30,7 +33,8 @@ const Dev = () => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					console.log(data);
+					console.log(data)
+					dispatch({ type: "set", payload: data})
 					setUser(data);
 				})
 				.then(() => {
@@ -69,10 +73,12 @@ const Dev = () => {
 		if (hamburger) {
 			sidebar.classList.remove("s-open");
 			hburger.classList.remove("h-open");
+			// panelContainer.classList.remove("p-open");
 			hamclose.classList.remove("c-open");
 		} else {
 			sidebar.classList.add("s-open");
 			hburger.classList.add("h-open");
+			// panelContainer.classList.add("p-open");
 			hamclose.classList.add("c-open");
 		}
 	};
@@ -136,6 +142,8 @@ const Dev = () => {
 			</div>
 		);
 	}
+
+
 };
 
 export default Dev;
