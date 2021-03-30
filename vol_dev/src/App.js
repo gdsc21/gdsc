@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, {useEffect, useState, useReducer, useContext} from "react";
 import { Home, SignUp, SignIn, Project, Explore, NonProfit, Dev } from "./pages";
 import {Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom";
-import { fbApp } from "./firebase";
 import { Context, userDataReducer, userData, loadContext } from "./store";
+import { getSessionStorage } from "./utils";
 
 const App = () => {
+	// loads the reducer which creates the dispatch function
 	const [store, dispatch] = useReducer(userDataReducer, userData)
-	const [isDev, setDev] = useState(null);
 
-	// user is the user info provided by firebase authentication
-	const [user, setUser] = useState(null);
+	const user = getSessionStorage(Object.keys(sessionStorage).filter(item => item.startsWith('firebase:authUser'))[0])
 
 	// this loads the context from session storage everytime this component is mounted for the first time
 	// this enables context to persist across page refreshes
@@ -18,14 +17,6 @@ const App = () => {
 		dispatch({type: "set", payload: persistedContext})
 	}, [])
 
-	useEffect(() => {
-		fbApp.auth().onAuthStateChanged(setUser);
-		try {
-			setDev(user.providerData[0].providerId === "github.com");
-			// console.log(user)
-		} catch {}
-	}, [user]);
-
 	return (
 		<Context.Provider value={{ store, dispatch }}>
 			<Switch>
@@ -33,6 +24,7 @@ const App = () => {
 					{
 						// if user is logged in go to dashboard otherwise go to sign up page
 						!!user ? <Redirect to="/dashboard" /> : <SignUp />
+
 					}
 				</Route>
 				<Route exact path="/signin">
@@ -45,7 +37,11 @@ const App = () => {
 					{
 						// if user is logged in and a developer go to Dev if not a developer go to NonProfit
 						// if user is not logged in go to home
-						!!user ? isDev ? <Dev /> : <NonProfit /> : <Redirect to="/" />
+						!!user ?
+							user.providerData[0].providerId === "github.com" ?
+								<Dev />
+							: <NonProfit />
+						: <Redirect to="/" />
 						// console.log(!!user) || <Dev/>
 
 

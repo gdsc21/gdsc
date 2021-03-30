@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import { getSessionStorageExpire } from "../../utils";
 import axios from "axios";
 import { Context } from "../../store";
+import { AuthContext} from "../../Auth";
 
 const Dev = () => {
 	const [user, setUser] = useState(null);

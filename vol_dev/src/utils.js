@@ -39,6 +39,22 @@ export const getSessionStorageExpire = (key) => {
     return data.value
 }
 
+export const getSessionStorage = (key) => {
+    let item
+    try {
+        item = sessionStorage.getItem(key)
+    } catch {
+        console.warn("Failed to load", key, "from session storage")
+        return null
+    }
+    if (!item) {
+        console.warn(key, "is not in session storage")
+        return null
+    }
+
+    return JSON.parse(item)
+}
+
 export const removeSessionStorage = (key) => {
     try {
         sessionStorage.removeItem(key)
