@@ -1,0 +1,40 @@
+.np-container {
+    .create-modal {
+        display: flex;
+        padding-top: 1em;
+        padding-bottom: 2em;
+        background:rgba(255, 255, 255, 0.4);
+        border-radius: 2em;
+        flex-direction: column;
+        align-items: center;
+        h1 {
+            color: $darkBlue;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 1em;
+        }
+        div {
+            h5 {
+                color: $yellow;
+                font-size: 1.3em;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+            input {
+                outline: none;
+                margin-bottom: 2em;
+                border-radius: 1em;
+                border: none;
+                width: 100%;
+                height: 2em;
+                padding-left: 1em;
+                padding-right: 1em;
+            }
+        }
+        a {
+            background-color: $yellow;
+            padding: 0.5em 2.5em 0.5em 2.5em;
+            border-radius: 1em;
+        }
+    }
+}

@@ -1,257 +1,270 @@
 @import "../../styles/global.scss";
-
-.nonprofit__dashboard {
-	a {
-		text-decoration: none;
-		color: $white;
-	}
-	.container {
-		background-color: $darkBlue;
-		height: 100vh;
+@import "./modal";
+a {
+	text-decoration: none;
+	color: $white;
+}
+.np-container {
+	background-color: $darkBlue;
+	min-height: 100vh;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	color: $white;
+	justify-content: center;
+	padding-left: 20%;
+	padding-right: 20%;
+	.np-curProject {
+		margin-top: 3%;
 		display: flex;
-		flex-direction: column;
-		color: $white;
+		flex-wrap: wrap;
 		justify-content: center;
-		padding-left: 20%;
-		padding-right: 20%;
-
-		.np-dash {
+		.devproject {
+			background: rgba(255, 255, 255, 0.4);
+			border-radius: 1em;
+			margin: 0.5em 1em 0.5em 0;
 			display: flex;
+			width: 19rem;
+			flex-direction: column;
+			padding: 2em 1.5em;
 
-			.devNav {
-				display: none;
+			h3,
+			h4 {
+				color: $yellow;
 			}
 
-			.profile {
+			h3 {
+				text-align: center;
+				font-size: 1.5rem;
+				padding-bottom: 0.5em;
+			}
+
+			h4 {
+				text-transform: uppercase;
+				padding-right: 1em;
+			}
+
+			div {
+				display: flex;
+				padding: 0.375em;
+			}
+
+			.description-div {
 				display: flex;
 				flex-direction: column;
-
-				.profile-image {
+				text-align: left;
+			}
+			.goto-btn {
+				align-self: center;
+				position: relative;
+				margin-top: 2em;
+				padding: 0.5em 2.5em 0.5em 2.5em;
+				border-radius: 1em;
+				vertical-align: middle;
+				text-decoration: none;
+				color: $lightgrey;
+				background-color: $yellow;
+			}
+		}
+	}
+	.np-dash {
+		margin-top: 5%;
+		display: flex;
+		.np-devnav {
+			display: none;
+		}
+		.np-profile {
+			display: flex;
+			flex-direction: column;
+			.np-profile-image {
+				display: flex;
+				img {
+					background-color: $white;
+					padding: 0.5em;
+					border-radius: 50%;
+					align-self: center;
+					width: 5em;
+					height: 5em;
+				}
+				.np-user {
 					display: flex;
-
-					img {
-						background-color: $white;
-						padding: 0.5em;
-						border-radius: 50%;
-						align-self: center;
-						width: 5em;
-						height: 5em;
+					flex-direction: column;
+					margin-left: 2em;
+					h1 {
+						font-weight: normal;
+						font-size: 1.8em;
 					}
-
-					.user {
-						display: flex;
-						flex-direction: column;
-						margin-left: 2em;
-
-						h1 {
-							font-weight: normal;
-							font-size: 1.8em;
-						}
-
-						h3 {
-							font-weight: normal;
-							font-size: 1em;
-							line-height: 1em;
-							text-transform: uppercase;
-						}
+					h3 {
+						font-weight: normal;
+						font-size: 1em;
+						line-height: 1em;
+						text-transform: uppercase;
 					}
 				}
-
-				.create-edit-mobile {
-					display: none;
+			}
+			.np-create-edit-mobile {
+				display: none;
+			}
+			a {
+				margin-top: 1em;
+				background-color: $yellow;
+				color: $darkBlue;
+				display: flex;
+				justify-content: center;
+				border-radius: 1em;
+				span {
+					padding: 0.25em;
+					text-transform: lowercase;
 				}
-
+			}
+		}
+		.np-dash-option {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			.np-devnav {
+				width: 100%;
+				display: flex;
+				justify-content: flex-end;
+				a {
+					padding-left: 2em;
+					span {
+						font-size: 1.1em;
+						text-transform: uppercase;
+					}
+				}
+			}
+			.np-create-edit {
 				a {
 					margin-top: 1em;
-					background-color: $yellow;
+					background-color: $white;
 					color: $darkBlue;
 					display: flex;
 					justify-content: center;
 					border-radius: 1em;
-
+					width: 20em;
 					span {
 						padding: 0.25em;
 						text-transform: lowercase;
 					}
 				}
 			}
-
-			.dash-option {
-				width: 100%;
-				display: flex;
-				flex-direction: column;
-				align-items: flex-end;
-
-				.devNav {
-					width: 100%;
-					display: flex;
-					justify-content: flex-end;
-
-					a {
-						padding-left: 2em;
-
-						span {
-							font-size: 1.1em;
-							text-transform: uppercase;
-						}
-					}
+		}
+	}
+}
+.np-hamburger,
+.np-sidebar {
+	display: none;
+}
+@media screen and (max-width: 1242px) {
+	.np-container {
+		padding-left: 10%;
+		padding-right: 10%;
+	}
+}
+@media screen and (max-width: 900px) {
+	.np-container {
+		padding-left: 5%;
+		padding-right: 5%;
+	}
+}
+@media screen and (max-width: 800px) {
+	.np-container {
+		.np-dash {
+			justify-content: center;
+			margin-top: 15%;
+			.np-profile {
+				.np-profile-image {
+					justify-content: center;
 				}
-
-				.create-edit {
+				.np-create-edit-mobile {
+					display: flex;
+					flex-direction: column;
 					a {
-						margin-top: 1em;
 						background-color: $white;
-						color: $darkBlue;
-						display: flex;
-						justify-content: center;
-						border-radius: 1em;
-						width: 20em;
-
-						span {
-							padding: 0.25em;
-							text-transform: lowercase;
-						}
 					}
 				}
 			}
-		}
-		.carousel-3 {
-			.carousel-container {
-				margin-top: 2em;
-			}
-		}
-		.carousel-1 {
-			display: none;
-			.carousel-container {
-				margin-top: 2em;
-			}
-		}
-	}
-
-	.hamburger,
-	.sidebar {
-		display: none;
-	}
-
-	@media screen and (max-width: 1242px) {
-		.container {
-			padding-left: 10%;
-			padding-right: 10%;
-		}
-	}
-
-	@media screen and (max-width: 900px) {
-		.container {
-			padding-left: 5%;
-			padding-right: 5%;
-		}
-	}
-
-	@media screen and (max-width: 800px) {
-		.container {
-			.np-dash {
-				justify-content: center;
-				.profile {
-					.profile-image {
-						justify-content: center;
-					}
-					.create-edit-mobile {
-						display: flex;
-						flex-direction: column;
-						a {
-							background-color: $white;
-						}
+			.np-devnav {
+				display: flex;
+				position: absolute;
+				top: 5%;
+				left: 0;
+				width: 100%;
+				justify-content: space-around;
+				a {
+					span {
+						font-size: 1.3em;
+						text-transform: uppercase;
 					}
 				}
-				.devNav {
-					display: flex;
-					position: absolute;
-					top: 2em;
-					left: 0;
-					width: 100%;
-					justify-content: space-around;
-					a {
-						span {
-							font-size: 1.3em;
-							text-transform: uppercase;
-						}
-					}
-				}
-				.dash-option {
-					display: none;
-				}
 			}
-			.carousel-3 {
+			.np-dash-option {
 				display: none;
 			}
-			.carousel-1 {
-				display: block;
-			}
 		}
 	}
-
-	@media screen and (max-width: 500px) {
-		.container {
-			.hamburger {
+}
+@media screen and (max-width: 500px) {
+	.np-container {
+		.np-hamburger {
+			display: inline;
+			position: absolute;
+			top: 1em;
+			left: 1em;
+			width: 2em;
+			height: 2em;
+			color: $white;
+			background-color: $darkBlue;
+			border: none;
+		}
+		.np-sidebar {
+			display: none;
+		}
+		.h-open {
+			display: none;
+		}
+		.s-open {
+			display: flex;
+			z-index: 1;
+			.c-open {
 				display: inline;
 				position: absolute;
 				top: 1em;
 				left: 1em;
-				width: 2em;
-				height: 2em;
+				height: 1em;
+				width: 1em;
 				color: $white;
 				background-color: $darkBlue;
 				border: none;
 			}
-			.sidebar {
-				display: none;
-			}
-			.h-open {
-				display: none;
-			}
-			.n-open {
-				display: none;
-			}
-			.s-open {
+			.np-devnav {
+				width: 100%;
 				display: flex;
-				.c-open {
-					display: inline;
-					position: absolute;
-					top: 1em;
-					left: 1em;
-					height: 1em;
-					width: 1em;
-					color: $white;
-					background-color: $darkBlue;
-					border: none;
-				}
-				.devNav {
-					width: 100%;
+				flex-direction: column;
+				align-items: center;
+				position: relative;
+				div {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
-					position: relative;
-					div {
-						display: flex;
-						flex-direction: column;
-						align-items: center;
-						width: 100%;
-						padding-bottom: 1em;
-						border-bottom: solid $white 1px;
-						a {
-							margin-top: 2em;
-							span {
-								color: $white;
-								font-size: 1.5em;
-							}
+					width: 100%;
+					padding-bottom: 1em;
+					border-bottom: solid $white 1px;
+					a {
+						margin-top: 2em;
+						span {
+							color: $white;
+							font-size: 1.5em;
 						}
 					}
 				}
 			}
-			.np-dash {
-				.devNav {
-					display: none;
-				}
+		}
+		.np-dash {
+			.np-devnav {
+				display: none;
 			}
 		}
 	}
