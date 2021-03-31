@@ -11,7 +11,7 @@ import EditProfile from "./Components/EditProfile";
 
 const Dev = () => {
 	const { userStore, updateUserStore } = useContext(UserContext)
-
+	const page = props.page
 	useEffect(() => {
 		if (userStore) return
 
@@ -122,7 +122,14 @@ const Dev = () => {
 					hamCloseClick={hamburgerClick}
 					setShowEditProfile={setShowEditProfile}
 				/>
-				<ProjectPanel user={userStore} hamburger={hamburgerClick} />
+				{page === "dashboard"?
+				<ProjectPanel user={userStore} hamburger={hamburgerClick} />:
+				page === "explore"?
+				<Explore />:
+				page === "notification"?
+				<Notification /> :
+				<Messages />
+				}
 			</div>
 		);
 	}
