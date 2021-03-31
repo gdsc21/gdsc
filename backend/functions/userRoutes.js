@@ -41,7 +41,7 @@ const {
 } = require("./API/developers")
 
 // non profit signup -- logs in automatically after signup -- returns auth token
-userApp.post("/np-signup", npSignUp, npLogin)
+userApp.post("/np-signup", npSignUp)
 
 // non profit login -- returns auth token
 userApp.post("/np-login", npLogin)

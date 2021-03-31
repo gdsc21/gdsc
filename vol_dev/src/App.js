@@ -53,7 +53,7 @@ const App = () => {
 						() => {
 							const user = checkAuth()
 							if (!!user && user.providerData[0].providerId === "github.com") return <Dev/>
-							else if (!!user) return <Dev/>
+							else if (!!user) return <NonProfit/>
 							else return <Redirect to="/" />
 						}
 						// !!user ?

@@ -2,7 +2,7 @@ const { admin, fs, firebase, FieldValue } = require('../util/admin');
 const { validateNpSignUp, validateNpLogin, validateNpCredentials, checkUserExist } = require('../util/validators');
 
 
-exports.npSignUp = (request, response, next) => {
+exports.npSignUp = (request, response) => {
     /**
      * Takes data from signup form, creates a user account, creates a document for the user, saves info from the form in
      * the document, authenticates the user, returns a JWT token.
@@ -53,7 +53,7 @@ exports.npSignUp = (request, response, next) => {
                 })
             // reset request body and send to login function to authenticate
             request.body = {"npEmail": newCredentials.npEmail, "npPassword":newCredentials.npPassword}
-            return next()
+            return response.status(200).json({message: "success"})
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
