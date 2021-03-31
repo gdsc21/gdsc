@@ -2,7 +2,7 @@ import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
 import { useState, useEffect, useContext } from "react";
-import { getSessionStorageExpire, removeSessionStorage } from "../../utils";
+import {authErrorCheck, getSessionStorageExpire, removeSessionStorage} from "../../utils";
 import { fbApp } from "../../firebase";
 import axios from "axios";
 import { UserContext } from "../../store";
@@ -31,7 +31,6 @@ const Dev = () => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					console.log(data)
 					updateUserStore({ type: "set", payload: data})
 				})
 				.then(() => {
@@ -39,23 +38,7 @@ const Dev = () => {
 					clearInterval(fetchProfile);
 				})
 				.catch((err) => {
-					fbApp
-						.auth()
-						.signOut()
-						.then(() => {
-							removeSessionStorage("token");
-							window.location.href = "/signin";
-						})
-						.catch((err) => {
-							console.warn("Error signing out", err.message)
-						})
-
-					console.log(err);
-					if (err.response.status === 403) {
-						// TODO: Enable automatic token refresh if user is still active
-						// return <Redirect to="/signin" />;
-						window.location.href = "/signin";
-					}
+					authErrorCheck(err)
 				});
 		}, 2000);
 	}, []);
