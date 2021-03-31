@@ -8,7 +8,11 @@ const App = () => {
 	// loads the reducer which creates the dispatch function
 	const [userStore, updateUserStore] = useReducer(userDataReducer, userData)
 
-	const user = getSessionStorage(Object.keys(sessionStorage).filter(item => item.startsWith('firebase:authUser'))[0])
+	function checkAuth () {
+		return getSessionStorage(Object.keys(sessionStorage).filter(item => item.startsWith('firebase:authUser'))[0])
+	}
+
+	const user = checkAuth()
 
 	// this loads the context from session storage everytime this component is mounted for the first time
 	// this enables context to persist across page refreshes
@@ -23,25 +27,40 @@ const App = () => {
 				<Route exact path="/signup">
 					{
 						// if user is logged in go to dashboard otherwise go to sign up page
-						!!user ? <Redirect to="/dashboard" /> : <SignUp />
-
+						// !!user ? <Redirect to="/dashboard"/> : <SignUp/>
+						() => {
+							const user = checkAuth()
+							if (!!user) return <Redirect to="/dashboard"/>
+							else return <SignUp/>
+						}
 					}
 				</Route>
 				<Route exact path="/signin">
 					{
 						// if user is logged in go to dashboard otherwise go to sign in page
-						!!user ? <Redirect to="/dashboard" /> : <SignIn />
+						// !!user ? <Redirect to="/dashboard" /> : <SignIn />
+						() => {
+							const user = checkAuth()
+							if (!!user) return <Redirect to="/dashboard" />
+							else return <SignIn/>
+						}
 					}
 				</Route>
 				<Route exact path="/dashboard">
 					{
 						// if user is logged in and a developer go to Dev if not a developer go to NonProfit
 						// if user is not logged in go to home
-						!!user ?
-							user.providerData[0].providerId === "github.com" ?
-								<Dev />
-							: <NonProfit />
-						: <Redirect to="/" />
+						() => {
+							const user = checkAuth()
+							if (!!user && user.providerData[0].providerId === "github.com") return <Dev/>
+							else if (!!user) return <Dev/>
+							else return <Redirect to="/" />
+						}
+						// !!user ?
+						// 	user.providerData[0].providerId === "github.com" ?
+						// 		<Dev />
+						// 	: <NonProfit />
+						// : <Redirect to="/" />
 						// console.log(!!user) || <Dev/>
 
 
@@ -52,7 +71,12 @@ const App = () => {
 					{
 						// if user is logged in, do to the project page
 						// if user is not logged in go to home
-						!!user ? <Project /> : <Redirect to="/" />
+						// !!user ? <Project /> : <Redirect to="/" />
+						() => {
+							const user = checkAuth()
+							if (!!user) return <Project/>
+							else return <Redirect to="/"/>
+						}
 
 						// <Project /> // for Project page debugging
 					}
@@ -61,7 +85,12 @@ const App = () => {
 					{
 						// if user is logged in and is a developer go to explore page if user is a nonprofit go to home
 						// if user is not logged in go to sign in page
-						!!user ? <Explore /> : <SignIn />
+						// !!user ? <Explore /> : <SignIn />
+						() => {
+							const user = checkAuth()
+							if (!!user) return <Explore/>
+							else return <SignIn/>
+						}
 					}
 				</Route>
 				<Route path="/">
