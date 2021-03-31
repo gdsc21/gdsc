@@ -67,6 +67,7 @@ exports.npLogin = (request, response) => {
      * @return success: status=200 --- json={token: token}
      *          failure: status=403 --- json={error: err.message}
      */
+
     let np
     if (typeof request.body != "object")
         np = JSON.parse(request.body)
