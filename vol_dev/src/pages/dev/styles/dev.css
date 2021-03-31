@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-.sidebar {
+.developer__dashboard .sidebar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -28,7 +28,7 @@
   z-index: 2;
 }
 
-.sidebar .ham-close {
+.developer__dashboard .sidebar .ham-close {
   display: none;
   background: none;
   width: 4em;
@@ -40,30 +40,30 @@
   cursor: pointer;
 }
 
-.sidebar .ham-close:focus {
+.developer__dashboard .sidebar .ham-close:focus {
   outline: none;
 }
 
-.sidebar .profile {
+.developer__dashboard .sidebar .profile {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
   padding: 2em 1em;
 }
 
-.sidebar .profile img {
+.developer__dashboard .sidebar .profile img {
   border-radius: 50%;
   width: 5em;
   height: 5em;
 }
 
-.sidebar .profile .user {
+.developer__dashboard .sidebar .profile .user {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -74,25 +74,27 @@
   padding-left: 0.5em;
 }
 
-.sidebar .profile .user a {
+.developer__dashboard .sidebar .profile .user a {
   -ms-flex-item-align: end;
       align-self: flex-end;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.75em;
+  margin-bottom: 0.5em;
+  cursor: pointer;
 }
 
-.sidebar .profile .user h2 {
+.developer__dashboard .sidebar .profile .user h2 {
+  line-height: 1;
   font-size: 1.5rem;
   font-weight: 500;
 }
 
-.sidebar .profile .user h3 {
+.developer__dashboard .sidebar .profile .user h3 {
   font-size: 1rem;
   font-weight: 300;
 }
 
-.sidebar .achievements {
-  background-color: #f0a63e;
+.developer__dashboard .sidebar .achievements {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -107,9 +109,9 @@
           flex: 1;
 }
 
-.sidebar .achievements .xp,
-.sidebar .achievements .badges,
-.sidebar .achievements .starproject {
+.developer__dashboard .sidebar .achievements .xp,
+.developer__dashboard .sidebar .achievements .badges,
+.developer__dashboard .sidebar .achievements .starproject {
   margin-bottom: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -123,25 +125,25 @@
   padding: 1rem;
 }
 
-.sidebar .achievements .xp h3,
-.sidebar .achievements .badges h3,
-.sidebar .achievements .starproject h3 {
+.developer__dashboard .sidebar .achievements .xp h3,
+.developer__dashboard .sidebar .achievements .badges h3,
+.developer__dashboard .sidebar .achievements .starproject h3 {
   color: #fca311;
   text-transform: uppercase;
 }
 
-.sidebar .achievements .xp h5,
-.sidebar .achievements .badges h5,
-.sidebar .achievements .starproject h5 {
+.developer__dashboard .sidebar .achievements .xp h5,
+.developer__dashboard .sidebar .achievements .badges h5,
+.developer__dashboard .sidebar .achievements .starproject h5 {
   color: #141b28;
   font-size: 1.3em;
   font-weight: 500;
   padding-bottom: 0.5em;
 }
 
-.sidebar .achievements .xp .user-progress,
-.sidebar .achievements .badges .user-progress,
-.sidebar .achievements .starproject .user-progress {
+.developer__dashboard .sidebar .achievements .xp .user-progress,
+.developer__dashboard .sidebar .achievements .badges .user-progress,
+.developer__dashboard .sidebar .achievements .starproject .user-progress {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -150,27 +152,27 @@
           align-items: center;
 }
 
-.sidebar .achievements .xp .user-progress h5,
-.sidebar .achievements .badges .user-progress h5,
-.sidebar .achievements .starproject .user-progress h5 {
+.developer__dashboard .sidebar .achievements .xp .user-progress h5,
+.developer__dashboard .sidebar .achievements .badges .user-progress h5,
+.developer__dashboard .sidebar .achievements .starproject .user-progress h5 {
   font-weight: 500;
   font-size: 1em;
   padding: 0;
   margin: 0;
 }
 
-.sidebar .achievements .xp p,
-.sidebar .achievements .badges p,
-.sidebar .achievements .starproject p {
+.developer__dashboard .sidebar .achievements .xp p,
+.developer__dashboard .sidebar .achievements .badges p,
+.developer__dashboard .sidebar .achievements .starproject p {
   text-transform: uppercase;
   font-size: 0.75em;
   font-weight: bold;
   color: rgba(22, 34, 59, 0.6);
 }
 
-.sidebar .achievements .xp progress,
-.sidebar .achievements .badges progress,
-.sidebar .achievements .starproject progress {
+.developer__dashboard .sidebar .achievements .xp progress,
+.developer__dashboard .sidebar .achievements .badges progress,
+.developer__dashboard .sidebar .achievements .starproject progress {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -179,47 +181,47 @@
   -webkit-appearance: none;
 }
 
-.sidebar .achievements .xp progress::-webkit-progress-bar,
-.sidebar .achievements .badges progress::-webkit-progress-bar,
-.sidebar .achievements .starproject progress::-webkit-progress-bar {
+.developer__dashboard .sidebar .achievements .xp progress::-webkit-progress-bar,
+.developer__dashboard .sidebar .achievements .badges progress::-webkit-progress-bar,
+.developer__dashboard .sidebar .achievements .starproject progress::-webkit-progress-bar {
   background: #ffe9ca;
   color: #141b28;
   border-radius: 4em;
 }
 
-.sidebar .achievements .xp progress::-webkit-progress-value,
-.sidebar .achievements .badges progress::-webkit-progress-value,
-.sidebar .achievements .starproject progress::-webkit-progress-value {
+.developer__dashboard .sidebar .achievements .xp progress::-webkit-progress-value,
+.developer__dashboard .sidebar .achievements .badges progress::-webkit-progress-value,
+.developer__dashboard .sidebar .achievements .starproject progress::-webkit-progress-value {
   background-color: #141b28;
   border-radius: 4em 0 0 4em;
 }
 
-.sidebar .achievements .xp .proj,
-.sidebar .achievements .badges .proj,
-.sidebar .achievements .starproject .proj {
+.developer__dashboard .sidebar .achievements .xp .proj,
+.developer__dashboard .sidebar .achievements .badges .proj,
+.developer__dashboard .sidebar .achievements .starproject .proj {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.sidebar .achievements .xp .proj h4,
-.sidebar .achievements .badges .proj h4,
-.sidebar .achievements .starproject .proj h4 {
+.developer__dashboard .sidebar .achievements .xp .proj h4,
+.developer__dashboard .sidebar .achievements .badges .proj h4,
+.developer__dashboard .sidebar .achievements .starproject .proj h4 {
   font-size: 1.3em;
 }
 
-.sidebar .achievements .xp .proj h5,
-.sidebar .achievements .badges .proj h5,
-.sidebar .achievements .starproject .proj h5 {
+.developer__dashboard .sidebar .achievements .xp .proj h5,
+.developer__dashboard .sidebar .achievements .badges .proj h5,
+.developer__dashboard .sidebar .achievements .starproject .proj h5 {
   padding-top: 0.25em;
   font-size: 1em;
   font-weight: normal;
   text-transform: uppercase;
 }
 
-.sidebar .achievements .xp .proj .proj-icon,
-.sidebar .achievements .badges .proj .proj-icon,
-.sidebar .achievements .starproject .proj .proj-icon {
+.developer__dashboard .sidebar .achievements .xp .proj .proj-icon,
+.developer__dashboard .sidebar .achievements .badges .proj .proj-icon,
+.developer__dashboard .sidebar .achievements .starproject .proj .proj-icon {
   -ms-flex-item-align: center;
       align-self: center;
   display: -webkit-box;
@@ -232,9 +234,9 @@
   margin-left: auto;
 }
 
-.sidebar .achievements .xp .proj .proj-icon a,
-.sidebar .achievements .badges .proj .proj-icon a,
-.sidebar .achievements .starproject .proj .proj-icon a {
+.developer__dashboard .sidebar .achievements .xp .proj .proj-icon a,
+.developer__dashboard .sidebar .achievements .badges .proj .proj-icon a,
+.developer__dashboard .sidebar .achievements .starproject .proj .proj-icon a {
   display: -ms-grid;
   display: grid;
   place-items: center;
@@ -245,23 +247,23 @@
   background-color: #fca311;
 }
 
-.sidebar .achievements .xp .no-starred h5,
-.sidebar .achievements .badges .no-starred h5,
-.sidebar .achievements .starproject .no-starred h5 {
+.developer__dashboard .sidebar .achievements .xp .no-starred h5,
+.developer__dashboard .sidebar .achievements .badges .no-starred h5,
+.developer__dashboard .sidebar .achievements .starproject .no-starred h5 {
   font-size: 0.75em;
   font-weight: bold;
   color: rgba(22, 34, 59, 0.6);
   text-transform: uppercase;
 }
 
-.sidebar .achievements .xp .no-starred p,
-.sidebar .achievements .badges .no-starred p,
-.sidebar .achievements .starproject .no-starred p {
+.developer__dashboard .sidebar .achievements .xp .no-starred p,
+.developer__dashboard .sidebar .achievements .badges .no-starred p,
+.developer__dashboard .sidebar .achievements .starproject .no-starred p {
   font-weight: normal;
   text-transform: none;
 }
 
-.sidebar .sign-out {
+.developer__dashboard .sidebar .sign-out {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -274,15 +276,16 @@
   padding: 2em 1em;
 }
 
-.sidebar .sign-out a {
+.developer__dashboard .sidebar .sign-out a {
   background-color: #eae8fd;
   color: #141b28;
   padding: 0.5em 2em 0.5em 2em;
   border-radius: 1rem;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
-.panel-container {
+.developer__dashboard .panel-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -298,14 +301,15 @@
   height: 100vh;
 }
 
-.panel-container .devNav {
+.developer__dashboard .panel-container .devNav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   margin-left: auto;
   margin-right: 2rem;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
   min-width: 30rem;
   max-width: 50rem;
   min-height: 4rem;
@@ -314,15 +318,19 @@
           align-items: center;
 }
 
-.panel-container .devNav a {
+.developer__dashboard .panel-container .devNav a {
   text-decoration: none;
   text-transform: uppercase;
   color: #eae8fd;
   font-weight: 500;
 }
 
-.panel-container .curProject,
-.panel-container .interestProject {
+.developer__dashboard .panel-container .devNav .navlink__icon {
+  display: none;
+}
+
+.developer__dashboard .panel-container .curProject,
+.developer__dashboard .panel-container .interestProject {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -332,18 +340,18 @@
           flex-direction: column;
 }
 
-.panel-container .curProject .head,
-.panel-container .interestProject .head {
+.developer__dashboard .panel-container .curProject .head,
+.developer__dashboard .panel-container .interestProject .head {
   font-size: 1.5em;
   line-height: 2em;
   text-transform: uppercase;
   padding: 0 2rem;
 }
 
-.panel-container .curProject .curProjectDisp,
-.panel-container .curProject .intProjectDisp,
-.panel-container .interestProject .curProjectDisp,
-.panel-container .interestProject .intProjectDisp {
+.developer__dashboard .panel-container .curProject .curProjectDisp,
+.developer__dashboard .panel-container .curProject .intProjectDisp,
+.developer__dashboard .panel-container .interestProject .curProjectDisp,
+.developer__dashboard .panel-container .interestProject .intProjectDisp {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -356,10 +364,10 @@
       flex-wrap: wrap;
 }
 
-.panel-container .curProject .curProjectDisp .devproject,
-.panel-container .curProject .intProjectDisp .devproject,
-.panel-container .interestProject .curProjectDisp .devproject,
-.panel-container .interestProject .intProjectDisp .devproject {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 1em;
   margin: 0.5em 1em 0.5em 0;
@@ -374,48 +382,48 @@
   padding: 2em 1.5em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h3,
-.panel-container .curProject .curProjectDisp .devproject h4,
-.panel-container .curProject .intProjectDisp .devproject h3,
-.panel-container .curProject .intProjectDisp .devproject h4,
-.panel-container .interestProject .curProjectDisp .devproject h3,
-.panel-container .interestProject .curProjectDisp .devproject h4,
-.panel-container .interestProject .intProjectDisp .devproject h3,
-.panel-container .interestProject .intProjectDisp .devproject h4 {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject h3,
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject h4,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject h3,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject h4,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h3,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h4,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h3,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h4 {
   color: #fca311;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h3,
-.panel-container .curProject .intProjectDisp .devproject h3,
-.panel-container .interestProject .curProjectDisp .devproject h3,
-.panel-container .interestProject .intProjectDisp .devproject h3 {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject h3,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject h3,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h3,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h3 {
   text-align: center;
   font-size: 1.5rem;
   padding-bottom: 0.5em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject h4,
-.panel-container .curProject .intProjectDisp .devproject h4,
-.panel-container .interestProject .curProjectDisp .devproject h4,
-.panel-container .interestProject .intProjectDisp .devproject h4 {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject h4,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject h4,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h4,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h4 {
   text-transform: uppercase;
   padding-right: 1em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject div,
-.panel-container .curProject .intProjectDisp .devproject div,
-.panel-container .interestProject .curProjectDisp .devproject div,
-.panel-container .interestProject .intProjectDisp .devproject div {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject div,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject div,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject div,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding: 0.375em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .description-div,
-.panel-container .curProject .intProjectDisp .devproject .description-div,
-.panel-container .interestProject .curProjectDisp .devproject .description-div,
-.panel-container .interestProject .intProjectDisp .devproject .description-div {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .description-div,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .description-div,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .description-div,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .description-div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -426,44 +434,44 @@
   text-align: left;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress,
-.panel-container .curProject .intProjectDisp .devproject .progress,
-.panel-container .interestProject .curProjectDisp .devproject .progress,
-.panel-container .interestProject .intProjectDisp .devproject .progress {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .progress,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .progress,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .progress,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .progress {
   display: block;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress,
-.panel-container .curProject .intProjectDisp .devproject .progress progress,
-.panel-container .interestProject .curProjectDisp .devproject .progress progress,
-.panel-container .interestProject .intProjectDisp .devproject .progress progress {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .progress progress,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .progress progress,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .progress progress,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .progress progress {
   width: 12em;
   height: 1em;
   margin-right: 1em;
   -webkit-appearance: none;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
-.panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar,
-.panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
-.panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-bar,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-bar {
   background: #ffe9ca;
   color: #141b28;
   border-radius: 4em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
-.panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-value,
-.panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
-.panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-value {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .progress progress::-webkit-progress-value,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .progress progress::-webkit-progress-value,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .progress progress::-webkit-progress-value {
   background-color: #fca311;
   border-radius: 4em 0 0 4em;
 }
 
-.panel-container .curProject .curProjectDisp .devproject .goto-btn,
-.panel-container .curProject .intProjectDisp .devproject .goto-btn,
-.panel-container .interestProject .curProjectDisp .devproject .goto-btn,
-.panel-container .interestProject .intProjectDisp .devproject .goto-btn {
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .goto-btn,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .goto-btn,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .goto-btn,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .goto-btn {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
@@ -478,19 +486,22 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .panel-container {
+  .developer__dashboard .panel-container {
     margin-left: 0;
     max-width: unset;
   }
+  .developer__dashboard .panel-container .curProject {
+    margin-top: 1rem;
+  }
 }
 
-.panel-container .ham-header {
+.developer__dashboard .panel-container .ham-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.panel-container .ham-header button {
+.developer__dashboard .panel-container .ham-header button {
   display: none;
   background: none;
   color: #eae8fd;
@@ -500,42 +511,100 @@
   cursor: pointer;
 }
 
-.panel-container .ham-header button:focus {
+.developer__dashboard .panel-container .ham-header button:focus {
   outline: none;
 }
 
 @media screen and (max-width: 1023px) {
-  .panel-container .ham-header {
+  .developer__dashboard .panel-container .ham-header {
     background: #141b28;
   }
-  .panel-container .ham-header button {
+  .developer__dashboard .panel-container .ham-header button {
     display: inline-block;
   }
-  .panel-container .ham-header .devNav {
-    margin-left: none;
-    max-width: none;
+  .developer__dashboard .panel-container .ham-header .devNav {
+    margin-left: 0;
     width: 100%;
+    min-width: unset;
     -webkit-box-pack: space-evenly;
         -ms-flex-pack: space-evenly;
             justify-content: space-evenly;
   }
-  .panel-container .ham-header .curProjectDisp {
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    margin: 0;
-    padding: 0;
-  }
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.developer__dashboard .dev__edit-profile {
+  min-width: 50vw;
 }
 
-.dev {
+.developer__dashboard .dev__edit-profile input,
+.developer__dashboard .dev__edit-profile textarea {
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 28px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  font-size: 0.875rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+
+.developer__dashboard .dev__edit-profile input:focus,
+.developer__dashboard .dev__edit-profile textarea:focus {
+  border: 2px solid #16223b;
+}
+
+.developer__dashboard .dev__edit-profile textarea {
+  display: block;
+  min-height: 5rem;
+}
+
+.developer__dashboard .dev__edit-profile label {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: block;
+}
+
+.developer__dashboard .dev__edit-profile button {
+  background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
+  border-radius: 2rem;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.developer__dashboard .dev__edit-profile .error {
+  color: red;
+  font-size: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.developer__dashboard .dev__edit-profile .form-error {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.developer__dashboard .dev__edit-profile .edit-profile__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1rem 0;
+}
+
+.developer__dashboard .dev__edit-profile .edit-profile__buttons .edit-profile__cancel {
+  background: linear-gradient(329.74deg, rgba(139, 30, 30, 0.86) 18.42%, rgba(139, 59, 30, 0.86) 81.58%);
+}
+
+.developer__dashboard {
   background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
   background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
   display: -webkit-box;
@@ -545,33 +614,30 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  overflow-x: hidden;
 }
 
 @media screen and (max-width: 1023px) {
-  .dev .sidebar {
-    display: none;
+  .developer__dashboard .sidebar {
+    -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
     height: 100%;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
   }
-  .dev .s-open {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
+  .developer__dashboard .sidebar .ham-close {
+    display: unset;
+  }
+  .developer__dashboard .s-open {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
     position: fixed;
   }
-  .dev .panel-container {
-    margin-left: 0;
-  }
-  .dev .p-open {
-    margin-left: 22em;
-  }
-  .dev .ham-header {
-    width: 100vw;
-  }
-  .dev .h-open {
+  .developer__dashboard .h-open {
     display: none;
   }
-  .dev .c-open {
+  .developer__dashboard .c-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -585,21 +651,71 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .dev .sidebar {
-    display: none;
-    height: 100%;
-    width: 100%;
-  }
-  .dev .s-open {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-  .dev .p-open {
+  .developer__dashboard .p-open {
     display: none;
   }
-  .dev .ham-header {
+  .developer__dashboard .ham-header {
     width: 100%;
+  }
+  .developer__dashboard .devNav .navlink__icon {
+    display: inline-block !important;
+    font-size: 1rem;
+  }
+  .developer__dashboard .devNav .navlink__text {
+    display: none;
+  }
+}
+
+.dev__loader {
+  background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
+  background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding: 20vw 0;
+}
+
+.dev__loader h3 {
+  margin-top: 1rem;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.dev__loader svg rect {
+  stroke-dasharray: 190;
+  -webkit-animation: loading 2s cubic-bezier(0.49, 1.01, 1, 0.38) infinite;
+          animation: loading 2s cubic-bezier(0.49, 1.01, 1, 0.38) infinite;
+}
+
+@-webkit-keyframes loading {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 400;
+  }
+}
+
+@keyframes loading {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 400;
   }
 }
 /*# sourceMappingURL=dev.css.map */

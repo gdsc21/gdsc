@@ -7,7 +7,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-.project .project-container {
+.project__page .project-container {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -16,7 +16,7 @@
   height: 100vh;
 }
 
-.project .project-container .devNav {
+.project__page .project-container .devNav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -33,20 +33,20 @@
           align-items: center;
 }
 
-.project .project-container .devNav a {
+.project__page .project-container .devNav a {
   text-decoration: none;
   text-transform: uppercase;
   color: #eae8fd;
   font-weight: 500;
 }
 
-.project .project-container .title {
+.project__page .project-container .title {
   text-transform: uppercase;
   font-weight: 600;
   margin: 1rem 0;
 }
 
-.project .project-container .developers {
+.project__page .project-container .developers {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -59,7 +59,7 @@
       flex-wrap: wrap;
 }
 
-.project .project-container .proj-and-np {
+.project__page .project-container .proj-and-np {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -68,19 +68,19 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .project .project-container {
+  .project__page .project-container {
     margin-left: 0;
     max-width: unset;
   }
 }
 
-.project-container .ham-header {
+.project__page .project-container .ham-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.project-container .ham-header button {
+.project__page .project-container .ham-header button {
   display: none;
   background: none;
   color: #eae8fd;
@@ -90,18 +90,18 @@
   cursor: pointer;
 }
 
-.project-container .ham-header button:focus {
+.project__page .project-container .ham-header button:focus {
   outline: none;
 }
 
 @media screen and (max-width: 1023px) {
-  .project-container .ham-header {
+  .project__page .project-container .ham-header {
     background: #141b28;
   }
-  .project-container .ham-header button {
+  .project__page .project-container .ham-header button {
     display: inline-block;
   }
-  .project-container .ham-header .devNav {
+  .project__page .project-container .ham-header .devNav {
     margin-left: none;
     max-width: none;
     width: 100%;
@@ -111,7 +111,7 @@
   }
 }
 
-.project .dev-profile {
+.project__page .dev-profile {
   background: linear-gradient(115.35deg, rgba(255, 255, 255, 0.5) 3.11%, rgba(255, 255, 255, 0.3) 96.88%);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -136,7 +136,7 @@
           align-items: center;
 }
 
-.project .dev-profile .dev-image {
+.project__page .dev-profile .dev-image {
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
@@ -145,19 +145,19 @@
   margin: 1rem 0;
 }
 
-.project .dev-profile h4 {
+.project__page .dev-profile h4 {
   font-size: 1.25rem;
   line-height: 1;
   text-align: center;
 }
 
-.project .dev-profile h5 {
+.project__page .dev-profile h5 {
   font-weight: 300;
   text-transform: uppercase;
   padding-top: 0.5rem;
 }
 
-.project .dev-profile .dev-links {
+.project__page .dev-profile .dev-links {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -168,7 +168,7 @@
   padding: 1rem 2rem;
 }
 
-.project .dev-profile .dev-links a {
+.project__page .dev-profile .dev-links a {
   background-color: #fca311;
   width: 1.5rem;
   height: 1.5rem;
@@ -178,11 +178,11 @@
   place-items: center;
 }
 
-.project .dev-profile .dev-links a i {
+.project__page .dev-profile .dev-links a i {
   color: #16223b;
 }
 
-.project .project-info {
+.project__page .project-info {
   background: linear-gradient(115.35deg, rgba(255, 255, 255, 0.5) 3.11%, rgba(255, 255, 255, 0.3) 96.88%);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -194,20 +194,20 @@
   width: clamp(20rem, 40vw, 40rem);
 }
 
-.project .project-info .subtitle {
+.project__page .project-info .subtitle {
   text-transform: uppercase;
   color: #fca311;
   font-weight: 600;
   margin-top: 0.5rem;
 }
 
-.project .project-info .proj-title {
+.project__page .project-info .proj-title {
   font-size: 2rem;
   line-height: 1;
   font-weight: 500;
 }
 
-.project .project-info .github {
+.project__page .project-info .github {
   width: 2rem;
   height: 2rem;
   display: -ms-grid;
@@ -218,11 +218,11 @@
   background: #fca311;
 }
 
-.project .project-info .github a {
+.project__page .project-info .github a {
   color: #16223b;
 }
 
-.project .non-profit {
+.project__page .non-profit {
   background: linear-gradient(115.35deg, rgba(255, 255, 255, 0.5) 3.11%, rgba(255, 255, 255, 0.3) 96.88%);
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -244,20 +244,20 @@
   padding: 1.5rem;
 }
 
-.project .non-profit h4 {
+.project__page .non-profit h4 {
   margin: 1rem 0;
   text-transform: uppercase;
   text-align: center;
 }
 
-.project .non-profit img {
+.project__page .non-profit img {
   -webkit-filter: drop-shadow(2px 5px 2px #2b2b34);
           filter: drop-shadow(2px 5px 2px #2b2b34);
   height: 4rem;
   width: auto;
 }
 
-.project .non-profit .np-links {
+.project__page .non-profit .np-links {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -267,7 +267,7 @@
           justify-content: space-between;
 }
 
-.project .non-profit .np-links a {
+.project__page .non-profit .np-links a {
   background-color: #fca311;
   width: 2rem;
   height: 2rem;
@@ -277,18 +277,11 @@
   place-items: center;
 }
 
-.project .non-profit .np-links a i {
+.project__page .non-profit .np-links a i {
   color: #16223b;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.project {
+.project__page {
   background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
   background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
   display: -webkit-box;
@@ -302,29 +295,29 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .project .sidebar {
+  .project__page .sidebar {
     display: none;
     height: 100%;
   }
-  .project .s-open {
+  .project__page .s-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     position: fixed;
   }
-  .project .panel-container {
+  .project__page .panel-container {
     margin-left: 0;
   }
-  .project .p-open {
+  .project__page .p-open {
     margin-left: 22em;
   }
-  .project .ham-header {
+  .project__page .ham-header {
     width: 100vw;
   }
-  .project .h-open {
+  .project__page .h-open {
     display: none;
   }
-  .project .c-open {
+  .project__page .c-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -338,20 +331,20 @@
 }
 
 @media only screen and (max-width: 500px) {
-  .project .sidebar {
+  .project__page .sidebar {
     display: none;
     height: 100%;
     width: 100%;
   }
-  .project .s-open {
+  .project__page .s-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
-  .project .p-open {
+  .project__page .p-open {
     display: none;
   }
-  .project .ham-header {
+  .project__page .ham-header {
     width: 100%;
   }
 }

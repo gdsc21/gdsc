@@ -23,8 +23,8 @@ const NP = ({user}) => {
             hamclose.classList.remove("c-open");
             curproject.classList.remove("p-open")
 		} else {
-            sidebar.classList.add("s-open");
-            npdash.classList.add("n-open");
+			sidebar.classList.add("s-open");
+			npdash.classList.add("n-open");
 			hburger.classList.add("h-open");
             hamclose.classList.add("c-open");
             curproject.classList.add("p-open")

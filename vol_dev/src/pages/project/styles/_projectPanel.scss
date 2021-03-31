@@ -1,4 +1,4 @@
-.project .project-container {
+.project__page .project-container {
 	flex: 1;
 	color: $lightgrey;
 	margin: 0 5rem 0 27rem;
@@ -46,7 +46,7 @@
 	}
 }
 
-.project-container .ham-header {
+.project__page .project-container .ham-header {
 	display: flex;
 
 	button {
@@ -78,7 +78,7 @@
 	}
 }
 
-.project .dev-profile {
+.project__page .dev-profile {
 	background: linear-gradient(
 		115.35deg,
 		rgba(255, 255, 255, 0.5) 3.11%,
@@ -137,7 +137,7 @@
 	}
 }
 
-.project .project-info {
+.project__page .project-info {
 	background: linear-gradient(
 		115.35deg,
 		rgba(255, 255, 255, 0.5) 3.11%,
@@ -179,7 +179,7 @@
 	}
 }
 
-.project .non-profit {
+.project__page .non-profit {
 	background: linear-gradient(
 		115.35deg,
 		rgba(255, 255, 255, 0.5) 3.11%,

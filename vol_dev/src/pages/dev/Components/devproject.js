@@ -17,13 +17,14 @@ const Devproject = ({ key, project }) => {
 				<h4>Description</h4>
 				<p className="description">{project.description}</p>
 			</div>
-			{
-				// TODO: There are no roles for projects yet but we need to add the github repo link and the non-profits name
-			}
-			{/*<div>*/}
-			{/*	<h4>Role</h4>*/}
-			{/*	<p className="role">{project.role}</p>*/}
-			{/*</div>*/}
+
+			{/*
+			// TODO: There are no roles for projects yet but we need to add the github repo link and the non-profits name
+			<div>
+				<h4>Role</h4>
+				<p className="role">{project.role}</p>
+			</div> 
+			*/}
 
 			{
 				// TODO: Add a way to quantify the project's progess

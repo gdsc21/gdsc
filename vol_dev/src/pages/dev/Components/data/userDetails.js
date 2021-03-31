@@ -1,11 +1,13 @@
 // This is the dummy user
 const userDetails = {
-	name: "Jessica Day",
-	imgUrl: "/",
-	title: "front-end developer",
-	points: 4290,
-	projects: [
-		{
+	devDisplayName: "Jessica Day",
+	// devProfileImgUrl: "/",
+	devTitle: "front-end developer",
+	gamification: {
+		devXP: 4290,
+	},
+	projects: {
+		proj1: {
 			org: "A really influential NGO",
 			title: "Website Accessibility",
 			description:
@@ -13,7 +15,7 @@ const userDetails = {
 			role: "Administrator",
 			progress: 50,
 		},
-		{
+		proj2: {
 			org: "A really influential NGO",
 			title: "Website Accessibility",
 			description:
@@ -21,7 +23,7 @@ const userDetails = {
 			role: "Administrator",
 			progress: 50,
 		},
-		{
+		proj3: {
 			org: "A really influential NGO",
 			title: "Website Accessibility",
 			description:
@@ -29,7 +31,7 @@ const userDetails = {
 			role: "Administrator",
 			progress: 50,
 		},
-		{
+		proj4: {
 			org: "A really influential NGO",
 			title: "Website Accessibility",
 			description:
@@ -37,7 +39,7 @@ const userDetails = {
 			role: "Administrator",
 			progress: 50,
 		},
-	],
+	},
 	starProject: {
 		org: "A really influential NGO",
 		title: "Website Accessibility",

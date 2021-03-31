@@ -11,7 +11,7 @@ import msgLogo from "../img/msgLogo.png";
 import abstract from "../img/abstract.svg";
 
 // Upload data
-import projectData from "./projectData";
+import projectData from "./featureProjectData";
 
 // Upload css
 import "../styles/homepage.css";
@@ -57,16 +57,18 @@ const Header = () => {
 	};
 
 	return (
-		<div className="header">
+		<div className="home__header">
 			<nav className="nav">
 				<div className="logo">
 					<img src={logo} alt="website logo"></img>
 				</div>
+
 				<div className="hamburger" onClick={() => handleHamburger()}>
 					<div className="line" id="hamburger-line1"></div>
 					<div className="line" id="hamburger-line2"></div>
 					<div className="line" id="hamburger-line3"></div>
 				</div>
+
 				<div className="navlinks">
 					<ScrollTo id="homepage-navlink-home" className="link main-links" to="home" smooth={true}>
 						home
@@ -133,7 +135,7 @@ const Header = () => {
 					))}
 				</div>
 
-				<h2 className="project-title">Awesome Projects Built on Smth Smth </h2>
+				<h2 className="project-title">Awesome Projects Built on Relite</h2>
 
 				{/* Project components */}
 				<div className="projects" id="homepage-featured-projects">

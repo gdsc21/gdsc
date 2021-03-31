@@ -9,31 +9,34 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 				<button className="hamburger" onClick={hamburgerClick}>
 					<i className="fas fa-bars"></i>
 				</button>
-				<nav className="devNav">
+				<div className="devNav">
 					{
 						//TODO: add notifications and messaging
 					}
-					<Link to="/dashboard">Dashboard</Link>
-					<Link to="/">Notifications</Link>
-					<Link to="/">Messages</Link>
-					<Link to="/explore">Explore</Link>
-				</nav>
+					<Link to="/dashboard">
+						<span className="navlink__text">Dashboard</span>
+						<i className="navlink__icon fas fa-home"></i>
+					</Link>
+					<Link to="/">
+						<span className="navlink__text">Notifications</span>
+						<i className="navlink__icon fas fa-bell"></i>
+					</Link>
+					{/* <Link to="/">Messages</Link> */}
+					<Link to="/explore">
+						<span className="navlink__text">Explore</span>
+						<i className="navlink__icon fas fa-compass"></i>
+					</Link>
+				</div>
 			</div>
 
 			{/* Current user projects */}
 			<div className="curProject">
 				<h1 className="head">Current Projects</h1>
 				<div className="curProjectDisp">
-					{
-						// Object.entries(user.projects).map((id, projInfo) => {
-						// 	return <Devproject key={id} project={projInfo} />;
-						// })
-					}
-					{/*{*/}
-					{/*	user.projects.map((project, id) => {*/}
-					{/*		return <Devproject key={id} project={project} />;*/}
-					{/*	})*/}
-					{/*}*/}
+					{user.projects &&
+						Object.entries(user.projects).map(([projID, projInfo], id) => {
+							return <Devproject key={id} project={projInfo} />;
+						})}
 				</div>
 			</div>
 

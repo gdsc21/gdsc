@@ -23,15 +23,16 @@ const Footer = () => {
 					</Link>
 				</div>
 				<div className="contact-info">
-					<p className="email">hello@something.com</p>
+					<p className="email">contact us using our contact form</p>
 					<p className="address">
-						12345 Sesame St. <br />
-						Edmonton, AB A1B 2C3 <br />
+						Students of University of Alberta <br />
+						Edmonton, AB
+						<br />
 						Canada
 					</p>
 				</div>
 			</div>
-			<p className="copyright">Copyright © 2018 Something Something. All Rights Reserved.</p>
+			<p className="copyright">Copyright © 2021 Relite. All Rights Reserved.</p>
 		</footer>
 	);
 };
