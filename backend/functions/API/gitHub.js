@@ -141,6 +141,47 @@ exports.updateDevCommits = (request, response) => {
                     commit[commitId].authorUid = authorUid
                     // remove the email so it is not included in the commit info in firestore
                     delete commit[commitId].authorEmail
+
+                    // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
+                    // commitDocRef = commitDocCol.doc(authorUid)
+                    // batch.set(commitDocRef, commit,  { merge: true })
+
+                    let newLevel, newXP
+                    console.log(authorUid)
+                    let devDocRef = fs.collection("dev_accounts").doc(authorUid).catch((err) => {
+                        return response.status(400).json({error: err.message})
+                    })
+
+                    // updates developer xp and level
+                    devDocRef
+                        .get()
+                        .then((doc) => {
+                            let data = doc.data()
+                            let game = data.gamification
+
+                            // manages adding xp + level
+                            newXP = game.devXP + (commit[commitId].changes.total > 200 ? 200 : commit[commitId].changes.total)
+                            newLevel = Math.ceil(newXP / 2000)
+
+                            game.devXP = newXP
+                            game.devLevel = newLevel
+
+                            devDocRef
+                                .update({
+                                    "gamification.devXP": newXP,
+                                    "gamification.devLevel": newLevel
+                                })
+                                .catch((err) => {
+                                    return response.status(500).json({error: "Problem updating xp and level"})
+                                })
+                        })
+                        .then(() => {
+                            return response.status(200).json({message: "Success!"})
+                        })
+                        .catch((err) => {
+                            return response.status(502).json({error: err.message})
+                        })
+
                 })
                 .catch((err) => {
                     if (err.code === "auth/user-not-found")
@@ -149,44 +190,6 @@ exports.updateDevCommits = (request, response) => {
                         return response.status(400).json({error: err.message})
                 })
         }
-
-
-        // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
-        // commitDocRef = commitDocCol.doc(authorUid)
-        // batch.set(commitDocRef, commit,  { merge: true })
-
-        let newLevel, newXP
-        console.log(authorUid)
-        let devDocRef = fs.collection("dev_accounts").doc(authorUid).catch((err) => {
-            return response.status(400).json({error: err.message})
-        })
-
-        // updates developer xp and level
-        devDocRef
-            .get()
-            .then((doc) => {
-                let data = doc.data()
-                let game = data.gamification
-
-                // manages adding xp + level
-                newXP = game.devXP + (commit[commitId].changes.total > 200 ? 200 : commit[commitId].changes.total)
-                newLevel = Math.ceil(newXP / 400)
-
-                game.devXP = newXP
-                game.devLevel = newLevel
-
-                devDocRef
-                    .update(game)
-                    .catch((err) => {
-                        return response.status(500).json({error: "Problem updating xp and level"})
-                    })
-            })
-            .then(() => {
-                return response.status(200).json({message: "Success!"})
-            })
-            .catch((err) => {
-                return response.status(502).json({error: err.message})
-            })
     }) // end loop
 }
 
