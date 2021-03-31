@@ -148,9 +148,7 @@ exports.updateDevCommits = (request, response) => {
 
                     let newLevel, newXP
                     console.log(authorUid)
-                    let devDocRef = fs.collection("dev_accounts").doc(authorUid).catch((err) => {
-                        return response.status(400).json({error: err.message})
-                    })
+                    let devDocRef = fs.collection("dev_accounts").doc(authorUid)
 
                     // updates developer xp and level
                     devDocRef
