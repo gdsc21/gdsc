@@ -31,6 +31,7 @@ const Dev = () => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
+					console.log(data)
 					updateUserStore({ type: "set", payload: data})
 				})
 				.then(() => {
