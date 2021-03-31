@@ -27,7 +27,9 @@ const OrgSignIn = ({ setSelection }) => {
 		fbApp
 			.auth()
 			.setPersistence(fb.auth.Auth.Persistence.SESSION)
-			.signInWithEmailAndPassword(Email, Password)
+			.then(() => {
+				return fbApp.auth().signInWithEmailAndPassword(Email, Password)
+			})
 			.then((userCredential) => {
 				return userCredential.user.getIdToken(true);
 			})

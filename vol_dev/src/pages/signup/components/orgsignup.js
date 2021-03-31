@@ -3,6 +3,7 @@ import axios from "axios";
 import "../scss/signup.scss";
 import { setStorageSessionExpire } from "../../../utils";
 import Country from "./country";
+import {fbApp} from "../../../firebase";
 
 const OrgSignUp = ({ setSelection }) => {
 	// Form values
@@ -45,14 +46,27 @@ const OrgSignUp = ({ setSelection }) => {
 				npCountry: country,
 			})
 			.then((response) => {
-				token = response.data.token;
-				console.log(response.data);
-				console.log(token);
+				fbApp
+					.auth()
+					.signInWithEmailAndPassword(Email, Password)
+					.then((data) => {
+						return data.user.getIdToken(true)
+					})
+					.then((tokenStr) => {
+						token = tokenStr
+					})
+					.catch((err) => {
+						console.warn(err.message)
+					})
+				// token = response.data.token;
+				// console.log(response.data);
+				// console.log(token);
 				if (token === "undefined") {
 					// Account created but Authentication failed
 					setFormError("Your account was successfully created, please sign in.");
+					return {}
 				}
-
+				//
 				// Store it in session storage
 				setStorageSessionExpire("isDev", false, 3600000);
 				setStorageSessionExpire("token", token, 3600000);
