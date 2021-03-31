@@ -1,6 +1,6 @@
 import { getSessionStorageExpire } from "../../../utils";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/dev.css";
 
 const EditProfile = ({ user, setShowEditProfile }) => {
@@ -52,7 +52,7 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 				name="devDisplayName"
 				placeholder="e.g. Ada Lovelace"
 				value={devName}
-				onChange={setDevName}
+				onChange={(e) => setDevName(e.target.value)}
 			/>
 
 			<label htmlFor="devTitle">Title</label>
@@ -61,7 +61,7 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 				name="devTitle"
 				placeholder="e.g. Computer Programmer"
 				value={devTitle}
-				onChange={setDevTitle}
+				onChange={(e) => setDevTitle(e.target.value)}
 			/>
 
 			<label htmlFor="devBio">Biography</label>
@@ -71,7 +71,7 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 				maxLength="140"
 				placeholder="e.g. I like sunsets and long walks on the beach"
 				value={devBio}
-				onChange={setDevBio}
+				onChange={(e) => setDevBio(e.target.value)}
 			/>
 
 			<label htmlFor="devWebsite">Portfolio</label>
@@ -80,7 +80,7 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 				name="devWebsite"
 				placeholder="e.g. f1rstpro0gr4mm3r.io"
 				value={devWebsite}
-				onChange={setDevWebsite}
+				onChange={(e) => setDevWebsite(e.target.value)}
 			/>
 
 			<label htmlFor="devLinkedIn">LinkedIn</label>
@@ -89,7 +89,7 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 				name="devLinkedIn"
 				placeholder="e.g. linkedin.com/in/AdaLovelace"
 				value={devLinkedIn}
-				onChange={setDevLinkedIn}
+				onChange={(e) => setDevLinkedIn(e.target.value)}
 			/>
 
 			<div className="edit-profile__buttons">
