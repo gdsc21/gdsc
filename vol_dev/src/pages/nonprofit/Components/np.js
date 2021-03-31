@@ -3,11 +3,43 @@ import { Carousel } from "./carousel";
 import Devproject from "./devproject";
 import userDetails from "./data/userDetails";
 import npicon from "../icons/np-icon.png";
-import { useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import DevNav from "./devnav";
+import { UserContext } from "../../../store";
+import {authErrorCheck, getSessionStorageExpire} from "../../../utils";
+import axios from "axios";
 
 const NP = ({ user }) => {
+	const { userStore, updateUserStore } = useContext(UserContext)
 	const [hamburger, setHamburger] = useState(false);
+
+	useEffect(() => {
+		if (userStore) return
+
+		let counter = 1
+		const fetchProfile = setInterval(() => {
+			if (counter >= 3) clearInterval(fetchProfile)
+			else ++counter
+
+			const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-non-profit"
+			let token = getSessionStorageExpire("token")
+			let config = { headers: { Authorization: `Bearer ${token}` } }
+			let data
+
+			axios
+				.get(url, config)
+				.then((response) => {
+					data = response.data
+					updateUserStore({ type: "set", payload: data})
+				})
+				.then(() => {
+					clearInterval(fetchProfile)
+				})
+				.catch((err) => {
+					authErrorCheck(err)
+				})
+		}, 2000)
+	}, [])
 
 	const hamburgerClick = () => {
 		setHamburger(!hamburger);
