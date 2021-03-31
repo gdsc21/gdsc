@@ -117,7 +117,6 @@ exports.updateDevCommits = (request, response) => {
     /**
      * Updates the developers xp, level, and badges on their profile document
      */
-    return response.status(200).json(request.body.commits)
     let commitArr = request.body.commits
     let authorEmail, authorUid
 
@@ -127,9 +126,10 @@ exports.updateDevCommits = (request, response) => {
 
     // loop through the commits
     commitArr.forEach((commit) => {
+        let commitId = Object.keys(commit)[0]
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
-        if (authorEmail !== commit.id.authorEmail) {
-            authorEmail = commit.id.authorEmail
+        if (authorEmail !== commit[commitId].authorEmail) {
+            authorEmail = commit[commitId].authorEmail
             // return response.status(203).json({message: "Authentication Error"})
 
             admin
@@ -138,9 +138,9 @@ exports.updateDevCommits = (request, response) => {
                 .then((userRecord) => {
                     console.log("UID:", userRecord.uid)
                     authorUid = userRecord.uid
-                    commit.id.authorUid = authorUid
+                    commit[commitId].authorUid = authorUid
                     // remove the email so it is not included in the commit info in firestore
-                    delete commit.id.authorEmail
+                    delete commit[commitId].authorEmail
                 })
                 .catch((err) => {
                     if (err.code === "auth/user-not-found")
@@ -166,7 +166,7 @@ exports.updateDevCommits = (request, response) => {
                 let game = data.gamification
 
                 // manages adding xp + level
-                newXP = game.devXP + (commit.id.changes.total > 200 ? 200 : commit.id.changes.total)
+                newXP = game.devXP + (commit[commitId].changes.total > 200 ? 200 : commit[commitId].changes.total)
                 newLevel = Math.ceil(newXP / 400)
 
                 game.devXP = newXP
