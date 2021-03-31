@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Devproject from "./devproject";
 import userDetails from "./data/userDetails";
-import npicon from "../icons/np-icon.png";
+import npicon from "./icons/np-icon.png";
 import {useContext, useEffect, useState} from "react";
 import DevNav from "./devnav";
 import { UserContext } from "../../../store";
