@@ -156,7 +156,10 @@ exports.updateDevCommits = (request, response) => {
         // batch.set(commitDocRef, commit,  { merge: true })
 
         let newLevel, newXP
-        let devDocRef = fs.collection("dev_accounts").doc(authorUid)
+        console.log(authorUid)
+        let devDocRef = fs.collection("dev_accounts").doc(authorUid).catch((err) => {
+            return response.status(400).json({error: err.message})
+        })
 
         // updates developer xp and level
         devDocRef
