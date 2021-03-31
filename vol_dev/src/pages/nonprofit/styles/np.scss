@@ -1,5 +1,5 @@
 @import "../../styles/global.scss";
-
+@import "./modal";
 a{
     text-decoration: none;
     color: $white;
@@ -54,6 +54,17 @@ a{
 					flex-direction: column;
 					text-align: left;
                 }
+                .goto-btn {
+					align-self: center;
+					position: relative;
+					margin-top: 2em;
+					padding: 0.5em 2.5em 0.5em 2.5em;
+					border-radius: 1em;
+					vertical-align: middle;
+					text-decoration: none;
+					color: $lightgrey;
+					background-color: $yellow;
+				}
             }
         }
     .np-dash {

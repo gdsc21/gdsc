@@ -7,6 +7,54 @@
   font-family: "Poppins", sans-serif;
 }
 
+.np-container .create-modal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 1em;
+  padding-bottom: 2em;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 2em;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.np-container .create-modal h1 {
+  color: #141b28;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+
+.np-container .create-modal div h5 {
+  color: #fca311;
+  font-size: 1.3em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.np-container .create-modal div input {
+  outline: none;
+  margin-bottom: 2em;
+  border-radius: 1em;
+  border: none;
+  width: 100%;
+  height: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.np-container .create-modal a {
+  background-color: #fca311;
+  padding: 0.5em 2.5em 0.5em 2.5em;
+  border-radius: 1em;
+}
+
 a {
   text-decoration: none;
   color: white;
@@ -90,6 +138,20 @@ a {
       -ms-flex-direction: column;
           flex-direction: column;
   text-align: left;
+}
+
+.np-container .np-curProject .devproject .goto-btn {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  position: relative;
+  margin-top: 2em;
+  padding: 0.5em 2.5em 0.5em 2.5em;
+  border-radius: 1em;
+  vertical-align: middle;
+  text-decoration: none;
+  color: #eae8fd;
+  background-color: #fca311;
 }
 
 .np-container .np-dash {

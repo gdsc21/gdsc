@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom'
-import Devproject from '../devproject'
-import userDetails from '../data/userDetails'
-import npicon from '../icons/np-icon.png'
+import Devproject from './devproject'
+import userDetails from './data/userDetails'
+import npicon from './icons/np-icon.png'
 import { useState } from "react";
 import DevNav from './devnav'
+import CreateModal from './createmodal';
 const NP = ({user}) => {
     const [hamburger, setHamburger] = useState(false);
 
@@ -29,7 +30,6 @@ const NP = ({user}) => {
             curproject.classList.add("p-open")
 		}
 	};
-
 	const [closeIcon, setHamClose] = useState(false);
     return ( 
         <div className="np-container">
