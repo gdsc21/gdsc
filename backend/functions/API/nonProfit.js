@@ -362,3 +362,34 @@ exports.npUpdateProject = (request, response) => {
             return response.status(500).json({error: err.message})
         })
 }
+
+exports.npAddDevApplied = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+
+    fs
+        .collection("np_accounts")
+        .doc(data.npInfo.npUid)
+        .update({
+            [`projectApplications.${data.projectId}.devs.${user.uid}`]: data.userProfile
+        })
+        .then(() => {
+            return response.status(200).json({message: "success"})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+//       projectApplications: {
+//          projectId: {
+//             devs: {
+//                  devUID: { dev profile info }
+//             }
+//             projectInfo: { project info }
+//          }
+//      }
+}

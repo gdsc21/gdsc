@@ -1,4 +1,5 @@
 const { admin, fs, firebase, FieldValue} = require('../util/admin');
+const functions = require('firebase-functions');
 
 
 // exports.devCreateProfile = (request, response) => {
@@ -21,9 +22,9 @@ const { admin, fs, firebase, FieldValue} = require('../util/admin');
 //             devDisplayName: user.displayName, // display name is username while name is the developers actual name
 //             devProfileImgUrl: user.photoURL,
 //             devLinks: {
-//                 devWebsite: data.devWebsite,
-//                 devGitHub: data.devGitHub,
-//                 devLinkedIn: data.devLinkedIn,
+//                 devWebsite: "",
+//                 devGitHub: "",
+//                 devLinkedIn: "",
 //             },
 //             gamification: {
 //                 devLevel: 0,
@@ -97,27 +98,39 @@ exports.devUpdateProfile = (request, response, next) => {
             })
     }
 
-    // creates a batch and reference to the developer profile document
-    let batch = fs.batch()
+    // // creates a batch and reference to the developer profile document
+    // let batch = fs.batch()
     let devDocRef = fs.collection("dev_accounts").doc(user.uid)
+    //
+    // // creates updates for each data point that is passed in the request body -- if not include no update is created
+    // "devDisplayName" in data ? batch.update(devDocRef, {"devDisplayName": data.devDisplayName}) : ""
+    // if ("devLinks" in data) {
+    //     "devGitHub" in data.devLinks ? batch.update(devDocRef, {"devLinks.devGitHub": data.devLinks.devGitHub}) : ""
+    //     "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""
+    //     "devLinkedIn" in data.devLinks ? batch.update(devDocRef, {"devLinks.devLinkedIn": data.devLinks.devLinkedIn}) : ""
+    // }
+    // "devTitle" in data ? batch.update(devDocRef, {"devTitle": data.devTitle}) : ""
+    // "devBio" in data ? batch.update(devDocRef, {"devBio": data.devBio}) : ""
 
-    // creates updates for each data point that is passed in the request body -- if not include no update is created
-    "devDisplayName" in data ? batch.update(devDocRef, {"devDisplayName": data.devDisplayName}) : ""
-    if ("devLinks" in data) {
-        "devGitHub" in data.devLinks ? batch.update(devDocRef, {"devLinks.devGitHub": data.devLinks.devGitHub}) : ""
-        "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""
-        "devLinkedIn" in data.devLinks ? batch.update(devDocRef, {"devLinks.devLinkedIn": data.devLinks.devLinkedIn}) : ""
-    }
-    "devTitle" in data ? batch.update(devDocRef, {"devTitle": data.devTitle}) : ""
-    "devBio" in data ? batch.update(devDocRef, {"devBio": data.devBio}) : ""
-
+    devDocRef
+        .update({
+            "devDisplayName": data.devDisplayName,
+            "devLinks.devGitHub": data.devLinks.devGitHub,
+            "devLinks.devLinkedIn": data.devLinks.devLinkedIn,
+            "devLinks.devWebsite": data.devLinks.devWebsite,
+            "devTitle": data.devTitle,
+            "devBio": data.devBio
+        })
+        .catch((err) => {
+            return response.status(400).json({error: err.message})
+        })
 
     // commit the updates and return
-    batch
-        .commit()
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
+    // batch
+    //     .commit()
+    //     .catch((err) => {
+    //         return response.status(500).json({error: err.message})
+    //     })
 
     // adds the projects the developer is on to the request body
     devDocRef
@@ -130,21 +143,6 @@ exports.devUpdateProfile = (request, response, next) => {
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
-
-
-    // updates the project pages
-    // devDocRef
-    //     .get() // get the projects the developer has worked on
-    //     .then((devDoc) => {
-    //         let batch = fs.batch() // create a batch instance
-    //         let projects = devDoc.data().devProjects // projects = project dev has worked on
-    //         if (Object.keys(projects).length !== 0) { // if projects is not empty
-    //             for (const [projectId, value] of Object.entries(projects)) { // iterate through projectId
-    //                 let projDocRef = fs.collection("projects").doc(projectId) // create reference to proj doc
-    //                 batch.update(projectDocRef, {[`devProfiles.${user.uid}`]: {}})
-    //             }
-    //         }
-    //     })
 }
 
 exports.devAddProject = (request, response) => {
@@ -198,4 +196,32 @@ exports.devDeleteProject = (request, response) => {
 
 exports.addBadge = (request, response) => {
 
+}
+
+exports.devApplyProject = (request, response, next) => {
+    /*
+    Takes {projectId:, projectInfo: {**to be displayed on dev dashboard **}, userProfile: {**userStore** from react context}
+    npInfo: {**from project card**}
+     */
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
+    console.log(user.uid)
+
+    fs
+        .collection("dev_accounts")
+        .doc(user.uid)
+        .update({
+            [`devAppliedProjects.${data.projectId}`]: data.projectInfo
+        })
+        .then(() => {
+            return next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }

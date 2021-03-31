@@ -41,4 +41,4 @@ const saveContext = (context) => {
 
 
 // creates context with a default as the context saved in session storage if available
-export const Context = React.createContext()
+export const UserContext = React.createContext()

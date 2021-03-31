@@ -11,6 +11,8 @@ const Sidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 			.signOut()
 			.then(() => {
 				removeSessionStorage("token");
+				removeSessionStorage("context")
+				removeSessionStorage("isDev")
 			});
 	}
 

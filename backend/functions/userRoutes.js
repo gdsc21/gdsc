@@ -11,7 +11,8 @@ const {
     npUpdateProfileImg,
     npAddProject,
     npDeleteProject,
-    npUpdateProject
+    npUpdateProject,
+    npAddDevApplied
 } = require("./API/nonProfit")
 
 const {
@@ -26,14 +27,17 @@ const {
     projAddDev,
     projRemoveDev,
     projGetAll,
-    projUpdate
+    projUpdate,
+    projUpdateDevInfo
 } = require("./API/projects")
 
 const {
     devCreateProfile,
     devGetProfile,
     devAddProject,
-    devDeleteProject
+    devDeleteProject,
+    devUpdateProfile,
+    devApplyProject
 } = require("./API/developers")
 
 // non profit signup -- logs in automatically after signup -- returns auth token
@@ -67,14 +71,19 @@ userApp.post("/delete-project", auth, npDeleteProject, projDelete)
 userApp.get("/get-dev-profile", auth, devGetProfile)
 
 // adds a developer to a project -- only available to non-profits -- updates project/developer docs
-userApp.post("add-dev-to-project", auth, projAddDev, devAddProject)
+userApp.post("/add-dev-to-project", auth, projAddDev, devAddProject)
 
 // removes a developer from a project -- only available to non-profits -- updates project/developer docs
-userApp.post("remove-dev-from-project", auth, projRemoveDev, devDeleteProject)
+userApp.post("/remove-dev-from-project", auth, projRemoveDev, devDeleteProject)
+
+// updates the developers profile as well as all the project pages where the developers profile is saved as well
+userApp.post("/update-dev-profile", auth, devUpdateProfile, projUpdateDevInfo)
 
 // returns all the projects that have been created
-userApp.get("get-all-projects", auth, projGetAll)
+userApp.get("/get-all-projects", auth, projGetAll)
 
-userApp.post("update-project", auth, projUpdate, npUpdateProject)
+userApp.post("/update-project", auth, projUpdate, npUpdateProject)
+
+userApp.post("/apply-to-project", auth, devApplyProject, npAddDevApplied)
 
 module.exports = userApp

@@ -1,12 +1,12 @@
 import React, {useEffect, useState, useReducer, useContext} from "react";
 import { Home, SignUp, SignIn, Project, Explore, NonProfit, Dev } from "./pages";
 import {Switch, Route, Redirect, BrowserRouter as Router} from "react-router-dom";
-import { Context, userDataReducer, userData, loadContext } from "./store";
+import { UserContext, userDataReducer, userData, loadContext } from "./store";
 import { getSessionStorage } from "./utils";
 
 const App = () => {
 	// loads the reducer which creates the dispatch function
-	const [store, dispatch] = useReducer(userDataReducer, userData)
+	const [userStore, updateUserStore] = useReducer(userDataReducer, userData)
 
 	const user = getSessionStorage(Object.keys(sessionStorage).filter(item => item.startsWith('firebase:authUser'))[0])
 
@@ -14,11 +14,11 @@ const App = () => {
 	// this enables context to persist across page refreshes
 	useEffect(() => {
 		const persistedContext = loadContext();
-		dispatch({type: "set", payload: persistedContext})
+		updateUserStore({type: "set", payload: persistedContext})
 	}, [])
 
 	return (
-		<Context.Provider value={{ store, dispatch }}>
+		<UserContext.Provider value={{ userStore, updateUserStore }}>
 			<Switch>
 				<Route exact path="/signup">
 					{
@@ -68,7 +68,7 @@ const App = () => {
 					<Home />
 				</Route>
 			</Switch>
-		</Context.Provider>
+		</UserContext.Provider>
 	);
 };
 

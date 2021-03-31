@@ -5,17 +5,15 @@ import { useState, useEffect, useContext } from "react";
 import { getSessionStorageExpire, removeSessionStorage } from "../../utils";
 import { fbApp } from "../../firebase";
 import axios from "axios";
-import { Context } from "../../store";
-import { AuthContext} from "../../Auth";
+import { UserContext } from "../../store";
 import Modal from "../components/modal";
 import EditProfile from "./Components/EditProfile";
 
 const Dev = () => {
-	const [user, setUser] = useState(null);
-	const { store, dispatch } = useContext(Context)
+	const { userStore, updateUserStore } = useContext(UserContext)
 
 	useEffect(() => {
-		if (store) return
+		if (userStore) return
 
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1
@@ -34,8 +32,7 @@ const Dev = () => {
 				.then((response) => {
 					data = response.data;
 					console.log(data)
-					dispatch({ type: "set", payload: data})
-					setUser(data);
+					updateUserStore({ type: "set", payload: data})
 				})
 				.then(() => {
 					// stops the loop
@@ -88,7 +85,7 @@ const Dev = () => {
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	if (user === null) {
+	if (!userStore) {
 		return (
 			<div className="dev__loader">
 				<svg
@@ -134,14 +131,14 @@ const Dev = () => {
 					crossOrigin="anonymous"
 				/>
 				<Modal open={showEditProfile} setOpen={setShowEditProfile} title="Edit Profile">
-					<EditProfile user={user} setShowEditProfile={setShowEditProfile} />
+					<EditProfile user={userStore} setShowEditProfile={setShowEditProfile} />
 				</Modal>
 				<Sidebar
-					user={user}
+					user={userStore}
 					hamCloseClick={hamburgerClick}
 					setShowEditProfile={setShowEditProfile}
 				/>
-				<ProjectPanel user={user} hamburger={hamburgerClick} />
+				<ProjectPanel user={userStore} hamburger={hamburgerClick} />
 			</div>
 		);
 	}

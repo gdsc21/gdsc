@@ -13,35 +13,40 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 	const editDevProfile = (e) => {
 		e.preventDefault();
 
-		let user = {
+		let data = {
 			devDisplayName: devName,
-			devTitle,
-			devBio,
+			devTitle: devTitle,
+			devBio: devBio,
 			devLinks: {
 				devWebsite,
-				devLinkedIn,
-			},
+				devLinkedIn
+			}
 		};
 
+		// get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
+		if (!token) window.location.href = "/signin";
+
 		let config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		};
 
-		// const url =
-		// 	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/dev-create-profile";
+		const url =
+			// "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/update-dev-profile";
+			"http://localhost:5001/sunlit-webbing-305321/us-central1/userRoutes/update-dev-profile"
 
-		// axios
-		// 	.post(url, data, config)
-		// 	.then((response) => {
-		// 		// TODO: success -- redirect to dashboard
-		// 	})
-		// 	.catch((err) => {
-		// 		// TODO: Error - account was created in Firebase but the associated developer document was not
-		// 		// Poll to retry profile completion
-		// 	});
+		axios
+			.post(url, data, config)
+			.then((response) => {
+				// TODO: success -- redirect to dashboard
+				console.log(response)
+			})
+			.catch((err) => {
+				console.log(err.response.data)
+				console.warn("Profile Update Error:", err.response.status)
+			});
 	};
 
 	return (
