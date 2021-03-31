@@ -28,7 +28,7 @@ const MainPage = ({ setSelection }) => {
 				setStorageSessionExpire("isDev", true, 3600000);
 				setStorageSessionExpire("token", token, 3600000);
 
-				// TODO: Redirect to a form page where developer can input their links (linkedIn/portfolio)
+				window.location.href("/dashboard")
 			})
 			.catch((error) => {
 				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError

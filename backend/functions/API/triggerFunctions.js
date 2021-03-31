@@ -23,7 +23,8 @@ exports.createDevDoc = functions.auth.user().onCreate((user) => {
                 devBadges: {}
             },
             devProjects: {},
-            devCommits: {}
+            devCommits: {},
+            devAppliedProjects: {}
         })
         .catch((err) => {
             console.log("Error:", err.statusCode, "Message:", err.message)

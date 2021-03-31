@@ -246,6 +246,7 @@ exports.projUpdateDevInfo = (request, response) => {
 
     // array of projectId's that the developer is on
     let devProjects = data.devProjects
+    if (!devProjects) return response.status(200).json({message: "success"})
 
     // updates all the project documents that contains a developers profile
     let batch = fs.batch()

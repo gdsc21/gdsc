@@ -1,24 +1,25 @@
 import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
-import { useState, useEffect } from "react";
-import { getSessionStorageExpire, removeSessionStorage } from "../../utils";
+import { useState, useEffect, useContext } from "react";
+import {authErrorCheck, getSessionStorageExpire, removeSessionStorage} from "../../utils";
 import { fbApp } from "../../firebase";
 import axios from "axios";
+import { UserContext } from "../../store";
 import Modal from "../components/modal";
 import EditProfile from "./Components/EditProfile";
 
 const Dev = () => {
-	// const user = require("./Components/data/userDetails").default;
-
-	const [user, setUser] = useState(null);
+	const { userStore, updateUserStore } = useContext(UserContext)
 
 	useEffect(() => {
+		if (userStore) return
+
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
-		let counter = 1;
+		let counter = 1
 		const fetchProfile = setInterval(() => {
-			if (counter >= 3) clearInterval(fetchProfile);
-			else ++counter;
+			if (counter >= 3) clearInterval(fetchProfile)
+			else ++counter
 
 			const url =
 				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
@@ -30,28 +31,14 @@ const Dev = () => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					console.log(data);
-					setUser(data);
+					updateUserStore({ type: "set", payload: data})
 				})
 				.then(() => {
 					// stops the loop
 					clearInterval(fetchProfile);
 				})
 				.catch((err) => {
-					fbApp
-						.auth()
-						.signOut()
-						.then(() => {
-							removeSessionStorage("token");
-							window.location.href = "/signin";
-						});
-
-					console.log(err);
-					if (err.statusCode === 403) {
-						// TODO: Enable automatic token refresh if user is still active
-						// return <Redirect to="/signin" />;
-						window.location.href = "/signin";
-					}
+					authErrorCheck(err)
 				});
 		}, 2000);
 	}, []);
@@ -69,17 +56,19 @@ const Dev = () => {
 		if (hamburger) {
 			sidebar.classList.remove("s-open");
 			hburger.classList.remove("h-open");
+			// panelContainer.classList.remove("p-open");
 			hamclose.classList.remove("c-open");
 		} else {
 			sidebar.classList.add("s-open");
 			hburger.classList.add("h-open");
+			// panelContainer.classList.add("p-open");
 			hamclose.classList.add("c-open");
 		}
 	};
 
 	const [closeIcon, setHamClose] = useState(false);
 
-	if (user === null) {
+	if (!userStore) {
 		return (
 			<div className="dev__loader">
 				<svg
@@ -125,17 +114,19 @@ const Dev = () => {
 					crossOrigin="anonymous"
 				/>
 				<Modal open={showEditProfile} setOpen={setShowEditProfile} title="Edit Profile">
-					<EditProfile user={user} setShowEditProfile={setShowEditProfile} />
+					<EditProfile user={userStore} setShowEditProfile={setShowEditProfile} />
 				</Modal>
 				<Sidebar
-					user={user}
+					user={userStore}
 					hamCloseClick={hamburgerClick}
 					setShowEditProfile={setShowEditProfile}
 				/>
-				<ProjectPanel user={user} hamburger={hamburgerClick} />
+				<ProjectPanel user={userStore} hamburger={hamburgerClick} />
 			</div>
 		);
 	}
+
+
 };
 
 export default Dev;

@@ -4,19 +4,6 @@ const { createAppAuth } = require('@octokit/auth-app');
 const { Octokit } = require("@octokit/rest");
 
 
-
-function calcXP(currentXP, additions, deletions, total) {
-
-}
-
-function calcLevel(xp) {
-
-}
-
-function calcBadges(level) {
-
-}
-
 exports.push = async (request, response, next) => {
     /**
      * Receives the post request from GitHub push event and saves each commits info in commitArr then saves this list
@@ -139,9 +126,10 @@ exports.updateDevCommits = (request, response) => {
 
     // loop through the commits
     commitArr.forEach((commit) => {
+        let commitId = Object.keys(commit)[0]
         // retrieves the uid of the user whose email matches the commit -- if the email is still the same skip
-        if (authorEmail !== commit.id.authorEmail) {
-            authorEmail = commit.id.authorEmail
+        if (authorEmail !== commit[commitId].authorEmail) {
+            authorEmail = commit[commitId].authorEmail
             // return response.status(203).json({message: "Authentication Error"})
 
             admin
@@ -150,9 +138,48 @@ exports.updateDevCommits = (request, response) => {
                 .then((userRecord) => {
                     console.log("UID:", userRecord.uid)
                     authorUid = userRecord.uid
-                    commit.id.authorUid = authorUid
+                    commit[commitId].authorUid = authorUid
                     // remove the email so it is not included in the commit info in firestore
-                    delete commit.id.authorEmail
+                    delete commit[commitId].authorEmail
+
+                    // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
+                    // commitDocRef = commitDocCol.doc(authorUid)
+                    // batch.set(commitDocRef, commit,  { merge: true })
+
+                    let newLevel, newXP
+                    console.log(authorUid)
+                    let devDocRef = fs.collection("dev_accounts").doc(authorUid)
+
+                    // updates developer xp and level
+                    devDocRef
+                        .get()
+                        .then((doc) => {
+                            let data = doc.data()
+                            let game = data.gamification
+
+                            // manages adding xp + level
+                            newXP = game.devXP + (commit[commitId].changes.total > 200 ? 200 : commit[commitId].changes.total)
+                            newLevel = Math.ceil(newXP / 2000)
+
+                            game.devXP = newXP
+                            game.devLevel = newLevel
+
+                            devDocRef
+                                .update({
+                                    "gamification.devXP": newXP,
+                                    "gamification.devLevel": newLevel
+                                })
+                                .catch((err) => {
+                                    return response.status(500).json({error: "Problem updating xp and level"})
+                                })
+                        })
+                        .then(() => {
+                            return response.status(200).json({message: "Success!"})
+                        })
+                        .catch((err) => {
+                            return response.status(502).json({error: err.message})
+                        })
+
                 })
                 .catch((err) => {
                     if (err.code === "auth/user-not-found")
@@ -161,41 +188,6 @@ exports.updateDevCommits = (request, response) => {
                         return response.status(400).json({error: err.message})
                 })
         }
-
-
-        // // creates the commit document if it doesn't exist otherwise it appends the commit to the document
-        // commitDocRef = commitDocCol.doc(authorUid)
-        // batch.set(commitDocRef, commit,  { merge: true })
-
-        let newLevel, newXP
-        let devDocRef = fs.collection("dev_accounts").doc(authorUid)
-
-        // updates developer xp and level
-        devDocRef
-            .get()
-            .then((doc) => {
-                let data = doc.data()
-                let game = data.gamification
-
-                // manages adding xp + level
-                newXP = game.devXP + (commit.id.changes.total > 200 ? 200 : commit.id.changes.total)
-                newLevel = Math.ceil(newXP / 400)
-
-                game.devXP = newXP
-                game.devLevel = newLevel
-
-                devDocRef
-                    .update(game)
-                    .catch((err) => {
-                        return response.status(500).json({error: "Problem updating xp and level"})
-                    })
-            })
-            .then(() => {
-                return response.status(200).json({message: "Success!"})
-            })
-            .catch((err) => {
-                return response.status(502).json({error: err.message})
-            })
     }) // end loop
 }
 

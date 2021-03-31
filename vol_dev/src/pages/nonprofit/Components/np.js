@@ -20,14 +20,14 @@ const NP = ({user}) => {
             sidebar.classList.remove("s-open");
             npdash.classList.remove("n-open")
 			hburger.classList.remove("h-open");
-            hamclose.classList.remove("c-open");
-            curproject.classList.remove("p-open")
+			hamclose.classList.remove("c-open");
+			curproject.classList.remove("p-open");
 		} else {
 			sidebar.classList.add("s-open");
 			npdash.classList.add("n-open");
 			hburger.classList.add("h-open");
-            hamclose.classList.add("c-open");
-            curproject.classList.add("p-open")
+			hamclose.classList.add("c-open");
+			curproject.classList.add("p-open");
 		}
 	};
 	const [closeIcon, setHamClose] = useState(false);

@@ -1,3 +1,4 @@
+import {fbApp} from "./firebase";
 
 export const setStorageSessionExpire = (key, value, ttl) => {
     // ttl must be in seconds since now.getTime() is epoch time
@@ -39,6 +40,22 @@ export const getSessionStorageExpire = (key) => {
     return data.value
 }
 
+export const getSessionStorage = (key) => {
+    let item
+    try {
+        item = sessionStorage.getItem(key)
+    } catch {
+        console.warn("Failed to load", key, "from session storage")
+        return null
+    }
+    if (!item) {
+        console.warn(key, "is not in session storage")
+        return null
+    }
+
+    return JSON.parse(item)
+}
+
 export const removeSessionStorage = (key) => {
     try {
         sessionStorage.removeItem(key)
@@ -47,4 +64,23 @@ export const removeSessionStorage = (key) => {
         return null
     }
     return true
+}
+
+export const authErrorCheck = (err) => {
+    // takes err an axios error object
+    if (err.response.status === 403) {
+        fbApp
+            .auth()
+            .signOut()
+            .then(() => {
+                removeSessionStorage("token");
+                // TODO: The below redirect doesn't load the react component just the cached html + css
+                window.location.href = "/signin";
+            })
+            .catch((err) => {
+                console.warn("Error signing out", err.message)
+            })
+    } else {
+        console.warn("Request Error:", err.response.data)
+    }
 }

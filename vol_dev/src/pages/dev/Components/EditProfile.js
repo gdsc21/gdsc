@@ -1,48 +1,66 @@
-import { getSessionStorageExpire } from "../../../utils";
+import {authErrorCheck, getSessionStorageExpire, removeSessionStorage} from "../../../utils";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import "../styles/dev.css";
+import {UserContext} from "../../../store";
+import {fbApp} from "../../../firebase";
 
 const EditProfile = ({ user, setShowEditProfile }) => {
-	const [devName, setDevName] = useState(user.devDisplayName);
-	const [devTitle, setDevTitle] = useState(user.devTitle);
-	const [devBio, setDevBio] = useState(user.devBio);
-	const [devWebsite, setDevWebsite] = useState(user.devLinks.devWebsite);
-	const [devLinkedIn, setDevLinkedIn] = useState(user.devLinks.devLinkedIn);
+	const { userStore, updateUserStore } = useContext(UserContext)
+
+	const [devName, setDevName] = useState(userStore.devDisplayName);
+	const [devTitle, setDevTitle] = useState(userStore.devTitle);
+	const [devBio, setDevBio] = useState(userStore.devBio);
+	const [devWebsite, setDevWebsite] = useState(userStore.devLinks.devWebsite);
+	const [devLinkedIn, setDevLinkedIn] = useState(userStore.devLinks.devLinkedIn);
 
 	const editDevProfile = (e) => {
 		e.preventDefault();
-		console.log("oop i tried to submit");
 
-		let user = {
+		let data = {
 			devDisplayName: devName,
-			devTitle,
-			devBio,
+			devTitle: devTitle,
+			devBio: devBio,
 			devLinks: {
 				devWebsite,
-				devLinkedIn,
-			},
+				devLinkedIn
+			}
 		};
 
+		// get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
+		if (!token) window.location.href = "/signin";
+
 		let config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
 		};
 
-		// const url =
-		// 	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/dev-create-profile";
+		const url =
+			// "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/update-dev-profile";
+			"http://localhost:5001/sunlit-webbing-305321/us-central1/userRoutes/update-dev-profile"
 
-		// axios
-		// 	.post(url, data, config)
-		// 	.then((response) => {
-		// 		// TODO: success -- redirect to dashboard
-		// 	})
-		// 	.catch((err) => {
-		// 		// TODO: Error - account was created in Firebase but the associated developer document was not
-		// 		// Poll to retry profile completion
-		// 	});
+		axios
+			.post(url, data, config)
+			.then((response) => {
+				// TODO: success -- redirect to dashboard
+				console.log(response)
+				const getProfileUrl = "http://localhost:5001/sunlit-webbing-305321/us-central1/userRoutes/get-dev-profile"
+				axios
+					.get(getProfileUrl, config)
+					.then((newResponse) => {
+						data = newResponse.data;
+						updateUserStore({ type: "set", payload: data})
+					})
+					.catch((err) => {
+						authErrorCheck(err)
+					})
+			})
+			.catch((err) => {
+				console.log(err.response.data)
+				console.warn("Profile Update Error:", err.response.status)
+			});
 	};
 
 	return (
