@@ -4,19 +4,6 @@ const { createAppAuth } = require('@octokit/auth-app');
 const { Octokit } = require("@octokit/rest");
 
 
-
-function calcXP(currentXP, additions, deletions, total) {
-
-}
-
-function calcLevel(xp) {
-
-}
-
-function calcBadges(level) {
-
-}
-
 exports.push = async (request, response, next) => {
     /**
      * Receives the post request from GitHub push event and saves each commits info in commitArr then saves this list
@@ -130,6 +117,7 @@ exports.updateDevCommits = (request, response) => {
     /**
      * Updates the developers xp, level, and badges on their profile document
      */
+    return response.status(200).json(request.body.commits)
     let commitArr = request.body.commits
     let authorEmail, authorUid
 
