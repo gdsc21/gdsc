@@ -12,7 +12,6 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 
 	const editDevProfile = (e) => {
 		e.preventDefault();
-		console.log("oop i tried to submit");
 
 		let user = {
 			devDisplayName: devName,

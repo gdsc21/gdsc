@@ -48,10 +48,13 @@ const Dev = () => {
 						.then(() => {
 							removeSessionStorage("token");
 							window.location.href = "/signin";
-						});
+						})
+						.catch((err) => {
+							console.warn("Error signing out", err.message)
+						})
 
 					console.log(err);
-					if (err.statusCode === 403) {
+					if (err.response.status === 403) {
 						// TODO: Enable automatic token refresh if user is still active
 						// return <Redirect to="/signin" />;
 						window.location.href = "/signin";
