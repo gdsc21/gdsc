@@ -159,7 +159,7 @@ exports.updateDevCommits = (request, response) => {
 
                             // manages adding xp + level
                             newXP = game.devXP + (commit[commitId].changes.total > 200 ? 200 : commit[commitId].changes.total)
-                            newLevel = Math.ceil(newXP / 2000)
+                            newLevel = Math.floor(newXP / 2000) + 1
 
                             game.devXP = newXP
                             game.devLevel = newLevel

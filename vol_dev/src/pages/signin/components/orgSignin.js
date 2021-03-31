@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "../styles/signin.css";
 import { fbApp, fs, fb } from "../../../firebase";
+import {setStorageSessionExpire} from "../../../utils";
 
 const OrgSignIn = ({ setSelection }) => {
 	// Form values
@@ -33,7 +34,9 @@ const OrgSignIn = ({ setSelection }) => {
 			.then((newToken) => {
 				token = newToken;
 
-				// TODO: what to do with token??
+				setStorageSessionExpire("isDev", false, 3600000);
+				setStorageSessionExpire("token", token, 3600000);
+
 				// Redirect to dashboard
 				window.location.href = "/dashboard";
 			})
