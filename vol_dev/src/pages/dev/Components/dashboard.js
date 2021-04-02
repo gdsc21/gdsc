@@ -1,7 +1,7 @@
 import Devproject from "./devproject";
 import { Link } from "react-router-dom";
 
-const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
+const ProjectPanel = ({ user, hamburgerClick }) => {
 	return (
 		<div className="panel-container">
 			{/* Nav and menu */}
@@ -17,10 +17,10 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 						<span className="navlink__text">Dashboard</span>
 						<i className="navlink__icon fas fa-home"></i>
 					</Link>
-					<Link to="/">
+					{/* <Link to="/">
 						<span className="navlink__text">Notifications</span>
 						<i className="navlink__icon fas fa-bell"></i>
-					</Link>
+					</Link> */}
 					{/* <Link to="/">Messages</Link> */}
 					<Link to="/explore">
 						<span className="navlink__text">Explore</span>

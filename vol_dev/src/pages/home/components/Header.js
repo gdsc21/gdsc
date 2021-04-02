@@ -110,10 +110,10 @@ const Header = () => {
 					<h1>WELCOME TO SOMETHING GREAT.</h1>
 					<h2>A chance for non-profits to expand digitally, a chance for developers to do good.</h2>
 					<p>
-						At Something Something, we give developers the opportunity to write code for good. Our
-						platform allows non-profits to create projects and find the perfect developers for them.
-						Not only will every line of code written go towards a worthy cause, but we have a
-						gamified system that awards our developers with amazing products and opportunities.{" "}
+						At Relite, we give developers the opportunity to write code for good. Our platform
+						allows non-profits to create projects and find the perfect developers for them. Not only
+						will every line of code written go towards a worthy cause, but we have a gamified system
+						that awards our developers with amazing products and opportunities.{" "}
 					</p>
 					<Link className="join-btn" to="/signup">
 						Join Our Community
