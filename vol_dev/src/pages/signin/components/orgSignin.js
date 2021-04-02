@@ -22,7 +22,7 @@ const OrgSignIn = ({ setSelection }) => {
 			setFormError("Cannot sign in as there are errors in the values entered.");
 			return;
 		}
-
+		console.log(Email, Password)
 		let token;
 		fbApp
 			.auth()

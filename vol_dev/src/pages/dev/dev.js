@@ -2,7 +2,7 @@ import Sidebar from "./Components/sidebar";
 import ProjectPanel from "./Components/projectPanel";
 import "./styles/dev.css";
 import { useState, useEffect, useContext } from "react";
-import {authErrorCheck, getSessionStorageExpire, removeSessionStorage} from "../../utils";
+import {authErrorCheck, getSessionStorageExpire} from "../../utils";
 import { fbApp } from "../../firebase";
 import axios from "axios";
 import { UserContext } from "../../store";

@@ -1,21 +1,10 @@
 import Highlights from "./highlights";
 import img from "../defaultUser.png";
 import { fbApp } from "../../../firebase";
-import { removeSessionStorage } from "../../../utils";
+import { signOut } from "../../../utils";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
-	function signOut() {
-		fbApp
-			.auth()
-			.signOut()
-			.then(() => {
-				removeSessionStorage("token");
-				removeSessionStorage("context")
-				removeSessionStorage("isDev")
-			});
-	}
-
 	return (
 		<div className="sidebar" id="developer__sidebar">
 			<button className="ham-close" onClick={hamCloseClick}>

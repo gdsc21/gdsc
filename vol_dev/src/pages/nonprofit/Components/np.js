@@ -5,7 +5,7 @@ import npicon from "./icons/np-icon.png";
 import {useContext, useEffect, useState} from "react";
 import DevNav from "./devnav";
 import { UserContext } from "../../../store";
-import {authErrorCheck, getSessionStorageExpire} from "../../../utils";
+import {authErrorCheck, signOut, getSessionStorageExpire} from "../../../utils";
 import axios from "axios";
 
 import CreateModal from "./createmodal";
@@ -64,6 +64,8 @@ const NP = ({ user }) => {
 			curproject.classList.add("p-open");
 		}
 	};
+
+
 	const [closeIcon, setHamClose] = useState(false);
 	return (
 		<div className="np-container">
@@ -87,9 +89,9 @@ const NP = ({ user }) => {
 								<h3>A Really Influential Non Profit</h3>
 							</div>
 						</div>
-						<a href="/">
-							<span>Sign out</span>
-						</a>
+						<Link to="/" onClick={signOut}>
+							Sign Out
+						</Link>
 						<div className="np-create-edit-mobile">
 							<a href="/">
 								<span>Create Project</span>

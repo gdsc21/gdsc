@@ -84,3 +84,14 @@ export const authErrorCheck = (err) => {
         console.warn("Request Error:", err.response.data)
     }
 }
+
+export const signOut = () => {
+    fbApp
+        .auth()
+        .signOut()
+        .then(() => {
+            removeSessionStorage("token");
+            removeSessionStorage("context")
+            removeSessionStorage("isDev")
+        });
+}

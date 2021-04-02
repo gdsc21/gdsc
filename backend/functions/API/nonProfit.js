@@ -101,8 +101,8 @@ exports.npGetAccount = (request, response) => {
     else user = request.user
 
     let retrieveUID
-    if ("npUid" in data) retrieveUID = user.uid
-    else retrieveUID = data.npUid
+    if ("npUid" in data) retrieveUID = data.npUid
+    else retrieveUID = user.uid
     retrieveUID = String(retrieveUID)
 
     fs

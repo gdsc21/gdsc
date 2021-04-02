@@ -3,7 +3,7 @@ import axios from "axios";
 import "../scss/signup.scss";
 import { setStorageSessionExpire } from "../../../utils";
 import Country from "./country";
-import {fbApp} from "../../../firebase";
+import {fb, fbApp} from "../../../firebase";
 
 const OrgSignUp = ({ setSelection }) => {
 	// Form values
@@ -48,7 +48,10 @@ const OrgSignUp = ({ setSelection }) => {
 			.then((response) => {
 				fbApp
 					.auth()
-					.signInWithEmailAndPassword(Email, Password)
+					.setPersistence(fb.auth.Auth.Persistence.SESSION)
+					.then(() => {
+						return fbApp.auth().signInWithEmailAndPassword(Email, Password)
+					})
 					.then((data) => {
 						return data.user.getIdToken(true)
 					})

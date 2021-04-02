@@ -12,8 +12,6 @@ const App = () => {
 		return getSessionStorage(Object.keys(sessionStorage).filter(item => item.startsWith('firebase:authUser'))[0])
 	}
 
-	const user = checkAuth()
-
 	// this loads the context from session storage everytime this component is mounted for the first time
 	// this enables context to persist across page refreshes
 	useEffect(() => {
