@@ -1,47 +1,4 @@
 const { admin, fs, firebase, FieldValue} = require('../util/admin');
-const functions = require('firebase-functions');
-
-
-// exports.devCreateProfile = (request, response) => {
-//     /**
-//      * Takes a token retrieved through Github auth - verifies it and then uses the returned user object to create an
-//      * associated developer document containing all the data passed in the body
-//      */
-//     let user, data
-//     if (typeof request.user != "object")
-//         user = JSON.parse(request.user)
-//     else user = request.user
-//     if (typeof request.body != "object")
-//         data = JSON.parse(request.body)
-//     else data = request.body
-//
-//     fs
-//         .collection("dev_accounts")
-//         .doc(user.uid)
-//         .set({
-//             devDisplayName: user.displayName, // display name is username while name is the developers actual name
-//             devProfileImgUrl: user.photoURL,
-//             devLinks: {
-//                 devWebsite: "",
-//                 devGitHub: "",
-//                 devLinkedIn: "",
-//             },
-//             gamification: {
-//                 devLevel: 0,
-//                 devXP: 0,
-//                 devRole: "developer",
-//                 devBadges: {}
-//             },
-//             devProjects: {},
-//             devCommits: {}
-//         })
-//         .then(() => {
-//             return response.status(201).json({message: "Account successfully created!"})
-//         })
-//         .catch((err) => {
-//             return response.status(500).json({error: err.message})
-//         })
-// }
 
 exports.devGetProfile = (request, response) => {
     let user, params
@@ -71,7 +28,6 @@ exports.devGetProfile = (request, response) => {
 
 exports.devUpdateProfile = (request, response, next) => {
     /**
-     * Updates a developer profile (name, username, email, GitHub, website, LinkedIn).
      * NOT TO BE USED FOR GAMIFICATION/COMMITS/PROJECTS IF FIELD IS NOT BEING UPDATED DO NOT SEND IT AS NULL.
      * DON'T INCLUDE IT IN THE DICTIONARY/OBJECT
      */
@@ -93,7 +49,7 @@ exports.devUpdateProfile = (request, response, next) => {
             .auth()
             .updateUser(user.uid, newUserData)
             .catch((err) => {
-                if (err.code === "") return response.status(404).json({message: "Profile not found"})
+                if (err.code === "auth/user-not-found") return response.status(404).json({message: "Profile not found"})
                 else return response.status(500).json({error: err.message})
             })
     }
@@ -101,21 +57,11 @@ exports.devUpdateProfile = (request, response, next) => {
     // // creates a batch and reference to the developer profile document
     // let batch = fs.batch()
     let devDocRef = fs.collection("dev_accounts").doc(user.uid)
-    //
-    // // creates updates for each data point that is passed in the request body -- if not include no update is created
-    // "devDisplayName" in data ? batch.update(devDocRef, {"devDisplayName": data.devDisplayName}) : ""
-    // if ("devLinks" in data) {
-    //     "devGitHub" in data.devLinks ? batch.update(devDocRef, {"devLinks.devGitHub": data.devLinks.devGitHub}) : ""
-    //     "devWebsite" in data.devLinks ? batch.update(devDocRef, {"devLinks.devWebsite": data.devLinks.devWebsite}) : ""
-    //     "devLinkedIn" in data.devLinks ? batch.update(devDocRef, {"devLinks.devLinkedIn": data.devLinks.devLinkedIn}) : ""
-    // }
-    // "devTitle" in data ? batch.update(devDocRef, {"devTitle": data.devTitle}) : ""
-    // "devBio" in data ? batch.update(devDocRef, {"devBio": data.devBio}) : ""
 
     devDocRef
         .update({
             "devDisplayName": data.devDisplayName,
-            "devLinks.devGitHub": data.devLinks.devGitHub,
+            "devLinks.devGithub": data.devLinks.devGithub,
             "devLinks.devLinkedIn": data.devLinks.devLinkedIn,
             "devLinks.devWebsite": data.devLinks.devWebsite,
             "devTitle": data.devTitle,
@@ -124,13 +70,6 @@ exports.devUpdateProfile = (request, response, next) => {
         .catch((err) => {
             return response.status(400).json({error: err.message})
         })
-
-    // commit the updates and return
-    // batch
-    //     .commit()
-    //     .catch((err) => {
-    //         return response.status(500).json({error: err.message})
-    //     })
 
     // adds the projects the developer is on to the request body
     devDocRef
@@ -193,11 +132,6 @@ exports.devDeleteProject = (request, response) => {
         })
 }
 
-
-exports.addBadge = (request, response) => {
-
-}
-
 exports.devApplyProject = (request, response, next) => {
     /*
     Takes {projectId:, projectInfo: {**to be displayed on dev dashboard **}, userProfile: {**userStore** from react context}
@@ -224,4 +158,9 @@ exports.devApplyProject = (request, response, next) => {
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
+}
+
+
+exports.addBadge = (request, response) => {
+
 }

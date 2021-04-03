@@ -46,7 +46,8 @@ exports.npSignUp = (request, response) => {
                     npPhoneNumber: newCredentials.npPhoneNumber,
                     npDisplayName: newCredentials.npDisplayName,
                     npWebsite: newCredentials.npWebsite,
-                    npCountry: newCredentials.npCountry
+                    npCountry: newCredentials.npCountry,
+                    npProjects: {}
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
@@ -291,8 +292,8 @@ exports.npAddProject = (request, response) => {
         .doc(user.uid)
         .update({
             [`npProjects.${data.projectId}`]: {
-                title: data.title,
-                description: data.description,
+                projTitle: data.projTitle,
+                projDescription: data.projDescription,
             }})
         .then(() => {
             return response.status(201).json({projectId: data.projectId})

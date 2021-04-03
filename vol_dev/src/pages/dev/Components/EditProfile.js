@@ -38,15 +38,13 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 		};
 
 		const url =
-			// "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/update-dev-profile";
-			"http://localhost:5001/sunlit-webbing-305321/us-central1/userRoutes/update-dev-profile"
+			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/update-dev-profile";
 
 		axios
 			.post(url, data, config)
 			.then((response) => {
 				// TODO: success -- redirect to dashboard
-				console.log(response)
-				const getProfileUrl = "http://localhost:5001/sunlit-webbing-305321/us-central1/userRoutes/get-dev-profile"
+				const getProfileUrl = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile"
 				axios
 					.get(getProfileUrl, config)
 					.then((newResponse) => {
@@ -58,8 +56,8 @@ const EditProfile = ({ user, setShowEditProfile }) => {
 					})
 			})
 			.catch((err) => {
-				console.log(err.response.data)
-				console.warn("Profile Update Error:", err.response.status)
+				console.log(err)
+				console.warn("Profile Update Error:", err)
 			});
 	};
 

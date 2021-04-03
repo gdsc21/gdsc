@@ -35,37 +35,38 @@ exports.projCreate = (request, response, next) => {
             let projectColRef = fs.collection("projects")
             projectColRef
                 .add({
-                    title: data.title,
-                    description: data.description,
+                    projTitle: data.projTitle,
+                    projDescription: data.projDescription,
                     npInfo: npInfo,
                     devProfiles: {},
-                    GitHubRepo: ""
+                    projGithub: ""
                 })
                 .then((projectDoc) => {
                     // must reassign request.body since request.body.projectId does not work to create a new key in body
                     data.projectId = projectDoc.id
                     request.body = data
+
+                    // adds the newly created project info to the all projects document
+                    projectColRef
+                        .doc("allProjects")
+                        .set({
+                            [data.projectId]: {
+                                projTitle: data.projTitle,
+                                projDescription: data.projDescription,
+                                projGithub: ""
+                            }
+                        }, { merge: true })
+                        .then(() => {
+                            return next()
+                        })
+                        .catch((err) => {
+                            return response.status(500).json({error: err.message})
+                        })
+
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
                 })
-
-            // adds the newly created project info to the all projects document
-            projectColRef
-                .doc("allProjects")
-                .set({
-                    [data.projectId]: {
-                        title: data.title,
-                        description: data.description
-                    }
-                }, { merge: true })
-                .then(() => {
-                    return next()
-                })
-                .catch((err) => {
-                    return response.status(500).json({error: err.message})
-                })
-
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -214,16 +215,16 @@ exports.projUpdate = (request, response, next) => {
                 // updates the project document
                 projectRef
                     .update({
-                        title: data.title,
-                        description: data.description
+                        projTitle: data.projTitle,
+                        projDescription: data.projDescription
                     })
                 // updates the allProject document
                 fs
                     .collection("projects")
                     .doc("allProjects")
                     .update({
-                        [`${data.projectId}.title`]: data.title,
-                        [`${data.projectId}.description`]: data.description
+                        [`${data.projectId}.projTitle`]: data.projTitle,
+                        [`${data.projectId}.projDescription`]: data.projDescription
                     })
             }
         })
@@ -254,16 +255,17 @@ exports.projUpdateDevInfo = (request, response) => {
     let projCollection = fs.collection("projects")
     devProjects.forEach((projectId) => {
         let docRef = projCollection.doc(projectId)
-
-        // creates updates for each data point that is passed in the request body -- if not include no update is created
-        "devDisplayName" in data ? batch.update(docRef, {[`devProfiles.${user.uid}.devDisplayName`]: data.devDisplayName}) : ""
-        if ("devLinks" in data) {
-            "devGitHub" in data.devLinks ? batch.update(docRef, {[`devProfiles.${user.uid}.devLinks.devGitHub`]: data.devLinks.devGitHub}) : ""
-            "devWebsite" in data.devLinks ? batch.update(docRef, {[`devProfiles.${user.uid}.devLinks.devWebsite`]: data.devLinks.devWebsite}) : ""
-            "devLinkedIn" in data.devLinks ? batch.update(docRef, {[`devProfiles.${user.uid}.devLinks.devLinkedIn`]: data.devLinks.devLinkedIn}) : ""
-        }
-
-        "devTitle" in data ? batch.update(docRef, {"devTitle": data.devTitle}) : ""
+        batch
+            .update(docRef, {
+                [`devProfiles.${user.uid}.devDisplayName`]: data.devDisplayName,
+                [`devProfiles.${user.uid}.devLinks.devGithub`]: data.devLinks.devGithub,
+                [`devProfiles.${user.uid}.devLinks.devLinkedIn`]: data.devLinks.devLinkedIn,
+                [`devProfiles.${user.uid}.devLinks.devWebsite`]: data.devLinks.devWebsite,
+                [`devProfiles.${user.uid}.devTitle`]: data.devTitle,
+            })
+            .catch((err) => {
+                return response.status(400).json({error: err.message})
+            })
     })
 
     batch
@@ -306,9 +308,9 @@ exports.projAddDev = (request, response, next) => {
                 if (projData.npInfo.npUid !== user.uid) return response.status(401).json({error: "Unauthorized"})
 
                 projInfo = {
-                    title: projData.title,
-                    description: projData.description,
-                    gitHubRepo: projData.gitHubRepo,
+                    projTitle: projData.projTitle,
+                    projDescription: projData.projDescription,
+                    projGithub: projData.projGithub,
                     npDisplayName: projData.npInfo.npDisplayName,
                     npUid: user.uid
                 }
@@ -326,7 +328,31 @@ exports.projAddDev = (request, response, next) => {
         .doc(data.devUid)
         .get()
         .then((devDoc) => {
-            if (devDoc.exists) devProfile = devDoc.data()
+            if (devDoc.exists) {
+                devProfile = devDoc.data()
+                // adds the developer profile to the project document and passes on to the next function
+                projDocRef
+                    .update({
+                        "devProfiles": {
+                            [user.uid]: {
+                                "devDisplayName": devProfile.devDisplayName,
+                                "devTitle": devProfile.devTitle,
+                                "devProfileImgUrl": devProfile.devProfileImgUrl,
+                                "devLinks": {
+                                    "devWebsite": devProfile.devLinks.devWebsite,
+                                    "devGithub": devProfile.devLinks.devGithub,
+                                    "devLinkedIn": devProfile.devLinks.devLinkedIn
+                                }
+                            }
+                        }
+                    })
+                    .then(() => {
+                        return next()
+                    })
+                    .catch((err) => {
+                        return response.status(500).json({error: err.message})
+                    })
+            }
             else return response.status(400).json({message: "Developer profile doesn't exist"})
         })
         .catch((err) => {
@@ -334,25 +360,7 @@ exports.projAddDev = (request, response, next) => {
         })
 
 
-    // adds the developer profile to the project document and passes on to the next function
-    projDocRef
-        .update({
-            "devProfiles": {
-                [user.uid]: {
-                    "devDisplayName": devProfile.devDisplayName,
-                    "devTitle": devProfile.devTitle,
-                    "devProfileImgUrl": devProfile.devProfileImgUrl,
-                    "devLinks": {
-                        "devWebsite": devProfile.devLinks.devWebsite,
-                        "devGitHub": devProfile.devLinks.devGitHub,
-                        "devLinkedIn": devProfile.devLinks.devLinkedIn
-                    }
-                }
-            }
-        })
-        .then(() => {
-            return next()
-        })
+
 }
 
 exports.projRemoveDev = (request, response, next) => {

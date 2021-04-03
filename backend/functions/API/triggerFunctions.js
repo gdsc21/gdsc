@@ -3,6 +3,8 @@ const { admin, fs, firebase, FieldValue} = require('../util/admin');
 
 
 exports.createDevDoc = functions.auth.user().onCreate((user) => {
+    if (user.providerData[0].providerId !== "github.com") return false
+
     fs
         .collection("dev_accounts")
         .doc(user.uid)

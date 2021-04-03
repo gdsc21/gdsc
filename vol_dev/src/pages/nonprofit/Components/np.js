@@ -8,7 +8,7 @@ import { UserContext } from "../../../store";
 import {authErrorCheck, signOut, getSessionStorageExpire} from "../../../utils";
 import axios from "axios";
 
-import CreateModal from "./createmodal";
+import CCreateProject from "./cCreateProject";
 
 const NP = ({ user }) => {
 	const { userStore, updateUserStore } = useContext(UserContext)
