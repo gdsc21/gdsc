@@ -1,7 +1,7 @@
-import Devproject from "./devproject";
+import DevProject from "./devProject";
 import { Link } from "react-router-dom";
 
-const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
+const Dashboard = ({ user, hamburgerClick }) => {
 	return (
 		<div className="panel-container">
 			{/* Nav and menu */}
@@ -10,9 +10,6 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 					<i className="fas fa-bars"></i>
 				</button>
 				<div className="devNav">
-					{
-						//TODO: add notifications and messaging
-					}
 					<Link to="/dashboard">
 						<span className="navlink__text">Dashboard</span>
 						<i className="navlink__icon fas fa-home"></i>
@@ -21,7 +18,10 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 						<span className="navlink__text">Notifications</span>
 						<i className="navlink__icon fas fa-bell"></i>
 					</Link>
-					{/* <Link to="/">Messages</Link> */}
+					{/*
+						//TODO: add messaging
+						<Link to="/">Messages</Link> 
+					*/}
 					<Link to="/explore">
 						<span className="navlink__text">Explore</span>
 						<i className="navlink__icon fas fa-compass"></i>
@@ -35,7 +35,7 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 				<div className="curProjectDisp">
 					{user.projects &&
 						Object.entries(user.projects).map(([projID, projInfo], id) => {
-							return <Devproject key={id} project={projInfo} />;
+							return <DevProject key={id} project={projInfo} />;
 						})}
 				</div>
 			</div>
@@ -43,18 +43,18 @@ const ProjectPanel = ({ user, hamburger: hamburgerClick }) => {
 			{
 				//TODO: add an algorithm that determines projects the user might be interested in
 				/* Projects that may interest the user 
-			<div className="interestProject">
-				<h1 className="head">Projects that may interest you</h1>
-				<div className="intProjectDisp">
-					{user.interestProjects.map((project, id) => {
-						return <Devproject key={id} project={project} />;
-					})}
+				<div className="interestProject">
+					<h1 className="head">Projects that may interest you</h1>
+					<div className="intProjectDisp">
+						{user.interestProjects.map((project, id) => {
+							return <Devproject key={id} project={project} />;
+						})}
+					</div>
 				</div>
-			</div>
-			*/
+				*/
 			}
 		</div>
 	);
 };
 
-export default ProjectPanel;
+export default Dashboard;

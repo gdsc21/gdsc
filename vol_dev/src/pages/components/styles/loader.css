@@ -1,0 +1,53 @@
+.loader__component {
+  background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
+  background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding: 20vw 0;
+}
+
+.loader__component h3 {
+  margin-top: 1rem;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.loader__component svg rect {
+  stroke-dasharray: 190;
+  -webkit-animation: loading 2s cubic-bezier(0.49, 1.01, 1, 0.38) infinite;
+          animation: loading 2s cubic-bezier(0.49, 1.01, 1, 0.38) infinite;
+}
+
+@-webkit-keyframes loading {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 400;
+  }
+}
+
+@keyframes loading {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 400;
+  }
+}
+/*# sourceMappingURL=loader.css.map */

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 // key should be the projectID
-const Devproject = ({ key, project }) => {
+const DevProject = ({ key, project }) => {
 	// const projectURL = project.id ? `/project/${project.id}` : "/";
 	const projectURL = key ? `/project/${key}` : "/";
 
@@ -44,4 +44,4 @@ const Devproject = ({ key, project }) => {
 	);
 };
 
-export default Devproject;
+export default DevProject;
