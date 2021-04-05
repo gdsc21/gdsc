@@ -74,8 +74,17 @@ exports.push = async (request, response, next) => {
             })
 
             if (res.status != 200) return response.status(res.status).json({error: "Problem requesting commit"})
-            commitStats = res.data.stats
 
+            if (res.data.ref === "refs/heads/main" || res.data["ref"] === "refs/heads/master") {
+                commitStats = res.data.stats
+            } else {
+                // a push and the commits therein must be to the master/main branch -- this avoids double counting
+                // commits that are pushed to several branches
+                return response.status(400).json({
+                    message: "Push is not in the main or master branch",
+                    pushRef: res.data.ref
+                })
+            }
         } catch {
             return response.status(400).json({error: "Commit not found"})
         }
