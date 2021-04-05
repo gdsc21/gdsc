@@ -5,7 +5,7 @@ import "./scss/signup.css";
 // Import components
 import Header from "./components/header";
 import MainPage from "./components/mainpage";
-import OrgSignUp from "./components/orgsignup";
+import OrgSignUp from "./components/orgSignup";
 
 const SignUp = () => {
 	const [selection, setSelection] = useState("main-page");

@@ -1,8 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import "../styles/signin.css";
-import { fbApp, fs, fb } from "../../../firebase";
-import {setStorageSessionExpire} from "../../../utils";
+import { fbApp, fb } from "../../../firebase";
+import { setStorageSessionExpire } from "../../../utils";
 
 const OrgSignIn = ({ setSelection }) => {
 	// Form values
@@ -22,13 +21,13 @@ const OrgSignIn = ({ setSelection }) => {
 			setFormError("Cannot sign in as there are errors in the values entered.");
 			return;
 		}
-		console.log(Email, Password)
+		console.log(Email, Password);
 		let token;
 		fbApp
 			.auth()
 			.setPersistence(fb.auth.Auth.Persistence.SESSION)
 			.then(() => {
-				return fbApp.auth().signInWithEmailAndPassword(Email, Password)
+				return fbApp.auth().signInWithEmailAndPassword(Email, Password);
 			})
 			.then((userCredential) => {
 				return userCredential.user.getIdToken(true);
@@ -85,7 +84,7 @@ const OrgSignIn = ({ setSelection }) => {
 						value={Email}
 						onChange={(e) => setEmail(e.target.value)}
 						onBlur={() => {
-							if (Email == "") setEmailError("Email cannot be empty");
+							if (Email === "") setEmailError("Email cannot be empty");
 							else setEmailError("");
 						}}
 					/>
@@ -100,7 +99,7 @@ const OrgSignIn = ({ setSelection }) => {
 						value={Password}
 						onChange={(e) => setPassword(e.target.value)}
 						onBlur={() => {
-							if (Password == "") setPasswordError("Password cannot be empty");
+							if (Password === "") setPasswordError("Password cannot be empty");
 							else setPasswordError("");
 						}}
 					/>

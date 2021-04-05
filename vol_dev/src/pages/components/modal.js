@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./styles/modal.css";
 
 const Modal = ({ open, setOpen, title, children }) => {
@@ -9,7 +8,7 @@ const Modal = ({ open, setOpen, title, children }) => {
 				id="modal__component"
 				onClick={(e) => {
 					// close when clicking away from children
-					if (e.target.id == "modal__component") {
+					if (e.target.id === "modal__component") {
 						setOpen(false);
 					}
 				}}

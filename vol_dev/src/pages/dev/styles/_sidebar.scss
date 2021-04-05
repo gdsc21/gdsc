@@ -73,8 +73,9 @@
 
 		.xp,
 		.badges,
-		.starproject {
-			margin-bottom: 2rem;
+		.starproject,
+		.description {
+			margin-bottom: 1rem;
 			display: flex;
 			flex-direction: column;
 			background-color: $peach;
@@ -143,24 +144,30 @@
 					font-weight: normal;
 					text-transform: uppercase;
 				}
+			}
 
-				.proj-icon {
-					align-self: center;
-					display: flex;
-					justify-content: space-between;
-					width: 4rem;
-					margin-left: auto;
+			.proj-icon,
+			.links {
+				align-self: center;
+				display: flex;
+				justify-content: space-between;
+				width: 4rem;
+				margin-left: auto;
 
-					a {
-						display: grid;
-						place-items: center;
-						height: 1.75rem;
-						width: 1.75rem;
-						border-radius: 50%;
-						color: $darkBlue;
-						background-color: $yellow;
-					}
+				a {
+					display: grid;
+					place-items: center;
+					height: 1.75rem;
+					width: 1.75rem;
+					border-radius: 50%;
+					color: $darkBlue;
+					background-color: $yellow;
 				}
+			}
+
+			.bio {
+				font-weight: normal;
+				text-transform: none;
 			}
 
 			.no-starred {

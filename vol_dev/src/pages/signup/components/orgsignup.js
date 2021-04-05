@@ -3,7 +3,7 @@ import axios from "axios";
 import "../scss/signup.scss";
 import { setStorageSessionExpire } from "../../../utils";
 import Country from "./country";
-import {fb, fbApp} from "../../../firebase";
+import { fb, fbApp } from "../../../firebase";
 
 const OrgSignUp = ({ setSelection }) => {
 	// Form values
@@ -46,25 +46,25 @@ const OrgSignUp = ({ setSelection }) => {
 				npCountry: country,
 			})
 			.then((response) => {
-				console.log(response)
+				console.log(response);
 				fbApp
 					.auth()
 					.setPersistence(fb.auth.Auth.Persistence.SESSION)
 					.then(() => {
-						return fbApp.auth().signInWithEmailAndPassword(Email, Password)
+						return fbApp.auth().signInWithEmailAndPassword(Email, Password);
 					})
 					.then((data) => {
-						return data.user.getIdToken(true)
+						return data.user.getIdToken(true);
 					})
 					.then((tokenStr) => {
-						token = tokenStr
+						token = tokenStr;
 						// token = response.data.token;
 						// console.log(response.data);
 						// console.log(token);
 						if (token === "undefined") {
 							// Account created but Authentication failed
 							setFormError("Your account was successfully created, please sign in.");
-							return {}
+							return {};
 						}
 						//
 						// Store it in session storage
@@ -76,8 +76,8 @@ const OrgSignUp = ({ setSelection }) => {
 						window.location.href = "/dashboard";
 					})
 					.catch((err) => {
-						console.warn(err.message)
-					})
+						console.warn(err.message);
+					});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -119,7 +119,7 @@ const OrgSignUp = ({ setSelection }) => {
 						value={orgName}
 						onChange={(e) => setOrgName(e.target.value)}
 						onBlur={() => {
-							if (orgName == "") setOrgNameError("The non-profit name cannot be empty");
+							if (orgName === "") setOrgNameError("The non-profit name cannot be empty");
 							else setOrgNameError("");
 						}}
 					/>
@@ -145,7 +145,7 @@ const OrgSignUp = ({ setSelection }) => {
 						value={Name}
 						onChange={(e) => setName(e.target.value)}
 						onBlur={() => {
-							if (Name == "") setNameError("Name cannot be empty");
+							if (Name === "") setNameError("Name cannot be empty");
 							else setNameError("");
 						}}
 					/>
@@ -160,7 +160,7 @@ const OrgSignUp = ({ setSelection }) => {
 						value={Email}
 						onChange={(e) => setEmail(e.target.value)}
 						onBlur={() => {
-							if (Email == "") setEmailError("Email cannot be empty");
+							if (Email === "") setEmailError("Email cannot be empty");
 							else setEmailError("");
 						}}
 					/>
@@ -176,7 +176,7 @@ const OrgSignUp = ({ setSelection }) => {
 							value={Password}
 							onChange={(e) => setPassword(e.target.value)}
 							onBlur={() => {
-								if (Password == "") setPasswordError("Password cannot be empty");
+								if (Password === "") setPasswordError("Password cannot be empty");
 								else setPasswordError("");
 							}}
 						/>
@@ -191,8 +191,8 @@ const OrgSignUp = ({ setSelection }) => {
 							value={cPassword}
 							onChange={(e) => setcPassword(e.target.value)}
 							onBlur={() => {
-								if (cPassword == "") setConfirmPassError("This field cannot be empty");
-								else if (cPassword != Password) setConfirmPassError("Passwords do not match");
+								if (cPassword === "") setConfirmPassError("This field cannot be empty");
+								else if (cPassword !== Password) setConfirmPassError("Passwords do not match");
 								else setConfirmPassError("");
 							}}
 						/>
