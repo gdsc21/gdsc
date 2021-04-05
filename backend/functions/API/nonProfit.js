@@ -354,8 +354,8 @@ exports.npUpdateProject = (request, response) => {
         .collection("np_accounts")
         .doc(user.uid)
         .update({
-            [`npProjects.${data.projectId}.description`]: data.title,
-            [`npProjects.${data.projectId}.description`]: data.description
+            [`npProjects.${data.projectId}.projTitle`]: data.title,
+            [`npProjects.${data.projectId}.projDescription`]: data.description
         })
         .then(() => {
             return response.status(200).json({message: "Successfully updated"})
@@ -375,7 +375,7 @@ exports.npAddDevApplied = (request, response) => {
     else data = request.body
 
     fs
-        .collection("np_accounts")
+        .collection("np_applications")
         .doc(data.npInfo.npUid)
         .update({
             [`projectApplications.${data.projectId}.devs.${user.uid}`]: data.userProfile
@@ -394,4 +394,23 @@ exports.npAddDevApplied = (request, response) => {
 //             projectInfo: { project info }
 //          }
 //      }
+}
+
+exports.npGetProjectApplications = (request, response) => {
+    let user
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+
+    fs
+        .collection("np_applications")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+            let docData = doc.data()
+            return response.status(200).json(docData)
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }

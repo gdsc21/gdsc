@@ -416,4 +416,17 @@ exports.createProjectRepo = (request, response) => {
     // TODO: add repo id to the project created page so that the github function that adds commit history can find it
 }
 
+exports.getAllProjects = (request, response) => {
+    fs
+        .collection("projects")
+        .doc("allProjects")
+        .get()
+        .then((doc) => {
+            let docData = doc.data()
+            return response.status(200).json(docData)
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
+}
 
