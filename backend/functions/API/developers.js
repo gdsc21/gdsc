@@ -132,56 +132,10 @@ exports.devDeleteProject = (request, response) => {
         })
 }
 
-exports.devApplyProject = (request, response, next) => {
-    /*
-    Applies the developer to a project thereby adding the application to the dev_applications document with status null
-     */
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
-    if (typeof request.body != "object")
-        data = JSON.parse(request.body)
-    else data = request.body
+exports.devUpdateProject = (request, response) => {
 
-    fs
-        .collection("projects")
-        .doc(data.projectId)
-        .get()
-        .then((doc) => {
-            if (!doc.exists) return response.status(404).json({message: "Project no longer exists"})
-
-            // add project data to the request
-            data.projectData = doc.data()
-            request.body = data
-
-            fs
-                .collection("dev_applications")
-                .doc(user.uid)
-                .update({
-                    [data.projectId]: {
-                        projTitle: data.projectData.projTitle,
-                        projDescription: data.projectData.projDescription,
-                        projGithub: data.projectData.projGithub,
-                        npDisplayName: data.projectData.npInfo.npDisplayName,
-                        npUid: data.projectData.npInfo.npUid,
-                        appStatus: null
-                    }
-                })
-                .then(() => {
-                    return next() //TODO: link next function
-                })
-                .catch((err) => {
-                    return response.status(500).json({error: err.message})
-                })
-
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
 }
 
-
-exports.addBadge = (request, response) => {
+exports.devUpdateNpInfo = (request, response) => {
 
 }

@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const userApp = require("./userRoutes")
-const ghApp = require("./gitHubRoutes")
+const ghApp = require("./githubRoutes")
 const devCreate = require("./API/triggerFunctions")
 const testingApp = require("./testingRoutes")
 

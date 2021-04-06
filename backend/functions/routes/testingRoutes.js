@@ -2,7 +2,7 @@ const testingApp = require('express')();
 
 const {
     updateTest
-} = require("./API/testing")
+} = require("../API/testing")
 
 
 testingApp.post("/update-test", updateTest)

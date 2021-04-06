@@ -13,11 +13,11 @@ const {
     npDeleteProject,
     npUpdateProject,
     npAddDevApplied
-} = require("./API/nonProfit")
+} = require("../API/nonProfit")
 
 const {
     auth
-} = require("./util/auth")
+} = require("../util/auth")
 
 const {
     projCreate,
@@ -29,7 +29,7 @@ const {
     projGetAll,
     projUpdate,
     projUpdateDevInfo
-} = require("./API/projects")
+} = require("../API/projects")
 
 const {
     devCreateProfile,
@@ -38,7 +38,7 @@ const {
     devDeleteProject,
     devUpdateProfile,
     devApplyProject
-} = require("./API/developers")
+} = require("../API/developers")
 
 // non profit signup -- logs in automatically after signup -- returns auth token
 userApp.post("/np-signup", npSignUp)

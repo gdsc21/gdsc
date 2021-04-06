@@ -155,18 +155,16 @@ exports.npUpdateAccount = (request, response, next) => {
             })
     }
 
-    // updates the non profits account document
-    let batch = fs.batch()
-    let npDocRef = fs.collection("np_accounts").doc(request.user.uid)
-
-    "npEmail" in data ? batch.update(npDocRef, {"npEmail": data.npEmail}) : ""
-    "npDisplayName" in data ? batch.update(npDocRef, {"npDisplayName": data.npDisplayName}) : ""
-    "npPhoneNumber" in data ? batch.update(npDocRef, {"npPhoneNumber": data.npPhoneNumber}) : ""
-    "npWebsite" in data ? batch.update(npDocRef, {"npWebsite": data.npWebsite}) : ""
-    "npCountry" in data ? batch.update(npDocRef, {"npCountry": data.npCountry}) : ""
-
-    batch
-        .commit()
+    fs
+        .collection("np_accounts")
+        .doc(request.user.uid)
+        .update({
+            "npEmail": data.npEmail,
+            "npDisplayName": data.npDisplayName,
+            "npPhoneNumber": data.npPhoneNumber,
+            "npWebsite": data.npWebsite,
+            "npCountry": data.npCountry
+        })
         .then(() => {
             return next()
         })
@@ -278,7 +276,7 @@ exports.npUpdateProfileImg = (request, response) => {
     busboy.end(request.rawBody);
 };
 
-exports.npAddProject = (request, response) => {
+exports.npAddProject = (request, response, next) => {
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -296,7 +294,7 @@ exports.npAddProject = (request, response) => {
                 projDescription: data.projDescription,
             }})
         .then(() => {
-            return response.status(201).json({projectId: data.projectId})
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -322,7 +320,7 @@ exports.npDeleteProject = (request, response, next) => {
         .then((npDoc) => {
             if (!npDoc.exists) return response.status(400).json({message: "Non-profit doesn't exist"})
             let projects = npDoc.data().npProjects
-            if (!(data.projectId in projects)) return response.status(500).json({message: "Unauthorized or project doesn't exist"})
+            if (!(data.projectId in projects)) return response.status(500).json({message: "Project doesn't exist"})
 
             npDocRef
                 .update({
@@ -354,61 +352,12 @@ exports.npUpdateProject = (request, response) => {
         .collection("np_accounts")
         .doc(user.uid)
         .update({
-            [`npProjects.${data.projectId}.projTitle`]: data.title,
-            [`npProjects.${data.projectId}.projDescription`]: data.description
+            [`npProjects.${data.projectId}.projTitle`]: data.projTitle,
+            [`npProjects.${data.projectId}.projDescription`]: data.projDescription,
+            [`npProjects.${data.projectId}.projGithub`]: data.projGithub
         })
         .then(() => {
             return response.status(200).json({message: "Successfully updated"})
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
-}
-
-exports.npAddDevApplied = (request, response) => {
-    let user, data
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
-    if (typeof request.body != "object")
-        data = JSON.parse(request.body)
-    else data = request.body
-
-    fs
-        .collection("np_applications")
-        .doc(data.npInfo.npUid)
-        .update({
-            [`projectApplications.${data.projectId}.devs.${user.uid}`]: data.userProfile
-        })
-        .then(() => {
-            return response.status(200).json({message: "success"})
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
-//       projectApplications: {
-//          projectId: {
-//             devs: {
-//                  devUID: { dev profile info }
-//             }
-//             projectInfo: { project info }
-//          }
-//      }
-}
-
-exports.npGetProjectApplications = (request, response) => {
-    let user
-    if (typeof request.user != "object")
-        user = JSON.parse(request.user)
-    else user = request.user
-
-    fs
-        .collection("np_applications")
-        .doc(user.uid)
-        .get()
-        .then((doc) => {
-            let docData = doc.data()
-            return response.status(200).json(docData)
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})

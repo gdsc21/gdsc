@@ -1,7 +1,6 @@
 const { fs, FieldValue } = require('../util/admin');
 
 
-// TODO: Perform title name validation so that the title can be easily converted to a repo name
 exports.projCreate = (request, response, next) => {
     /**
      * Creates a new project document with a random uid as the file name and inserts a title, description and npInfo
@@ -32,6 +31,7 @@ exports.projCreate = (request, response, next) => {
                 npUid: user.uid
             }
 
+            // create project document and add project to the allProjects document
             let projectColRef = fs.collection("projects")
             projectColRef
                 .add({
@@ -62,7 +62,6 @@ exports.projCreate = (request, response, next) => {
                         .catch((err) => {
                             return response.status(500).json({error: err.message})
                         })
-
                 })
                 .catch((err) => {
                     return response.status(500).json({error: err.message})
@@ -86,7 +85,7 @@ exports.projGetAll = (request, response) => {
         })
 }
 
-exports.projDelete = (request, response) => {
+exports.projDelete = (request, response, next) => {
     /**
      * Deletes a created project and returns a 500 error if the project doesn't exist
      * @param {request} body={projectId:} --- user=decodedToken
@@ -116,7 +115,7 @@ exports.projDelete = (request, response) => {
             [data.projectId]: FieldValue.delete()
         })
         .then(() => {
-            return response.status(200).json({message: "Project deleted"})
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
@@ -155,7 +154,7 @@ exports.projLoad = (request, response) => {
         })
 }
 
-exports.projUpdateNpInfo = (request, response) => {
+exports.projUpdateNpInfo = (request, response, next) => {
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -172,18 +171,21 @@ exports.projUpdateNpInfo = (request, response) => {
         .get()
         .then((projectDocs) => {
             projectDocs.forEach((doc) => {
-                "npEmail" in data ? batch.update(doc.ref, {"npInfo.npEmail": data.npEmail}) : ""
-                "npDisplayName" in data ? batch.update(doc.ref, {"npInfo.npDisplayName": data.npDisplayName}) : ""
-                "npPhoneNumber" in data ? batch.update(doc.ref, {"npInfo.npPhoneNumber": data.npPhoneNumber}) : ""
-                "npWebsite" in data ? batch.update(doc.ref, {"npInfo.npWebsite": data.npWebsite}) : ""
-                "npCountry" in data ? batch.update(doc.ref, {"npInfo.npCountry": data.npCountry}) : ""
+                batch
+                    .update(doc.ref, {
+                        "npInfo.npEmail": data.npEmail,
+                        "npInfo.npDisplayName": data.npDisplayName,
+                        "npInfo.npPhoneNumber": data.npPhoneNumber,
+                        "npInfo.npWebsite": data.npWebsite,
+                        "npInfo.npCountry": data.npCountry
+                    })
             })
         })
         .then(() => {
             batch
                 .commit()
                 .then(() => {
-                    return response.status(200).json({message: "Profile updated"})
+                    return next()
                 })
                 .catch((err) => {
                     return response.status(500).json({message: err.message})
@@ -216,7 +218,11 @@ exports.projUpdate = (request, response, next) => {
                 projectRef
                     .update({
                         projTitle: data.projTitle,
-                        projDescription: data.projDescription
+                        projDescription: data.projDescription,
+                        projGithub: data.projGithub
+                    })
+                    .catch((err) => {
+                        return response.status(500).json({message: err.message})
                     })
                 // updates the allProject document
                 fs
@@ -224,7 +230,11 @@ exports.projUpdate = (request, response, next) => {
                     .doc("allProjects")
                     .update({
                         [`${data.projectId}.projTitle`]: data.projTitle,
-                        [`${data.projectId}.projDescription`]: data.projDescription
+                        [`${data.projectId}.projDescription`]: data.projDescription,
+                        [`${data.projectId}.projGithub`]: data.projGithub
+                    })
+                    .catch((err) => {
+                        return response.status(500).json({message: err.message})
                     })
             }
         })
@@ -317,47 +327,50 @@ exports.projAddDev = (request, response, next) => {
                 request.body.projectInfo = projInfo
             }
         })
+        .then(() => {
+            let devProfile
+            fs
+                .collection("dev_accounts")
+                .doc(data.devUid)
+                .get()
+                .then((devDoc) => {
+                    if (devDoc.exists) {
+                        devProfile = devDoc.data()
+                        // adds the developer profile to the project document and passes on to the next function
+                        projDocRef
+                            .update({
+                                "devProfiles": {
+                                    [user.uid]: {
+                                        "devDisplayName": devProfile.devDisplayName,
+                                        "devTitle": devProfile.devTitle,
+                                        "devProfileImgUrl": devProfile.devProfileImgUrl,
+                                        "devLinks": {
+                                            "devWebsite": devProfile.devLinks.devWebsite,
+                                            "devGithub": devProfile.devLinks.devGithub,
+                                            "devLinkedIn": devProfile.devLinks.devLinkedIn
+                                        }
+                                    }
+                                }
+                            })
+                            .then(() => {
+                                return next()
+                            })
+                            .catch((err) => {
+                                return response.status(500).json({error: err.message})
+                            })
+                    }
+                    else return response.status(400).json({message: "Developer profile doesn't exist"})
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+        })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
 
     // retrieves the developer profile using their uid
-    let devProfile
-    fs
-        .collection("dev_accounts")
-        .doc(data.devUid)
-        .get()
-        .then((devDoc) => {
-            if (devDoc.exists) {
-                devProfile = devDoc.data()
-                // adds the developer profile to the project document and passes on to the next function
-                projDocRef
-                    .update({
-                        "devProfiles": {
-                            [user.uid]: {
-                                "devDisplayName": devProfile.devDisplayName,
-                                "devTitle": devProfile.devTitle,
-                                "devProfileImgUrl": devProfile.devProfileImgUrl,
-                                "devLinks": {
-                                    "devWebsite": devProfile.devLinks.devWebsite,
-                                    "devGithub": devProfile.devLinks.devGithub,
-                                    "devLinkedIn": devProfile.devLinks.devLinkedIn
-                                }
-                            }
-                        }
-                    })
-                    .then(() => {
-                        return next()
-                    })
-                    .catch((err) => {
-                        return response.status(500).json({error: err.message})
-                    })
-            }
-            else return response.status(400).json({message: "Developer profile doesn't exist"})
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
+
 
 
 
@@ -387,24 +400,22 @@ exports.projRemoveDev = (request, response, next) => {
             } else return response.status(400).json({message: "Project doesn't exists"})
 
         })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
-
-    // deletes the developer profile from the project page
-    projDocRef
-        .update({
-            [`devProfiles.${data.devUid}`]: FieldValue.delete()
-        })
         .then(() => {
-            return next()
+            // deletes the developer profile from the project page
+            projDocRef
+                .update({
+                    [`devProfiles.${data.devUid}`]: FieldValue.delete()
+                })
+                .then(() => {
+                    return next()
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
-
-
-
 }
 
 exports.addCommit = (request, response) => {

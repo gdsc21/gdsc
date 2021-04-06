@@ -19,7 +19,7 @@ ghApp.use(cors({origin: true}))
 const {
     push,
     updateDevCommits
-} = require("./API/gitHub")
+} = require("../API/github")
 
 ghApp.post("/push", push, updateDevCommits)
 

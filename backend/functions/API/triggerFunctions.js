@@ -21,7 +21,6 @@ exports.createDevDoc = functions.auth.user().onCreate((user) => {
             gamification: {
                 devLevel: 0,
                 devXP: 0,
-                devRole: "developer",
                 devBadges: {}
             },
             devProjects: {},
