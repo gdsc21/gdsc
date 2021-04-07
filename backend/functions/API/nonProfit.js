@@ -339,7 +339,7 @@ exports.npDeleteProject = (request, response, next) => {
         })
 }
 
-exports.npUpdateProject = (request, response) => {
+exports.npUpdateProject = (request, response, next) => {
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -357,7 +357,7 @@ exports.npUpdateProject = (request, response) => {
             [`npProjects.${data.projectId}.projGithub`]: data.projGithub
         })
         .then(() => {
-            return response.status(200).json({message: "Successfully updated"})
+            return next()
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})

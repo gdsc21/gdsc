@@ -46,3 +46,6 @@ applicationsApp.get("/np-get-applications", auth, npGetProjectApplications)
 // gets all the applications a developer has sent --- get from dev so user = dev
 applicationsApp.get("/dev-get-applications", auth, devAppGetApplications)
 
+
+module.exports = applicationsApp
+

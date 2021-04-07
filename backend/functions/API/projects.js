@@ -212,6 +212,11 @@ exports.projUpdate = (request, response, next) => {
         .get()
         .then((doc) => {
             let docData = doc.data()
+
+            // adds the project developers to the request body
+            data.projDevs = docData.devProfiles
+            request.body = data
+
             if (docData.npInfo.npUid != user.uid) return response.status(404).json({error: "Unauthorized"})
             else {
                 // updates the project document

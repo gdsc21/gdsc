@@ -55,7 +55,6 @@ exports.devUpdateProfile = (request, response, next) => {
     }
 
     // // creates a batch and reference to the developer profile document
-    // let batch = fs.batch()
     let devDocRef = fs.collection("dev_accounts").doc(user.uid)
 
     devDocRef
@@ -67,20 +66,21 @@ exports.devUpdateProfile = (request, response, next) => {
             "devTitle": data.devTitle,
             "devBio": data.devBio
         })
+        .then(() => {
+            // adds the projects the developer is on to the request body
+            devDocRef
+                .get()
+                .then((devDoc) => {
+                    let devData = devDoc.data()
+                    request.body.projects = Object.keys(devData.devProjects)
+                    return next()
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
+        })
         .catch((err) => {
             return response.status(400).json({error: err.message})
-        })
-
-    // adds the projects the developer is on to the request body
-    devDocRef
-        .get()
-        .then((devDoc) => {
-            let devData = devDoc.data()
-            request.body.projects = Object.keys(devData.devProjects)
-            return next()
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
         })
 }
 
@@ -132,10 +132,46 @@ exports.devDeleteProject = (request, response) => {
         })
 }
 
-exports.devUpdateProject = (request, response) => {
+exports.devUpdateProject = (request, response, next) => {
+    // updates the project info on all the developer profiles associated with the project being updated
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    if (!data.devProfiles) return next()
+
+    let batch = fs.batch()
+    Object.keys(data.devProfiles).forEach(([devUid]) => {
+        let devDocRef = fs.collection("dev_accounts").doc(devUid)
+        batch
+            .update(devDocRef, {
+                [`devProjects.${data.projectId}.projTitle`]: data.projTitle,
+                [`devProjects.${data.projectId}.projDescription`]: data.projDescription,
+                [`devProjects.${data.projectId}.projGithub`]: data.projGithub
+            })
+    })
+
+    batch
+        .commit()
+        .then(() => {
+            return next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 exports.devUpdateNpInfo = (request, response) => {
+    let data
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    if (!data.npDisplayName) return response.status(200).json({message: "Profile updated"})
+
+    let batch = fs.batch()
+    fs
+        .collection("dev_accounts")
+        .doc()
 }

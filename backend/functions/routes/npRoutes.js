@@ -37,3 +37,6 @@ npApp.post("/get-np", auth, npGetAccount)
 
 // updates a non profits profile in all locations except developer applications
 npApp.post("/np-update", auth, npUpdateAccount, projUpdateNpInfo, devUpdateNpInfo)
+
+
+module.exports = npApp

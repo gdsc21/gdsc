@@ -59,3 +59,6 @@ projectApp.get("/get-project", projLoad)
 
 // loads the all the project summaries for the explore page --- not a restricted route so no user object from auth
 projectApp.get("/get-all-projects", projGetAll)
+
+
+module.exports = projectApp

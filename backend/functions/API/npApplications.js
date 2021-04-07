@@ -124,7 +124,28 @@ exports.npGetProjectApplications = (request, response) => {
 }
 
 exports.npAppUpdateProject = (request, response) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("np_applications")
+        .doc(user.uid)
+        .update({
+            [`${data.projectId}.projectInfo.projTitle`]: data.projTitle,
+            [`${data.projectId}.projectInfo.projDescription`]: data.projDescription,
+            [`${data.projectId}.projectInfo.projGithub`]: data.projGithub,
+        })
+        .then(() => {
+            return response.status(200).json({message: "Project Updated"})
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 
