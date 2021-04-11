@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import Loader from "../../Components/loader";
 import DevProject from "./devProject";
 
-const Explore = ({ user, hamburgerClick }) => {
+const Explore = ({ hamburgerClick }) => {
 	const [allProjectData, setAllProjectData] = useState(null)
 
 	useEffect(() => {
@@ -31,17 +31,13 @@ const Explore = ({ user, hamburgerClick }) => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					console.log(data)
-					setAllProjectData(data)
-					// stops the loop
+					setAllProjectData(response.data)
 					clearInterval(fetchProjects);
-				})
-				.then(() => {
-
-
+					// stops the loop
 				})
 				.catch((err) => {
-					authErrorCheck(err);
+					console.log(err)
+					if (err.response) authErrorCheck(err);
 				});
 		}, 2000);
 	}, []);
@@ -49,11 +45,6 @@ const Explore = ({ user, hamburgerClick }) => {
 	if (!allProjectData) {
 		return <Loader message="Hold on while we load the available projects" />;
 	} else {
-		let projectCards = []
-		Object.entries(allProjectData).forEach(([projectId, projectData]) => {
-			projectCards.push(<DevProject projectId={projectId} projectData={projectData}/>)
-		})
-
 		return (
 			<div className="panel-container">
 				{/* Nav and menu */}
@@ -85,7 +76,7 @@ const Explore = ({ user, hamburgerClick }) => {
 				<div className="curProject">
 					<h1 className="head">Projects that need developers</h1>
 					<div className="curProjectDisp">
-						{projectCards}
+
 					</div>
 				</div>
 			</div>

@@ -20,9 +20,9 @@ const DevApplication = ({ projectId, projectData }) => {
             },
         };
 
-        // const url =
-        // 	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/applicationsApp/apply-project";
-        const url = "http://localhost:5001/sunlit-webbing-305321/us-central1/applicationsApp/apply-project"
+        const url =
+        	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/applicationsApp/apply-project";
+        // const url = "http://localhost:5001/sunlit-webbing-305321/us-central1/applicationsApp/apply-project"
 
         axios
             .post(url, data, config)
