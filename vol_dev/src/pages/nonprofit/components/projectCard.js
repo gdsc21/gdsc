@@ -1,27 +1,26 @@
 import { Link } from "react-router-dom";
 
-// key should be the projectID
-const ProjectCard = ({ key, project }) => {
+// projectId should be the projectID
+const ProjectCard = ({ projectId, projectData }) => {
 	// const projectURL = project.id ? `/project/${project.id}` : "/";
-	const projectURL = key ? `/project/${key}` : "/";
+	const projectURL = projectId ? `/project/${projectId}` : "/";
 
 	return (
 		<div className="devproject">
-			<h3>{project.org}</h3>
 			<div>
 				<h4>Title</h4>
-				<p className="title">{project.title}</p>
+				<p className="title">{projectData.projTitle}</p>
 			</div>
 
 			<div className="description-div">
 				<h4>Description</h4>
-				<p className="description">{project.title}</p>
+				<p className="description">{projectData.projDescription}</p>
 			</div>
 
-			<div>
-				<h4>Role</h4>
-				<p className="role">{project.role}</p>
-			</div>
+			{/*<div>*/}
+			{/*	<h4>Role</h4>*/}
+			{/*	<p className="role">{projectData.role}</p>*/}
+			{/*</div>*/}
 
 			{
 				// TODO: Add a way to quantify the project's progess

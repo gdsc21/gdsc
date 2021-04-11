@@ -7,13 +7,13 @@ import axios from "axios";
 import { UserContext } from "../../store";
 
 // Components
-import Sidebar from "./components/sidebar";
-import Explore from "./components/explore";
-import Project from "./components/project";
-import Dashboard from "./components/dashboard";
+import Sidebar from "./Components/sidebar";
+import Explore from "./Components/explore";
+import Project from "./Components/project";
+import Dashboard from "./Components/dashboard";
 
-import EditProfile from "./components/editProfile";
-import Loader from "../components/loader";
+import EditProfile from "./Components/EditProfile";
+import Loader from "../Components/loader";
 
 const Dev = ({ page }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -28,7 +28,7 @@ const Dev = ({ page }) => {
 			else ++counter;
 
 			const url =
-				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
+				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/devApp/get-dev-profile";
 			let token = getSessionStorageExpire("token");
 			let config = { headers: { Authorization: `Bearer ${token}` } };
 			let data;
@@ -78,7 +78,6 @@ const Dev = ({ page }) => {
 		return (
 			<div className="developer__dashboard">
 				<EditProfile
-					user={userStore}
 					showEditProfile={showEditProfile}
 					setShowEditProfile={setShowEditProfile}
 				/>

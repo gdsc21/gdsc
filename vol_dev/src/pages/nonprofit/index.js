@@ -11,6 +11,9 @@ import { authErrorCheck, signOut, getSessionStorageExpire } from "../../utils";
 // Components
 import ProjectCard from "./components/projectCard";
 import Navigation from "./components/navigation";
+import Loader from "../Components/loader";
+import DevProject from "../dev/Components/devProject";
+import CreateProject from "./components/createProject";
 
 const NonProfit = ({ page }) => {
 	// Dummy user details for frontend tests
@@ -18,6 +21,8 @@ const NonProfit = ({ page }) => {
 
 	const { userStore, updateUserStore } = useContext(UserContext);
 	const [hamburger, setHamburger] = useState(false);
+	const [showCreateProject, setShowCreateProject] = useState(false);
+
 
 	useEffect(() => {
 		if (userStore) return;
@@ -28,7 +33,7 @@ const NonProfit = ({ page }) => {
 			else ++counter;
 
 			const url =
-				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-non-profit";
+				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np";
 			let token = getSessionStorageExpire("token");
 			let config = { headers: { Authorization: `Bearer ${token}` } };
 			let data;
@@ -43,7 +48,8 @@ const NonProfit = ({ page }) => {
 					clearInterval(fetchProfile);
 				})
 				.catch((err) => {
-					authErrorCheck(err);
+					if (counter < 3) {}
+					else authErrorCheck(err);
 				});
 		}, 2000);
 	}, []);
@@ -71,62 +77,75 @@ const NonProfit = ({ page }) => {
 		}
 	};
 
-	return (
-		<div className="np-container">
-			<button className="np-hamburger" onClick={hamburgerClick}>
-				<i className="fas fa-bars"></i>
-			</button>
 
-			<div className="np-sidebar">
-				<button className="np-ham-close" onClick={hamburgerClick}>
-					<i class="fas fa-times"></i>
+	if (!userStore) {
+		return <Loader message="Hold on while we load your profile" />
+	} else {
+		let projectCards = []
+		console.log(Object.entries(userStore.npProjects))
+		Object.entries(userStore.npProjects).forEach(([projectId, projectData]) => {
+			projectCards.push(<ProjectCard projectId={projectId} projectData={projectData}/>)
+		})
+		console.log(projectCards)
+
+		return (
+			<div className="np-container">
+				<button className="np-hamburger" onClick={hamburgerClick}>
+					<i className="fas fa-bars"></i>
 				</button>
-				<Navigation />
-			</div>
 
-			<div className="np">
-				<div className="np-dash">
+				<div className="np-sidebar">
+					<button className="np-ham-close" onClick={hamburgerClick}>
+						<i className="fas fa-times"></i>
+					</button>
 					<Navigation />
-					<div className="np-profile">
-						<div className="np-profile-image">
-							<img src={npicon} />
-							<div className="np-user">
-								<h1>Nick Miller</h1>
-								<h3>A Really Influential Non Profit</h3>
+				</div>
+
+				<div className="np">
+					<div className="np-dash">
+						<CreateProject
+							showCreateProject={showCreateProject}
+							setShowCreateProject={setShowCreateProject}
+						/>
+
+						<Navigation />
+						<div className="np-profile">
+							<div className="np-profile-image">
+								<img src={npicon} />
+								<div className="np-user">
+									<h1>{userStore.npDisplayName}</h1>
+									{/*<h3></h3>*/}
+								</div>
+							</div>
+							<Link to="/" onClick={signOut}>
+								Sign Out
+							</Link>
+							<div className="np-create-edit-mobile" onClick={() => setShowCreateProject(true)}>
+								<span>Create Project</span>
+								<a href="/">
+									<span>Edit Profile</span>
+								</a>
 							</div>
 						</div>
-						<Link to="/" onClick={signOut}>
-							Sign Out
-						</Link>
-						<div className="np-create-edit-mobile">
-							<a href="/">
-								<span>Create Project</span>
-							</a>
-							<a href="/">
-								<span>Edit Profile</span>
-							</a>
-						</div>
-					</div>
-					<div className="np-dash-option">
-						<Navigation />
-						<div className="np-create-edit">
-							<a href="/">
-								<span>Create Project</span>
-							</a>
-							<a href="/">
-								<span>Edit Profile</span>
-							</a>
+						<div className="np-dash-option">
+							<Navigation />
+							<div className="np-create-edit" onClick={() => setShowCreateProject(true)}>
+								<a>
+									<span>Create Project</span>
+								</a>
+								<a href="/">
+									<span>Edit Profile</span>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div className="np-curProject">
+					{projectCards}
+				</div>
 			</div>
-			<div className="np-curProject">
-				{userStore.projects.map((project, id) => {
-					return <ProjectCard key={id} project={project} />;
-				})}
-			</div>
-		</div>
-	);
+		);
+	}
 };
 
 export default NonProfit;

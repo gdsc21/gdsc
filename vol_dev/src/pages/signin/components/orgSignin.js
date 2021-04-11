@@ -71,7 +71,7 @@ const OrgSignIn = ({ setSelection }) => {
 		<div className="orgsignin">
 			<form onSubmit={orgLogin}>
 				<span className="back-btn" onClick={goBack}>
-					<i class="fas fa-chevron-left"></i>
+					<i className="fas fa-chevron-left"></i>
 				</span>
 
 				<h3 className="title">Non-Profit Sign-In</h3>

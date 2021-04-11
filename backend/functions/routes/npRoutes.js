@@ -32,11 +32,11 @@ const {
 // signs up a non-profit
 npApp.post("/np-sign-up", npSignUp)
 
-// gets a non-profits profile --- post from np OR dev
-npApp.post("/get-np", auth, npGetAccount)
-
 // updates a non profits profile in all locations except developer applications
 npApp.post("/np-update", auth, npUpdateAccount, projUpdateNpInfo, devUpdateNpInfo)
+
+// gets a non-profits profile --- post from np OR dev
+npApp.get("/get-np", auth, npGetAccount)
 
 
 module.exports = npApp

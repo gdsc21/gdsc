@@ -36,7 +36,7 @@ const OrgSignUp = ({ setSelection }) => {
 
 		let token;
 		axios
-			.post("https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/np-signup", {
+			.post("https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/np-sign-up", {
 				npEmail: Email,
 				npPhoneNumber: Phone,
 				npPassword: Password,

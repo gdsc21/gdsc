@@ -28,7 +28,8 @@ const MainPage = ({ setSelection }) => {
 				setStorageSessionExpire("isDev", true, 3600000);
 				setStorageSessionExpire("token", token, 3600000);
 
-				window.location.href("/dashboard")
+				// Redirect to dashboard
+				window.location.href = "/dashboard";
 			})
 			.catch((error) => {
 				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError

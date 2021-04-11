@@ -1,21 +1,21 @@
 import { Link } from "react-router-dom";
 
-// key should be the projectID
-const DevProject = ({ key, project }) => {
+// projectId should be the projectID
+const DevProject = ({ projectId, projectData }) => {
 	// const projectURL = project.id ? `/project/${project.id}` : "/";
-	const projectURL = key ? `/project/${key}` : "/";
+	const projectURL = projectId ? `/project/${projectId}` : "/";
 
 	return (
 		<div className="devproject">
-			<h3>{project.org}</h3>
+			<h3>{projectData.npDisplayName}</h3>
 			<div>
 				<h4>Title</h4>
-				<p className="title">{project.title}</p>
+				<p className="title">{projectData.title}</p>
 			</div>
 
 			<div className="description-div">
 				<h4>Description</h4>
-				<p className="description">{project.description}</p>
+				<p className="description">{projectData.description}</p>
 			</div>
 
 			{/*

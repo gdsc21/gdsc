@@ -3,7 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../store";
 
-import Modal from "../../components/modal";
+import Modal from "../../Components/modal";
 
 const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -38,14 +38,14 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 		};
 
 		const url =
-			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/update-dev-profile";
+			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/devApp/update-dev-profile";
 
 		axios
 			.post(url, data, config)
 			.then((response) => {
-				// TODO: success -- redirect to dashboard
+				// TODO: success -- close modal
 				const getProfileUrl =
-					"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-dev-profile";
+					"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/devApp/get-dev-profile";
 				axios
 					.get(getProfileUrl, config)
 					.then((newResponse) => {
