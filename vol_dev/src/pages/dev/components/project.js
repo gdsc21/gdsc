@@ -2,20 +2,25 @@ import { Link } from "react-router-dom";
 // import DevProfile from "./devProfile";
 // import defaultNP from "./img/charity_icon.svg";
 import { useParams } from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import {authErrorCheck, getSessionStorageExpire} from "../../../utils";
 
-const Project = ({ user, hamburgerClick }) => {
-	/*
+const Project = ({ hamburgerClick }) => {
+
 	let { id } = useParams();
 
-	const [npInfo, setnpInfo] = useState("");
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
+	const [npInfo, setNpInfo] = useState("");
+	const [prjTitle, setProjTitle] = useState("");
+	const [projDescription, setProjDescription] = useState("");
 	const [devProfiles, setDevProfiles] = useState("");
-	const [gitHubRepo, setGitHubRepo] = useState("");
+	const [projGithub, setProjGithub] = useState("");
+
 	useEffect((id) => {
 		const url =
-			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/userRoutes/get-project";
+			"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/projectApp/get-project";
 		let token = getSessionStorageExpire("token");
+
 		let config = {
 			headers: { Authorization: `Bearer ${token}` },
 			params: { projectId: id },
@@ -24,21 +29,22 @@ const Project = ({ user, hamburgerClick }) => {
 			.get(url, config)
 			.then((response) => {
 				let data = response.data;
-				setnpInfo(data.npInfo);
-				setTitle(data.title);
-				setDescription(data.description);
+				setNpInfo(data.npInfo);
+				setProjTitle(data.projTitle);
+				setProjDescription(data.projDescription);
 				setDevProfiles(data.devProfiles);
-				setGitHubRepo(data.GitHubRepo);
+				setProjGithub(data.projGithub);
 			})
-			.catch((response) => {
-				if (response.data.message === "Profile doesn't exists!") {
-				} // TODO: Profile doesn't exist error handling
+			.catch((error) => {
+				if (!error.response) console.log(error)
 				else {
-					// TODO: Server error handling
+					if (error.response.data.message === "Profile doesn't exists!") {} // TODO: Profile doesn't exist error handling
+					else {
+						authErrorCheck(error)
+					}
 				}
 			});
 	}, []);
-	*/
 
 	return (
 		<div className="panel-container">
