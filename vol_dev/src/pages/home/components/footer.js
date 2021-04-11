@@ -25,7 +25,8 @@ const Footer = () => {
 				<div className="contact-info">
 					<p className="email">contact us using our contact form</p>
 					<p className="address">
-						Students of University of Alberta <br />
+						Students of University of Alberta
+						<br />
 						Edmonton, AB
 						<br />
 						Canada
