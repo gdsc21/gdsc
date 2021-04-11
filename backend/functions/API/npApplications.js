@@ -31,11 +31,10 @@ exports.npAppAddProject = (request, response) => {
 }
 
 exports.npAppDeleteProject = (request, response) => {
-
 }
 
 exports.npAcceptDev = (request, response, next) => {
-    // request.body = { devUid: }
+    // request.body = { devUid: , projectId:}
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -48,15 +47,34 @@ exports.npAcceptDev = (request, response, next) => {
         .collection("np_applications")
         .doc(user.uid)
         .update({
-
+            // delete developer application
+            [`${data.projectId}.developers.${data.devUid}`]: FieldValue.delete()
         })
         .then(() => {
-            return next() // pass to addDev to project function
+            return next() // pass to devAppAccepted
         })
 }
 
-exports.npRejectDev = (request, response) => {
+exports.npRejectDev = (request, response, next) => {
+    // request.body = { devUid: , projectId:}
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("np_applications")
+        .doc(user.uid)
+        .update({
+            // delete developer application
+            [`${data.projectId}.developers.${data.devUid}`]: FieldValue.delete()
+        })
+        .then(() => {
+            return next() // pass to devAppRejected
+        })
 }
 
 exports.npAddDevApplied = (request, response) => {
@@ -68,40 +86,36 @@ exports.npAddDevApplied = (request, response) => {
         data = JSON.parse(request.body)
     else data = request.body
 
-    let devData
     fs
-        .collection("np_applications")
-        .doc(data.projectData.npInfo.npUid)
-        .then((docRef) => {
-            fs.collection("dev_accounts").doc(user.uid).get().then((devRef) => {
-                if (!devRef.exists) return response.status(400).json({message: "Developer doesn't exist"})
-                devData = devRef.data()
-            })
-            return docRef
-        })
-        .update({
-            [`projectApplications.${data.projectId}.devs.${user.uid}`]: {
-                devDisplayName: devData.devDisplayName,
-                devProfileImgUrl: devData.devProfileImgUrl,
-                devTitle: devData.devTitle,
-                devLinks: devData.devLinks,
-                appStatus: null
-            }
-        })
-        .then(() => {
-            return response.status(200).json({message: "success"})
+        .collection("dev_accounts")
+        .doc(user.uid)
+        .get()
+        .then((devRef) => {
+            if (!devRef.exists) return response.status(400).json({message: "Developer doesn't exist"})
+            let devData = devRef.data()
+
+            fs
+                .collection("np_applications")
+                .doc(data.projectData.npInfo.npUid)
+                .update({
+                    [`${data.projectId}.developers.${user.uid}`]: {
+                        devDisplayName: devData.devDisplayName,
+                        devProfileImgUrl: devData.devProfileImgUrl,
+                        devTitle: devData.devTitle,
+                        devLinks: devData.devLinks,
+                        appStatus: null
+                    }
+                })
+                .then(() => {
+                    return response.status(200).json({message: "success"})
+                })
+                .catch((err) => {
+                    return response.status(500).json({error: err.message})
+                })
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})
         })
-//       projectApplications: {
-//          projectId: {
-//             devs: {
-//                  devUID: { dev profile info }
-//             }
-//             projectInfo: { project info }
-//          }
-//      }
 }
 
 exports.npGetProjectApplications = (request, response) => {

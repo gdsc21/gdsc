@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import {authErrorCheck, getSessionStorageExpire} from "../../../utils";
+import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../utils";
 import { UserContext } from "../../../store";
 import axios from "axios";
 import Modal from "../../Components/modal";
@@ -20,7 +20,10 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 		};
 		// get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
-		if (!token) window.location.href = "/signin";
+		if (!token) {
+			signOut()
+			window.location.href = "/signin";
+		}
 
 		let config = {
 			headers: {

@@ -1,7 +1,16 @@
 import DevProject from "./devProject";
 import { Link } from "react-router-dom";
+import {useContext} from "react";
+import {UserContext} from "../../../store";
 
 const Dashboard = ({ user, hamburgerClick }) => {
+	const { userStore, updateUserStore } = useContext(UserContext);
+
+	let projectCards = []
+	Object.entries(userStore.devProjects).forEach(([projectId, projectData]) => {
+		projectCards.push(<DevProject projectId={projectId} projectData={projectData}/>)
+	})
+
 	return (
 		<div className="panel-container">
 			{/* Nav and menu */}
@@ -14,7 +23,7 @@ const Dashboard = ({ user, hamburgerClick }) => {
 						<span className="navlink__text">Dashboard</span>
 						<i className="navlink__icon fas fa-home"></i>
 					</Link>
-					<Link to="/">
+					<Link to="/notifications">
 						<span className="navlink__text">Notifications</span>
 						<i className="navlink__icon fas fa-bell"></i>
 					</Link>
@@ -33,10 +42,7 @@ const Dashboard = ({ user, hamburgerClick }) => {
 			<div className="curProject">
 				<h1 className="head">Current Projects</h1>
 				<div className="curProjectDisp">
-					{user.projects &&
-						Object.entries(user.projects).map(([projID, projInfo], id) => {
-							return <DevProject key={id} project={projInfo} />;
-						})}
+					{projectCards}
 				</div>
 			</div>
 

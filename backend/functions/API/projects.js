@@ -53,7 +53,9 @@ exports.projCreate = (request, response, next) => {
                             [data.projectId]: {
                                 projTitle: data.projTitle,
                                 projDescription: data.projDescription,
-                                projGithub: ""
+                                projGithub: "",
+                                npDisplayName: npInfo.npDisplayName,
+                                npUid: npInfo.npUid
                             }
                         }, { merge: true })
                         .then(() => {
@@ -76,6 +78,7 @@ exports.projGetAll = (request, response) => {
     fs
         .collection("projects")
         .doc("allProjects")
+        .get()
         .then((doc) => {
             let data = doc.data()
             return response.status(200).json(data)
@@ -430,19 +433,5 @@ exports.addCommit = (request, response) => {
 exports.createProjectRepo = (request, response) => {
     // use github app to create project repo with project title as repo name
     // TODO: add repo id to the project created page so that the github function that adds commit history can find it
-}
-
-exports.getAllProjects = (request, response) => {
-    fs
-        .collection("projects")
-        .doc("allProjects")
-        .get()
-        .then((doc) => {
-            let docData = doc.data()
-            return response.status(200).json(docData)
-        })
-        .catch((err) => {
-            return response.status(500).json({error: err.message})
-        })
 }
 

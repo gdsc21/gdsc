@@ -83,6 +83,17 @@ const App = () => {
 						}
 					}
 				</Route>
+				<Route exact path="/notifications">
+					{
+						() => {
+							const user = checkAuth();
+							if (!!user && user.providerData[0].providerId === "github.com")
+								return <Dev page="notifications" />
+							else if (!!user) return <NonProfit page="notifications" />
+							else return <Redirect to="/" />
+						}
+					}
+				</Route>
 				<Route path="/">
 					<Home />
 				</Route>

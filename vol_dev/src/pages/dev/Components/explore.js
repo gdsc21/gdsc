@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import {authErrorCheck, getSessionStorageExpire} from "../../../utils";
+import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../utils";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Loader from "../../Components/loader";
@@ -17,7 +17,13 @@ const Explore = ({ user, hamburgerClick }) => {
 
 			const url =
 				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/projectApp/get-all-projects";
-			let token = getSessionStorageExpire("token");
+			let token = getSessionStorageExpire("token")
+
+			if (!token) {
+				signOut()
+				window.location.href = "/signin";
+			}
+
 			let config = { headers: { Authorization: `Bearer ${token}` } };
 			let data;
 
@@ -44,10 +50,9 @@ const Explore = ({ user, hamburgerClick }) => {
 		return <Loader message="Hold on while we load the available projects" />;
 	} else {
 		let projectCards = []
-		Object.entries(allProjectData).forEach((projectId, projectData) => {
+		Object.entries(allProjectData).forEach(([projectId, projectData]) => {
 			projectCards.push(<DevProject projectId={projectId} projectData={projectData}/>)
 		})
-		console.log(projectCards)
 
 		return (
 			<div className="panel-container">

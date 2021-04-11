@@ -14,6 +14,8 @@ import Navigation from "./components/navigation";
 import Loader from "../Components/loader";
 import CreateProject from "./components/createProject";
 import EditProfile from "../nonprofit/components/editProfile";
+import NpNotifications from "./components/notifications";
+import {Redirect} from "react-router";
 
 const NonProfit = ({ page }) => {
 	// Dummy user details for frontend tests
@@ -36,6 +38,12 @@ const NonProfit = ({ page }) => {
 			const url =
 				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np";
 			let token = getSessionStorageExpire("token");
+
+			if (!token) {
+				signOut()
+				window.location.href = "/signin";
+			}
+
 			let config = { headers: { Authorization: `Bearer ${token}` } };
 			let data;
 
@@ -118,7 +126,6 @@ const NonProfit = ({ page }) => {
 								<img src={npicon} />
 								<div className="np-user">
 									<h1>{userStore.npDisplayName}</h1>
-									{/*<h3></h3>*/}
 								</div>
 							</div>
 							<Link to="/" onClick={signOut}>
@@ -144,9 +151,12 @@ const NonProfit = ({ page }) => {
 						</div>
 					</div>
 				</div>
-				<div className="np-curProject">
-					{projectCards}
-				</div>
+				{
+					page === "dashboard" ? <div className="np-curProject">{projectCards}</div> :
+					page === "explore" ? <div>Coming Soon</div> :
+					page === "notifications" ? <NpNotifications/> :
+						<div className="np-curProject">{projectCards}</div>
+				}
 			</div>
 		);
 	}

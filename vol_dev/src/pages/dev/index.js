@@ -2,7 +2,7 @@ import "./styles/dev.css";
 import { useState, useEffect, useContext } from "react";
 
 // Backend
-import { authErrorCheck, getSessionStorageExpire } from "../../utils";
+import {authErrorCheck, getSessionStorageExpire, signOut} from "../../utils";
 import axios from "axios";
 import { UserContext } from "../../store";
 
@@ -11,8 +11,8 @@ import Sidebar from "./Components/sidebar";
 import Explore from "./Components/explore";
 import Project from "./Components/project";
 import Dashboard from "./Components/dashboard";
-
 import EditProfile from "./Components/EditProfile";
+import Notifications from "./Components/notifications";
 import Loader from "../Components/loader";
 
 const Dev = ({ page }) => {
@@ -30,6 +30,12 @@ const Dev = ({ page }) => {
 			const url =
 				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/devApp/get-dev-profile";
 			let token = getSessionStorageExpire("token");
+
+			if (!token) {
+				signOut()
+				window.location.href = "/signin";
+			}
+
 			let config = { headers: { Authorization: `Bearer ${token}` } };
 			let data;
 
@@ -88,13 +94,13 @@ const Dev = ({ page }) => {
 					setShowEditProfile={setShowEditProfile}
 				/>
 
-				{page === "dashboard" ? (
-					<Dashboard user={userStore} hamburgerClick={hamburgerClick} />
-				) : page === "explore" ? (
-					<Explore user={userStore} hamburgerClick={hamburgerClick} />
-				) : (
-					<Project user={userStore} hamburgerClick={hamburgerClick} />
-				)}
+				{
+					page === "dashboard" ? (<Dashboard user={userStore} hamburgerClick={hamburgerClick} />) :
+					page === "explore" ? (<Explore user={userStore} hamburgerClick={hamburgerClick} />) :
+					page === "notifications" ? <Notifications hamburgerClick={hamburgerClick} /> :
+						(<Project user={userStore} hamburgerClick={hamburgerClick} />)
+				}
+
 			</div>
 		);
 	}

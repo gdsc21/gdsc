@@ -1,4 +1,4 @@
-import { authErrorCheck, getSessionStorageExpire } from "../../../utils";
+import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../utils";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../store";
@@ -26,7 +26,10 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 
         // get token and if token is null redirect to sign in
         let token = getSessionStorageExpire("token");
-        if (!token) window.location.href = "/signin";
+        if (!token) {
+            signOut()
+            window.location.href = "/signin";
+        }
 
         let config = {
             headers: {

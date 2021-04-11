@@ -32,7 +32,7 @@ const {
 
 
 // accepts a developers application to a project --- post from np account so user = np
-applicationsApp.post("/accept-dev", auth, npAcceptDev, projAddDev, devAddProject, devAppAccepted)
+applicationsApp.post("/accept-dev", auth, projAddDev, devAddProject, npAcceptDev,  devAppAccepted)
 
 // rejects a developers application to a project --- post from np account so user = np
 applicationsApp.post("/reject-dev", auth, npRejectDev, devAppRejected)

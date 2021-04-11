@@ -1,3 +1,6 @@
+const { admin, fs, firebase, FieldValue } = require('../util/admin');
+
+
 exports.devAppApply = (request, response, next) => {
     /*
     Applies the developer to a project thereby adding the application to the dev_applications document with status null
@@ -9,6 +12,7 @@ exports.devAppApply = (request, response, next) => {
     if (typeof request.body != "object")
         data = JSON.parse(request.body)
     else data = request.body
+
 
     fs
         .collection("projects")
@@ -22,11 +26,11 @@ exports.devAppApply = (request, response, next) => {
             data.creationDate = Date.now()
             request.body = data
 
-
+            console.log(user.uid, typeof user.uid)
             fs
                 .collection("dev_applications")
                 .doc(user.uid)
-                .update({
+                .set({
                     [data.projectId]: {
                         projTitle: data.projectData.projTitle,
                         projDescription: data.projectData.projDescription,
@@ -36,7 +40,7 @@ exports.devAppApply = (request, response, next) => {
                         creationData: data.creationDate,
                         appStatus: null
                     }
-                })
+                }, { merge: true })
                 .then(() => {
                     return next()
                 })
@@ -50,14 +54,68 @@ exports.devAppApply = (request, response, next) => {
         })
 }
 
-exports.devAppAccepted = (request, response) => {
+exports.devAppAccepted = (request, response, next) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("dev_applications")
+        .doc(user.uid)
+        .update({
+            [data.projectId.appStatus]: "accepted"
+        })
+        .then(() => {
+            next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
-exports.devAppRejected = (request, response) => {
+exports.devAppRejected = (request, response, next) => {
+    let user, data
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
+    if (typeof request.body != "object")
+        data = JSON.parse(request.body)
+    else data = request.body
 
+    fs
+        .collection("dev_applications")
+        .doc(user.uid)
+        .update({
+            [data.projectId.appStatus]: "rejected"
+        })
+        .then(() => {
+            next()
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 exports.devAppGetApplications = (request, response) => {
+    let user
+    if (typeof request.user != "object")
+        user = JSON.parse(request.user)
+    else user = request.user
 
+    fs
+        .collection("dev_applications")
+        .doc(user.uid)
+        .get()
+        .then((docRef) => {
+            if (!docRef.exists) return response.status(400).json({message: "Account doesn't exist"})
+            let docData = docRef.data()
+            return response.status(200).json(docData)
+        })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
