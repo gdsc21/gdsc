@@ -1,14 +1,13 @@
-import {getSessionStorageExpire} from "../../../utils";
+import { getSessionStorageExpire } from "../../../utils";
 import axios from "axios";
 
 // projectId should be the projectID
 const DevProject = ({ projectId, projectData }) => {
-
 	// const projectURL = project.id ? `/project/${project.id}` : "/";
 	const projectURL = projectId ? `/project/${projectId}` : "/";
 
 	const applyProject = () => {
-		let data = { projectId: projectId }
+		let data = { projectId: projectId };
 
 		// get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
@@ -26,13 +25,12 @@ const DevProject = ({ projectId, projectData }) => {
 
 		axios
 			.post(url, data, config)
-			.then((response) => {
-			})
+			.then((response) => {})
 			.catch((err) => {
 				console.log(err);
 				console.warn("Error:", err);
 			});
-	}
+	};
 
 	return (
 		<div className="devproject">

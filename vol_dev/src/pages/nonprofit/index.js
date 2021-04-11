@@ -11,11 +11,11 @@ import { authErrorCheck, signOut, getSessionStorageExpire } from "../../utils";
 // Components
 import ProjectCard from "./components/projectCard";
 import Navigation from "./components/navigation";
-import Loader from "../Components/loader";
+import Loader from "../components/loader";
 import CreateProject from "./components/createProject";
-import EditProfile from "../nonprofit/components/editProfile";
+import EditProfile from "./components/editProfile";
 import NpNotifications from "./components/notifications";
-import {Redirect} from "react-router";
+import { Redirect } from "react-router";
 
 const NonProfit = ({ page }) => {
 	// Dummy user details for frontend tests
@@ -26,7 +26,6 @@ const NonProfit = ({ page }) => {
 	const [showCreateProject, setShowCreateProject] = useState(false);
 	const [showEditProfile, setShowEditProfile] = useState(false);
 
-
 	useEffect(() => {
 		if (userStore) return;
 
@@ -35,12 +34,11 @@ const NonProfit = ({ page }) => {
 			if (counter >= 3) clearInterval(fetchProfile);
 			else ++counter;
 
-			const url =
-				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np";
+			const url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np";
 			let token = getSessionStorageExpire("token");
 
 			if (!token) {
-				signOut()
+				signOut();
 				window.location.href = "/signin";
 			}
 
@@ -57,8 +55,8 @@ const NonProfit = ({ page }) => {
 					clearInterval(fetchProfile);
 				})
 				.catch((err) => {
-					if (counter < 3) {}
-					else authErrorCheck(err);
+					if (counter < 3) {
+					} else authErrorCheck(err);
 				});
 		}, 2000);
 	}, []);
@@ -86,16 +84,15 @@ const NonProfit = ({ page }) => {
 		}
 	};
 
-
 	if (!userStore) {
-		return <Loader message="Hold on while we load your profile" />
+		return <Loader message="Hold on while we load your profile" />;
 	} else {
-		let projectCards = []
-		console.log(Object.entries(userStore.npProjects))
+		let projectCards = [];
+		console.log(Object.entries(userStore.npProjects));
 		Object.entries(userStore.npProjects).forEach(([projectId, projectData]) => {
-			projectCards.push(<ProjectCard projectId={projectId} projectData={projectData}/>)
-		})
-		console.log(projectCards)
+			projectCards.push(<ProjectCard projectId={projectId} projectData={projectData} />);
+		});
+		console.log(projectCards);
 
 		return (
 			<div className="np-container">
@@ -141,22 +138,25 @@ const NonProfit = ({ page }) => {
 						<div className="np-dash-option">
 							<Navigation />
 							<div className="np-create-edit">
-								<a  onClick={() => setShowCreateProject(true)}>
+								<a onClick={() => setShowCreateProject(true)}>
 									<span>Create Project</span>
 								</a>
-								<a  onClick={() => setShowEditProfile(true)}>
+								<a onClick={() => setShowEditProfile(true)}>
 									<span>Edit Profile</span>
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				{
-					page === "dashboard" ? <div className="np-curProject">{projectCards}</div> :
-					page === "explore" ? <div>Coming Soon</div> :
-					page === "notifications" ? <NpNotifications/> :
-						<div className="np-curProject">{projectCards}</div>
-				}
+				{page === "dashboard" ? (
+					<div className="np-curProject">{projectCards}</div>
+				) : page === "explore" ? (
+					<div>Coming Soon</div>
+				) : page === "notifications" ? (
+					<NpNotifications />
+				) : (
+					<div className="np-curProject">{projectCards}</div>
+				)}
 			</div>
 		);
 	}

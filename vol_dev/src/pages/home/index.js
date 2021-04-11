@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "./components/Header";
-import Sponsors from "./components/Sponsors";
-import Connect from "./components/Connect";
-import Footer from "./components/Footer";
+import Header from "./components/header";
+import Sponsors from "./components/sponsors";
+import Connect from "./components/connect";
+import Footer from "./components/footer";
 
 const Home = () => {
 	return (

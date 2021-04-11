@@ -3,6 +3,7 @@
   background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
   width: 100vw;
   height: 100vh;
+  z-index: 100;
   color: white;
   display: -webkit-box;
   display: -ms-flexbox;

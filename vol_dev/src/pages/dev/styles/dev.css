@@ -75,12 +75,15 @@
 }
 
 .developer__dashboard .sidebar .profile .user a {
-  -ms-flex-item-align: end;
-      align-self: flex-end;
+  text-align: right;
   color: #ffffff;
   font-size: 0.75em;
   margin-bottom: 0.5em;
   cursor: pointer;
+}
+
+.developer__dashboard .sidebar .profile .user a:hover {
+  color: #fca311;
 }
 
 .developer__dashboard .sidebar .profile .user h2 {
@@ -317,6 +320,10 @@
   text-transform: uppercase;
 }
 
+.developer__dashboard .sidebar .sign-out a:hover {
+  background-color: #fca311;
+}
+
 .developer__dashboard .panel-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -355,6 +362,13 @@
   text-transform: uppercase;
   color: #eae8fd;
   font-weight: 500;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+  -webkit-transition: border-bottom ease 0.5s;
+  transition: border-bottom ease 0.5s;
+}
+
+.developer__dashboard .panel-container .devNav a:hover {
+  border-bottom: 1px solid #ffffff;
 }
 
 .developer__dashboard .panel-container .devNav .navlink__icon {
