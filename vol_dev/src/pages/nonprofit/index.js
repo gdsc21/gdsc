@@ -12,8 +12,8 @@ import { authErrorCheck, signOut, getSessionStorageExpire } from "../../utils";
 import ProjectCard from "./components/projectCard";
 import Navigation from "./components/navigation";
 import Loader from "../Components/loader";
-import DevProject from "../dev/Components/devProject";
 import CreateProject from "./components/createProject";
+import EditProfile from "../nonprofit/components/editProfile";
 
 const NonProfit = ({ page }) => {
 	// Dummy user details for frontend tests
@@ -22,6 +22,7 @@ const NonProfit = ({ page }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
 	const [hamburger, setHamburger] = useState(false);
 	const [showCreateProject, setShowCreateProject] = useState(false);
+	const [showEditProfile, setShowEditProfile] = useState(false);
 
 
 	useEffect(() => {
@@ -107,7 +108,10 @@ const NonProfit = ({ page }) => {
 							showCreateProject={showCreateProject}
 							setShowCreateProject={setShowCreateProject}
 						/>
-
+						<EditProfile
+							showEditProfile={showEditProfile}
+							setShowEditProfile={setShowEditProfile}
+						/>
 						<Navigation />
 						<div className="np-profile">
 							<div className="np-profile-image">
@@ -129,11 +133,11 @@ const NonProfit = ({ page }) => {
 						</div>
 						<div className="np-dash-option">
 							<Navigation />
-							<div className="np-create-edit" onClick={() => setShowCreateProject(true)}>
-								<a>
+							<div className="np-create-edit">
+								<a  onClick={() => setShowCreateProject(true)}>
 									<span>Create Project</span>
 								</a>
-								<a href="/">
+								<a  onClick={() => setShowEditProfile(true)}>
 									<span>Edit Profile</span>
 								</a>
 							</div>
