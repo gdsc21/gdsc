@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 const Project = ({ user, hamburgerClick }) => {
 	/*
 	let { id } = useParams();
+
 	const [npInfo, setnpInfo] = useState("");
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -48,16 +49,16 @@ const Project = ({ user, hamburgerClick }) => {
 				</button>
 				<div className="devNav">
 					{
-						//TODO: add notifications and messaging
+						//TODO: add messaging
 					}
 					<Link to="/dashboard">
 						<span className="navlink__text">Dashboard</span>
 						<i className="navlink__icon fas fa-home"></i>
 					</Link>
-					{/* <Link to="/">
+					<Link to="/">
 						<span className="navlink__text">Notifications</span>
 						<i className="navlink__icon fas fa-bell"></i>
-					</Link> */}
+					</Link>
 					{/* <Link to="/">Messages</Link> */}
 					<Link to="/explore">
 						<span className="navlink__text">Explore</span>

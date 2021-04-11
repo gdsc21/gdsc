@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../utils";
+import { authErrorCheck, getSessionStorageExpire, signOut } from "../../../utils";
 import axios from "axios";
-import {useEffect, useState} from "react";
-import Loader from "../../Components/loader";
+import { useEffect, useState } from "react";
+import Loader from "../../components/loader";
 import DevProject from "./devProject";
 
 const Explore = ({ user, hamburgerClick }) => {
-	const [allProjectData, setAllProjectData] = useState(null)
+	const [allProjectData, setAllProjectData] = useState(null);
 
 	useEffect(() => {
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
@@ -17,10 +17,10 @@ const Explore = ({ user, hamburgerClick }) => {
 
 			const url =
 				"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/projectApp/get-all-projects";
-			let token = getSessionStorageExpire("token")
+			let token = getSessionStorageExpire("token");
 
 			if (!token) {
-				signOut()
+				signOut();
 				window.location.href = "/signin";
 			}
 
@@ -31,14 +31,9 @@ const Explore = ({ user, hamburgerClick }) => {
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					console.log(data)
-					setAllProjectData(data)
+					setAllProjectData(data);
 					// stops the loop
 					clearInterval(fetchProjects);
-				})
-				.then(() => {
-
-
 				})
 				.catch((err) => {
 					authErrorCheck(err);
@@ -49,26 +44,21 @@ const Explore = ({ user, hamburgerClick }) => {
 	if (!allProjectData) {
 		return <Loader message="Hold on while we load the available projects" />;
 	} else {
-		let projectCards = []
-		Object.entries(allProjectData).forEach(([projectId, projectData]) => {
-			projectCards.push(<DevProject projectId={projectId} projectData={projectData}/>)
-		})
-
 		return (
 			<div className="panel-container">
 				{/* Nav and menu */}
 				<div className="ham-header">
 					<button className="hamburger" onClick={hamburgerClick}>
-						<i className="fas fa-bars"></i>
+						<i className="fas fa-bars" />
 					</button>
 					<nav className="devNav">
 						<Link to="/dashboard">
 							<span className="navlink__text">Dashboard</span>
-							<i className="navlink__icon fas fa-home"></i>
+							<i className="navlink__icon fas fa-home" />
 						</Link>
 						<Link to="/notifications">
 							<span className="navlink__text">Notifications</span>
-							<i className="navlink__icon fas fa-bell"></i>
+							<i className="navlink__icon fas fa-bell" />
 						</Link>
 						{
 							//TODO: add messaging
@@ -76,7 +66,7 @@ const Explore = ({ user, hamburgerClick }) => {
 						}
 						<Link to="/explore">
 							<span className="navlink__text">Explore</span>
-							<i className="navlink__icon fas fa-compass"></i>
+							<i className="navlink__icon fas fa-compass" />
 						</Link>
 					</nav>
 				</div>
@@ -85,7 +75,9 @@ const Explore = ({ user, hamburgerClick }) => {
 				<div className="curProject">
 					<h1 className="head">Projects that need developers</h1>
 					<div className="curProjectDisp">
-						{projectCards}
+						{Object.entries(allProjectData).map(([projectId, projectData], i) => (
+							<DevProject projectId={projectId} projectData={projectData} key={i} />
+						))}
 					</div>
 				</div>
 			</div>

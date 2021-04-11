@@ -12,9 +12,9 @@ const Sidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 			<div className="profile">
 				<img src={user.devProfileImgUrl || img} alt="profile picture" />
 				<div className="user">
-					<div onClick={() => setShowEditProfile(true)}>
-						<span>edit info</span>
-					</div>
+					<a className="edit_info" onClick={() => setShowEditProfile(true)}>
+						edit info
+					</a>
 					<h2>{user.devDisplayName}</h2>
 					<h3>{user.devTitle}</h3>
 				</div>
@@ -118,10 +118,12 @@ const Sidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 function level(xp) {
 	if (xp >= 6000) {
 		return "Grandmaster";
+	} else if (xp >= 6000) {
+		return "Champion";
 	} else if (xp >= 4000) {
-		return "Expert";
+		return "Connoiseur";
 	} else if (xp >= 2000) {
-		return "Master";
+		return "Devotee";
 	} else {
 		return "Newbie";
 	}

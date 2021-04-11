@@ -1,9 +1,9 @@
-import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../utils";
+import { authErrorCheck, getSessionStorageExpire, signOut } from "../../../utils";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../store";
 
-import Modal from "../../Components/modal";
+import Modal from "../../components/modal";
 
 const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -30,7 +30,7 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 		// get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
 		if (!token) {
-			signOut()
+			signOut();
 			window.location.href = "/signin";
 		}
 
@@ -46,7 +46,6 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 		axios
 			.post(url, data, config)
 			.then((response) => {
-				// TODO: success -- close modal
 				const getProfileUrl =
 					"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/devApp/get-dev-profile";
 				axios
@@ -58,6 +57,7 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 					.catch((err) => {
 						authErrorCheck(err);
 					});
+				setShowEditProfile(false);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -124,7 +124,9 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 					>
 						Cancel
 					</button>
-					<button className="edit-profile__save">Save</button>
+					<button className="edit-profile__save" onClick={editDevProfile}>
+						Save
+					</button>
 				</div>
 			</form>
 		</Modal>

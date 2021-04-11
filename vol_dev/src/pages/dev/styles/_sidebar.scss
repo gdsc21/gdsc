@@ -44,11 +44,15 @@
 			padding-left: 0.5em;
 
 			a {
-				align-self: flex-end;
+				text-align: right;
 				color: $secondaryclr;
 				font-size: 0.75em;
 				margin-bottom: 0.5em;
 				cursor: pointer;
+
+				&:hover {
+					color: $yellow;
+				}
 			}
 
 			h2 {
@@ -199,6 +203,10 @@
 			border-radius: 1rem;
 			text-decoration: none;
 			text-transform: uppercase;
+
+			&:hover {
+				background-color: $yellow;
+			}
 		}
 	}
 }

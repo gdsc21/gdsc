@@ -2,18 +2,18 @@ import "./styles/dev.css";
 import { useState, useEffect, useContext } from "react";
 
 // Backend
-import {authErrorCheck, getSessionStorageExpire, signOut} from "../../utils";
+import { authErrorCheck, getSessionStorageExpire, signOut } from "../../utils";
 import axios from "axios";
 import { UserContext } from "../../store";
 
 // Components
-import Sidebar from "./Components/sidebar";
-import Explore from "./Components/explore";
-import Project from "./Components/project";
-import Dashboard from "./Components/dashboard";
-import EditProfile from "./Components/EditProfile";
-import Notifications from "./Components/notifications";
-import Loader from "../Components/loader";
+import Sidebar from "./components/sidebar";
+import Explore from "./components/explore";
+import Project from "./components/project";
+import Dashboard from "./components/dashboard";
+import EditProfile from "./components/editProfile";
+import Notifications from "./components/notifications";
+import Loader from "../components/loader";
 
 const Dev = ({ page }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -32,7 +32,7 @@ const Dev = ({ page }) => {
 			let token = getSessionStorageExpire("token");
 
 			if (!token) {
-				signOut()
+				signOut();
 				window.location.href = "/signin";
 			}
 
@@ -83,10 +83,7 @@ const Dev = ({ page }) => {
 	} else {
 		return (
 			<div className="developer__dashboard">
-				<EditProfile
-					showEditProfile={showEditProfile}
-					setShowEditProfile={setShowEditProfile}
-				/>
+				<EditProfile showEditProfile={showEditProfile} setShowEditProfile={setShowEditProfile} />
 
 				<Sidebar
 					user={userStore}
@@ -94,13 +91,15 @@ const Dev = ({ page }) => {
 					setShowEditProfile={setShowEditProfile}
 				/>
 
-				{
-					page === "dashboard" ? (<Dashboard user={userStore} hamburgerClick={hamburgerClick} />) :
-					page === "explore" ? (<Explore user={userStore} hamburgerClick={hamburgerClick} />) :
-					page === "notifications" ? <Notifications hamburgerClick={hamburgerClick} /> :
-						(<Project user={userStore} hamburgerClick={hamburgerClick} />)
-				}
-
+				{page === "dashboard" ? (
+					<Dashboard user={userStore} hamburgerClick={hamburgerClick} />
+				) : page === "explore" ? (
+					<Explore user={userStore} hamburgerClick={hamburgerClick} />
+				) : page === "notifications" ? (
+					<Notifications hamburgerClick={hamburgerClick} />
+				) : (
+					<Project user={userStore} hamburgerClick={hamburgerClick} />
+				)}
 			</div>
 		);
 	}
