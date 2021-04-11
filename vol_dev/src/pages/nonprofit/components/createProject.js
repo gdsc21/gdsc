@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../utils";
+import { authErrorCheck, getSessionStorageExpire, signOut } from "../../../utils";
 import { UserContext } from "../../../store";
 import axios from "axios";
-import Modal from "../../Components/modal";
+import Modal from "../../components/modal";
 
 const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -21,7 +21,7 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 		// get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
 		if (!token) {
-			signOut()
+			signOut();
 			window.location.href = "/signin";
 		}
 
@@ -38,12 +38,13 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 			.post(url, data, config)
 			.then((response) => {
 				if (!response.data.projectId) throw "projectId not returned";
-				const getProfileUrl = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np"
+				const getProfileUrl =
+					"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np";
 				axios
 					.get(getProfileUrl, config)
-					.then(newResponse => {
+					.then((newResponse) => {
 						data = newResponse.data;
-						updateUserStore({ type: "set", payload: data})
+						updateUserStore({ type: "set", payload: data });
 					})
 					.catch((err) => {
 						authErrorCheck(err);
@@ -89,10 +90,11 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 						Cancel
 					</button>
 
-					<button className="edit-profile__save" type="submit">Save</button>
+					<button className="edit-profile__save" type="submit">
+						Save
+					</button>
 				</div>
 			</form>
-
 		</Modal>
 	);
 };
