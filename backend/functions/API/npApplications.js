@@ -53,6 +53,9 @@ exports.npAcceptDev = (request, response, next) => {
         .then(() => {
             return next() // pass to devAppAccepted
         })
+        .catch((err) => {
+            return response.status(500).json({error: err.message})
+        })
 }
 
 exports.npRejectDev = (request, response, next) => {

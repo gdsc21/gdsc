@@ -84,7 +84,7 @@ exports.devUpdateProfile = (request, response, next) => {
         })
 }
 
-exports.devAddProject = (request, response) => {
+exports.devAddProject = (request, response, next) => {
     /**
      * Takes the projectInfo passed by the previous function and adds the project info to a developer profile.
      * @param {request} body={projectId:, devUid:, projectInfo: {title:, description:, gitHubRepo:, npDisplayName:, npUid:}}
@@ -104,7 +104,7 @@ exports.devAddProject = (request, response) => {
             [`devProjects.${data.projectId}`]: data.projectInfo
         })
         .then(() => {
-            return response.status(201).json({message: "Developer added"})
+            return next()
         })
         .catch((err) => {
             if (err.code === "not-found") return response.status(400).json({message: "Developer doesn't exist"})

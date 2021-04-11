@@ -348,7 +348,7 @@ exports.projAddDev = (request, response, next) => {
                         projDocRef
                             .update({
                                 "devProfiles": {
-                                    [user.uid]: {
+                                    [data.devUid]: {
                                         "devDisplayName": devProfile.devDisplayName,
                                         "devTitle": devProfile.devTitle,
                                         "devProfileImgUrl": devProfile.devProfileImgUrl,

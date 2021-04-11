@@ -54,7 +54,7 @@ exports.devAppApply = (request, response, next) => {
         })
 }
 
-exports.devAppAccepted = (request, response, next) => {
+exports.devAppAccepted = (request, response) => {
     let user, data
     if (typeof request.user != "object")
         user = JSON.parse(request.user)
@@ -65,12 +65,12 @@ exports.devAppAccepted = (request, response, next) => {
 
     fs
         .collection("dev_applications")
-        .doc(user.uid)
+        .doc(data.devUid)
         .update({
-            [data.projectId.appStatus]: "accepted"
+            [`${data.projectId}.appStatus`]: "accepted"
         })
         .then(() => {
-            next()
+            return response.status(200).json({message: "Developer Accepted"})
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})

@@ -1,4 +1,4 @@
-import {getSessionStorageExpire} from "../../../utils";
+import {getSessionStorageExpire, signOut} from "../../../utils";
 import axios from "axios";
 
 // projectId should be the projectID
@@ -8,11 +8,14 @@ const NpApplication = ({ projectId, projectData }) => {
     const projectURL = projectId ? `/project/${projectId}` : "/";
 
     const acceptDev = () => {
-        let data = { projectId: projectId }
+        let data = { devUid: Object.entries(projectData.developers)[0][0], projectId: projectId }
 
         // get token and if token is null redirect to sign in
         let token = getSessionStorageExpire("token");
-        if (!token) window.location.href = "/signin";
+        if (!token) {
+            signOut()
+            window.location.href = "/signin";
+        }
 
         let config = {
             headers: {
@@ -22,7 +25,7 @@ const NpApplication = ({ projectId, projectData }) => {
 
         // const url =
         // 	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/applicationsApp/apply-project";
-        const url = "http://localhost:5001/sunlit-webbing-305321/us-central1/applicationsApp/apply-project"
+        const url = "http://localhost:5001/sunlit-webbing-305321/us-central1/applicationsApp/accept-dev"
 
         axios
             .post(url, data, config)
@@ -72,6 +75,9 @@ const NpApplication = ({ projectId, projectData }) => {
             {/*<Link className="goto-btn" to={projectURL}>*/}
             {/*	Go to Project*/}
             {/*</Link>*/}
+            <div className="goto-btn" onClick={acceptDev}>
+                Accept Developer
+            </div>
         </div>
     );
 };

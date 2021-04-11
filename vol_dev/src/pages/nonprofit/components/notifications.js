@@ -33,7 +33,6 @@ const NpNotifications = () => {
                 .get(url, config)
                 .then((response) => {
                     data = response.data;
-                    console.log(data)
                     setApplicationData(data)
                     // stops the loop
                     clearInterval(fetchProjects);
@@ -43,7 +42,8 @@ const NpNotifications = () => {
 
                 })
                 .catch((err) => {
-                    authErrorCheck(err);
+                    console.log(err)
+                    // authErrorCheck(err);
                 });
         }, 2000);
     }, []);
