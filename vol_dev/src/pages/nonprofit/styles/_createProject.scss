@@ -1,0 +1,83 @@
+.np__dashboard .np__createProject {
+	min-width: 40vw;
+
+	input,
+	textarea {
+		background: rgba(255, 255, 255, 0.6);
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		border-radius: 28px;
+		border: 2px solid rgba(0, 0, 0, 0);
+		font-size: 0.875rem;
+		width: 100%;
+		padding: 0.5rem 1rem;
+		outline: none;
+
+		&:focus {
+			border: 2px solid $primaryclr;
+		}
+	}
+
+	textarea {
+		display: block;
+		min-height: 5rem;
+	}
+
+	label {
+		font-weight: 500;
+		font-size: 1rem;
+		margin-top: 1rem;
+		display: block;
+		color: $primaryclr;
+	}
+
+	.error {
+		color: red;
+		font-size: 0.75rem;
+		padding-bottom: 0.75rem;
+	}
+
+	.form-error {
+		font-size: 1rem;
+		text-align: center;
+	}
+
+	.edit-profile__buttons {
+		display: flex;
+		margin-top: 1rem;
+
+		button {
+			background: linear-gradient(329.74deg, $primaryclr 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
+			border-radius: 2rem;
+			color: $secondaryclr;
+			border: none;
+			padding: 0.5rem 1rem;
+			justify-self: center;
+			font-size: 1rem;
+			font-weight: 500;
+			text-align: center;
+			display: block;
+			margin: 0 auto;
+			cursor: pointer;
+
+			&:hover {
+				background: linear-gradient(329.74deg, #202a3f 18.42%, rgba(52, 64, 91, 0.86) 81.58%);
+			}
+		}
+
+		.edit-profile__cancel {
+			background: linear-gradient(
+				329.74deg,
+				rgba(139, 30, 30, 0.86) 18.42%,
+				rgba(139, 59, 30, 0.86) 81.58%
+			);
+
+			&:hover {
+				background: linear-gradient(
+					329.74deg,
+					rgba(138, 62, 62, 0.86) 18.42%,
+					rgba(138, 85, 66, 0.86) 81.58%
+				);
+			}
+		}
+	}
+}

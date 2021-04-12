@@ -1,10 +1,13 @@
 .loader__component {
-  background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(rgba(22, 34, 59, 0.9)));
-  background: linear-gradient(180deg, #16223b 0%, rgba(22, 34, 59, 0.9) 100%);
+  background: -webkit-gradient(linear, left top, left bottom, from(#16223b), to(#273c68));
+  background: linear-gradient(180deg, #16223b 0%, #273c68 100%);
   width: 100vw;
   height: 100vh;
   z-index: 100;
   color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

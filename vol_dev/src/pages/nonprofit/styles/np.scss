@@ -1,10 +1,13 @@
 @import "../../styles/global.scss";
-@import "./modal";
+@import "./createProject";
+@import "./editProfile";
+
 a {
 	text-decoration: none;
 	color: $white;
 }
-.np-container {
+
+.np__dashboard {
 	background-color: $darkBlue;
 	min-height: 100vh;
 	height: 100%;
@@ -12,13 +15,14 @@ a {
 	flex-direction: column;
 	color: $white;
 	justify-content: center;
-	padding-left: 20%;
-	padding-right: 20%;
+	padding: 0 15vw;
+
 	.np-curProject {
-		margin-top: 3%;
+		margin-top: 1rem;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
+
 		.devproject {
 			background: rgba(255, 255, 255, 0.4);
 			border-radius: 1em;
@@ -54,30 +58,54 @@ a {
 				flex-direction: column;
 				text-align: left;
 			}
+
 			.goto-btn {
+				flex: 1;
 				align-self: center;
-				position: relative;
 				margin-top: 2em;
-				padding: 0.5em 2.5em 0.5em 2.5em;
-				border-radius: 1em;
-				vertical-align: middle;
-				text-decoration: none;
-				color: $lightgrey;
-				background-color: $yellow;
+
+				display: flex;
+				justify-content: end;
+				align-items: flex-end;
+
+				a {
+					cursor: pointer;
+					text-decoration: none;
+					text-transform: uppercase;
+					font-weight: 500;
+					font-size: 0.875rem;
+					border-radius: 1em;
+					padding: 0.5em 2.5em;
+					color: $secondaryclr;
+					background-color: $yellow;
+					box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+					transition: all ease 0.2s;
+
+					&:hover,
+					&:focus {
+						background-color: $lightgrey;
+						color: $primaryclr;
+					}
+				}
 			}
 		}
 	}
+
 	.np-dash {
-		margin-top: 5%;
 		display: flex;
+		justify-content: space-between;
+
 		.np-devnav {
 			display: none;
 		}
+
 		.np-profile {
 			display: flex;
 			flex-direction: column;
-			.np-profile-image {
+
+			.np__profileInfo {
 				display: flex;
+
 				img {
 					background-color: $white;
 					padding: 0.5em;
@@ -86,55 +114,53 @@ a {
 					width: 5em;
 					height: 5em;
 				}
-				.np-user {
-					display: flex;
-					flex-direction: column;
-					margin-left: 2em;
-					h1 {
-						font-weight: normal;
-						font-size: 1.8em;
-					}
-					h3 {
-						font-weight: normal;
-						font-size: 1em;
-						line-height: 1em;
-						text-transform: uppercase;
-					}
+
+				.np__username {
+					font-weight: normal;
+					font-size: 1.5rem;
+					margin-left: 1rem;
 				}
 			}
-			.np-create-edit-mobile {
-				display: none;
-			}
-			a {
+
+			.np__signout {
 				margin-top: 1em;
 				background-color: $yellow;
+				text-transform: uppercase;
 				color: $darkBlue;
 				display: flex;
 				justify-content: center;
 				border-radius: 1em;
-				span {
-					padding: 0.25em;
-					text-transform: lowercase;
-				}
+				padding: 0.5rem 0;
+			}
+
+			.np-create-edit-mobile {
+				display: none;
 			}
 		}
+
 		.np-dash-option {
-			width: 100%;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-end;
+
 			.np-devnav {
-				width: 100%;
 				display: flex;
 				justify-content: flex-end;
+
 				a {
-					padding-left: 2em;
-					span {
-						font-size: 1.1em;
-						text-transform: uppercase;
+					margin-left: 2em;
+					padding: 0.25rem;
+					font-size: 1rem;
+					text-transform: uppercase;
+					border-bottom: 1px solid rgba(0, 0, 0, 0);
+					transition: border-bottom ease 0.5s;
+
+					&:hover {
+						border-bottom: 1px solid $secondaryclr;
 					}
 				}
 			}
+
 			.np-create-edit {
 				a {
 					margin-top: 1em;
@@ -143,41 +169,50 @@ a {
 					display: flex;
 					justify-content: center;
 					border-radius: 1em;
-					width: 20em;
-					span {
-						padding: 0.25em;
-						text-transform: lowercase;
+					width: 23rem;
+					padding: 0.4rem;
+					text-transform: lowercase;
+					cursor: pointer;
+
+					&:hover {
+						background-color: $yellow;
 					}
 				}
 			}
 		}
 	}
 }
+
 .np-hamburger,
 .np-sidebar {
 	display: none;
 }
+
 @media screen and (max-width: 1242px) {
-	.np-container {
+	.np__dashboard {
 		padding-left: 10%;
 		padding-right: 10%;
 	}
 }
+
 @media screen and (max-width: 900px) {
-	.np-container {
+	.np__dashboard {
 		padding-left: 5%;
 		padding-right: 5%;
 	}
 }
+
 @media screen and (max-width: 800px) {
-	.np-container {
+	.np__dashboard {
 		.np-dash {
 			justify-content: center;
 			margin-top: 15%;
+
 			.np-profile {
 				.np-profile-image {
 					justify-content: center;
 				}
+
 				.np-create-edit-mobile {
 					display: flex;
 					flex-direction: column;
@@ -186,6 +221,7 @@ a {
 					}
 				}
 			}
+
 			.np-devnav {
 				display: flex;
 				position: absolute;
@@ -193,6 +229,7 @@ a {
 				left: 0;
 				width: 100%;
 				justify-content: space-around;
+
 				a {
 					span {
 						font-size: 1.3em;
@@ -200,14 +237,16 @@ a {
 					}
 				}
 			}
+
 			.np-dash-option {
 				display: none;
 			}
 		}
 	}
 }
+
 @media screen and (max-width: 500px) {
-	.np-container {
+	.np__dashboard {
 		.np-hamburger {
 			display: inline;
 			position: absolute;
@@ -219,15 +258,19 @@ a {
 			background-color: $darkBlue;
 			border: none;
 		}
+
 		.np-sidebar {
 			display: none;
 		}
+
 		.h-open {
 			display: none;
 		}
+
 		.s-open {
 			display: flex;
 			z-index: 1;
+
 			.c-open {
 				display: inline;
 				position: absolute;
@@ -239,12 +282,14 @@ a {
 				background-color: $darkBlue;
 				border: none;
 			}
+
 			.np-devnav {
 				width: 100%;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				position: relative;
+
 				div {
 					display: flex;
 					flex-direction: column;
@@ -252,8 +297,10 @@ a {
 					width: 100%;
 					padding-bottom: 1em;
 					border-bottom: solid $white 1px;
+
 					a {
 						margin-top: 2em;
+
 						span {
 							color: $white;
 							font-size: 1.5em;
@@ -262,6 +309,7 @@ a {
 				}
 			}
 		}
+
 		.np-dash {
 			.np-devnav {
 				display: none;

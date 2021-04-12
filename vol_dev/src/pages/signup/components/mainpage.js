@@ -20,6 +20,8 @@ const MainPage = ({ setSelection }) => {
 				return result.user.getIdToken();
 			})
 			.then((idToken) => {
+				window.location.assign("/dashboard");
+
 				token = idToken;
 				if (token === "undefined") {
 					// TODO: Handle what happens if the token is not returned/there was an error
@@ -27,8 +29,6 @@ const MainPage = ({ setSelection }) => {
 
 				setStorageSessionExpire("isDev", true, 3600000);
 				setStorageSessionExpire("token", token, 3600000);
-
-				window.location.href("/dashboard")
 			})
 			.catch((error) => {
 				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError
@@ -67,6 +67,7 @@ const MainPage = ({ setSelection }) => {
 						<p className="subdescription">(and get some awesome rewards!)</p>
 					</div>
 				</div>
+
 				<div className="choice__card" onClick={setNonprofit}>
 					<img className="nonprof_img" src={charity} alt="keyboard" />
 					<p className="ima">I'm a</p>

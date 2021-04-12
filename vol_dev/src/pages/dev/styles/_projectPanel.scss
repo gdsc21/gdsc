@@ -21,11 +21,13 @@
 			text-transform: uppercase;
 			color: $lightgrey;
 			font-weight: 500;
-			border-bottom: 1px solid rgba(0, 0, 0, 0);
+			padding: 0.25rem;
+			border-bottom: 2px solid rgba(0, 0, 0, 0);
 			transition: border-bottom ease 0.5s;
 
-			&:hover {
-				border-bottom: 1px solid $secondaryclr;
+			&:hover,
+			&:focus {
+				border-bottom: 2px solid $lightgrey;
 			}
 		}
 
@@ -54,28 +56,35 @@
 			flex-wrap: wrap;
 
 			.devproject {
-				background: rgba(255, 255, 255, 0.4);
+				background: rgba(255, 255, 255, 0.35);
 				border-radius: 1em;
 				margin: 0.5em 1em 0.5em 0;
 				display: flex;
-				width: 19rem;
+				width: 18rem;
 				flex-direction: column;
-				padding: 2em 1.5em;
-
-				h3,
-				h4 {
-					color: $yellow;
-				}
+				padding: 1.75rem 1.5rem;
+				transition: all ease 0.2s;
+				box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 
 				h3 {
+					color: $yellow;
 					text-align: center;
-					font-size: 1.5rem;
+					text-transform: capitalize;
+					font-size: 1.25rem;
 					padding-bottom: 0.5em;
 				}
 
 				h4 {
+					color: $yellow;
 					text-transform: uppercase;
 					padding-right: 1em;
+				}
+
+				p {
+					text-transform: capitalize;
+					font-weight: 300;
+					font-size: 0.875rem;
+					color: #ffe9ca;
 				}
 
 				div {
@@ -83,7 +92,8 @@
 					padding: 0.375em;
 				}
 
-				.description-div {
+				.description-div,
+				.title {
 					display: flex;
 					flex-direction: column;
 					text-align: left;
@@ -112,15 +122,39 @@
 				}
 
 				.goto-btn {
+					flex: 1;
 					align-self: center;
-					position: relative;
 					margin-top: 2em;
-					padding: 0.5em 2.5em 0.5em 2.5em;
-					border-radius: 1em;
-					vertical-align: middle;
-					text-decoration: none;
-					color: $lightgrey;
-					background-color: $yellow;
+
+					display: flex;
+					justify-content: end;
+					align-items: flex-end;
+
+					a {
+						cursor: pointer;
+						text-decoration: none;
+						text-transform: uppercase;
+						font-weight: 500;
+						font-size: 0.875rem;
+						border-radius: 1em;
+						padding: 0.5em 2.5em;
+						color: $secondaryclr;
+						background-color: $yellow;
+						box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+						transition: all ease 0.2s;
+
+						&:hover,
+						&:focus {
+							background-color: $lightgrey;
+							color: $primaryclr;
+						}
+					}
+				}
+
+				&:hover,
+				&:focus {
+					background: rgba(255, 255, 255, 0.4);
+					transform: scale(1.05);
 				}
 			}
 		}

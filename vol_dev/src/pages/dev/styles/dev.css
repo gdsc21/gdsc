@@ -362,13 +362,14 @@
   text-transform: uppercase;
   color: #eae8fd;
   font-weight: 500;
-  border-bottom: 1px solid rgba(0, 0, 0, 0);
+  padding: 0.25rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
   -webkit-transition: border-bottom ease 0.5s;
   transition: border-bottom ease 0.5s;
 }
 
-.developer__dashboard .panel-container .devNav a:hover {
-  border-bottom: 1px solid #ffffff;
+.developer__dashboard .panel-container .devNav a:hover, .developer__dashboard .panel-container .devNav a:focus {
+  border-bottom: 2px solid #eae8fd;
 }
 
 .developer__dashboard .panel-container .devNav .navlink__icon {
@@ -414,37 +415,32 @@
 .developer__dashboard .panel-container .curProject .intProjectDisp .devproject,
 .developer__dashboard .panel-container .interestProject .curProjectDisp .devproject,
 .developer__dashboard .panel-container .interestProject .intProjectDisp .devproject {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.35);
   border-radius: 1em;
   margin: 0.5em 1em 0.5em 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 19rem;
+  width: 18rem;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 2em 1.5em;
-}
-
-.developer__dashboard .panel-container .curProject .curProjectDisp .devproject h3,
-.developer__dashboard .panel-container .curProject .curProjectDisp .devproject h4,
-.developer__dashboard .panel-container .curProject .intProjectDisp .devproject h3,
-.developer__dashboard .panel-container .curProject .intProjectDisp .devproject h4,
-.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h3,
-.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h4,
-.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h3,
-.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h4 {
-  color: #fca311;
+  padding: 1.75rem 1.5rem;
+  -webkit-transition: all ease 0.2s;
+  transition: all ease 0.2s;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .developer__dashboard .panel-container .curProject .curProjectDisp .devproject h3,
 .developer__dashboard .panel-container .curProject .intProjectDisp .devproject h3,
 .developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h3,
 .developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h3 {
+  color: #fca311;
   text-align: center;
-  font-size: 1.5rem;
+  text-transform: capitalize;
+  font-size: 1.25rem;
   padding-bottom: 0.5em;
 }
 
@@ -452,8 +448,19 @@
 .developer__dashboard .panel-container .curProject .intProjectDisp .devproject h4,
 .developer__dashboard .panel-container .interestProject .curProjectDisp .devproject h4,
 .developer__dashboard .panel-container .interestProject .intProjectDisp .devproject h4 {
+  color: #fca311;
   text-transform: uppercase;
   padding-right: 1em;
+}
+
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject p,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject p,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject p,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject p {
+  text-transform: capitalize;
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: #ffe9ca;
 }
 
 .developer__dashboard .panel-container .curProject .curProjectDisp .devproject div,
@@ -467,9 +474,13 @@
 }
 
 .developer__dashboard .panel-container .curProject .curProjectDisp .devproject .description-div,
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .title,
 .developer__dashboard .panel-container .curProject .intProjectDisp .devproject .description-div,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .title,
 .developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .description-div,
-.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .description-div {
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .title,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .description-div,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -518,17 +529,63 @@
 .developer__dashboard .panel-container .curProject .intProjectDisp .devproject .goto-btn,
 .developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .goto-btn,
 .developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .goto-btn {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
       align-self: center;
-  position: relative;
   margin-top: 2em;
-  padding: 0.5em 2.5em 0.5em 2.5em;
-  border-radius: 1em;
-  vertical-align: middle;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .goto-btn a,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .goto-btn a,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .goto-btn a,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .goto-btn a {
+  cursor: pointer;
   text-decoration: none;
-  color: #eae8fd;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 1em;
+  padding: 0.5em 2.5em;
+  color: #ffffff;
   background-color: #fca311;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all ease 0.2s;
+  transition: all ease 0.2s;
+}
+
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject .goto-btn a:hover, .developer__dashboard .panel-container .curProject .curProjectDisp .devproject .goto-btn a:focus,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .goto-btn a:hover,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject .goto-btn a:focus,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .goto-btn a:hover,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject .goto-btn a:focus,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .goto-btn a:hover,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject .goto-btn a:focus {
+  background-color: #eae8fd;
+  color: #16223b;
+}
+
+.developer__dashboard .panel-container .curProject .curProjectDisp .devproject:hover, .developer__dashboard .panel-container .curProject .curProjectDisp .devproject:focus,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject:hover,
+.developer__dashboard .panel-container .curProject .intProjectDisp .devproject:focus,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject:hover,
+.developer__dashboard .panel-container .interestProject .curProjectDisp .devproject:focus,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject:hover,
+.developer__dashboard .panel-container .interestProject .intProjectDisp .devproject:focus {
+  background: rgba(255, 255, 255, 0.4);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
 
 @media screen and (max-width: 1023px) {

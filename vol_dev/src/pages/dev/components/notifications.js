@@ -33,6 +33,7 @@ const Notifications = ({ hamburgerClick }) => {
 					data = response.data;
 					console.log(data);
 					setApplicationData(data);
+
 					// stops the loop
 					clearInterval(fetchProjects);
 				})
@@ -46,11 +47,6 @@ const Notifications = ({ hamburgerClick }) => {
 	if (!applicationData) {
 		return <Loader message="Hold on while we fetch your notifications" />;
 	} else {
-		let projectCards = [];
-		Object.entries(applicationData).forEach(([projectId, projectData]) => {
-			projectCards.push(<DevApplication projectId={projectId} projectData={projectData} />);
-		});
-
 		return (
 			<div className="panel-container">
 				{/* Nav and menu */}
@@ -68,8 +64,8 @@ const Notifications = ({ hamburgerClick }) => {
 							<i className="navlink__icon fas fa-bell"></i>
 						</Link>
 						{
-							//TODO: add messaging
-							/* <Link to="/">Messages</Link> */
+							// TODO: add messaging
+							// <Link to="/">Messages</Link>
 						}
 						<Link to="/explore">
 							<span className="navlink__text">Explore</span>
@@ -81,7 +77,11 @@ const Notifications = ({ hamburgerClick }) => {
 				{/* Website projects */}
 				<div className="curProject">
 					<h1 className="head">Your Applications</h1>
-					<div className="curProjectDisp">{projectCards}</div>
+					<div className="curProjectDisp">
+						{Object.entries(applicationData).map(([projectId, projectData], i) => (
+							<DevApplication projectId={projectId} projectData={projectData} key={i} />
+						))}
+					</div>
 				</div>
 			</div>
 		);

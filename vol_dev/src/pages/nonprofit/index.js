@@ -14,13 +14,10 @@ import Navigation from "./components/navigation";
 import Loader from "../components/loader";
 import CreateProject from "./components/createProject";
 import EditProfile from "./components/editProfile";
-import NpNotifications from "./components/notifications";
+import Notifications from "./components/notifications";
 import { Redirect } from "react-router";
 
 const NonProfit = ({ page }) => {
-	// Dummy user details for frontend tests
-	// const user = require("./Components/data/userDetails").default;
-
 	const { userStore, updateUserStore } = useContext(UserContext);
 	const [hamburger, setHamburger] = useState(false);
 	const [showCreateProject, setShowCreateProject] = useState(false);
@@ -87,15 +84,15 @@ const NonProfit = ({ page }) => {
 	if (!userStore) {
 		return <Loader message="Hold on while we load your profile" />;
 	} else {
-		let projectCards = [];
-		console.log(Object.entries(userStore.npProjects));
-		Object.entries(userStore.npProjects).forEach(([projectId, projectData]) => {
-			projectCards.push(<ProjectCard projectId={projectId} projectData={projectData} />);
-		});
-		console.log(projectCards);
-
 		return (
-			<div className="np-container">
+			<div className="np__dashboard">
+				<CreateProject
+					showCreateProject={showCreateProject}
+					setShowCreateProject={setShowCreateProject}
+				/>
+
+				<EditProfile showEditProfile={showEditProfile} setShowEditProfile={setShowEditProfile} />
+
 				<button className="np-hamburger" onClick={hamburgerClick}>
 					<i className="fas fa-bars"></i>
 				</button>
@@ -107,55 +104,46 @@ const NonProfit = ({ page }) => {
 					<Navigation />
 				</div>
 
-				<div className="np">
-					<div className="np-dash">
-						<CreateProject
-							showCreateProject={showCreateProject}
-							setShowCreateProject={setShowCreateProject}
-						/>
-						<EditProfile
-							showEditProfile={showEditProfile}
-							setShowEditProfile={setShowEditProfile}
-						/>
-						<Navigation />
-						<div className="np-profile">
-							<div className="np-profile-image">
-								<img src={npicon} />
-								<div className="np-user">
-									<h1>{userStore.npDisplayName}</h1>
-								</div>
-							</div>
-							<Link to="/" onClick={signOut}>
-								Sign Out
-							</Link>
-							<div className="np-create-edit-mobile" onClick={() => setShowCreateProject(true)}>
-								<span>Create Project</span>
-								<a href="/">
-									<span>Edit Profile</span>
-								</a>
-							</div>
+				<div className="np-dash">
+					<Navigation />
+
+					<div className="np-profile">
+						<div className="np__profileInfo">
+							<img src={npicon} />
+
+							<h2 className="np__username">{userStore.npDisplayName}</h2>
 						</div>
-						<div className="np-dash-option">
-							<Navigation />
-							<div className="np-create-edit">
-								<a onClick={() => setShowCreateProject(true)}>
-									<span>Create Project</span>
-								</a>
-								<a onClick={() => setShowEditProfile(true)}>
-									<span>Edit Profile</span>
-								</a>
-							</div>
+
+						<Link className="np__signout" to="/" onClick={signOut}>
+							Sign Out
+						</Link>
+
+						<div className="np-create-edit-mobile" onClick={() => setShowCreateProject(true)}>
+							<a>Create Project</a>
+							<a>Edit Profile</a>
+						</div>
+					</div>
+
+					<div className="np-dash-option">
+						<Navigation />
+						<div className="np-create-edit">
+							<a onClick={() => setShowCreateProject(true)}>Create Project</a>
+
+							<a onClick={() => setShowEditProfile(true)}>Edit Profile</a>
 						</div>
 					</div>
 				</div>
+
 				{page === "dashboard" ? (
-					<div className="np-curProject">{projectCards}</div>
+					<div className="np-curProject">
+						{Object.entries(userStore.npProjects).map(([projectId, projectData]) => (
+							<ProjectCard projectId={projectId} projectData={projectData} />
+						))}
+					</div>
 				) : page === "explore" ? (
-					<div>Coming Soon</div>
-				) : page === "notifications" ? (
-					<NpNotifications />
+					<div className="np__comingSoon">Coming Soon</div>
 				) : (
-					<div className="np-curProject">{projectCards}</div>
+					page === "notifications" && <Notifications />
 				)}
 			</div>
 		);

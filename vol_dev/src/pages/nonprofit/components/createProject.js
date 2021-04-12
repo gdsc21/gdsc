@@ -5,7 +5,7 @@ import axios from "axios";
 import Modal from "../../components/modal";
 
 const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
-	const { userStore, updateUserStore } = useContext(UserContext);
+	const { updateUserStore } = useContext(UserContext);
 
 	const [projTitle, setProjTitle] = useState(null);
 	const [projDescription, setProjDescription] = useState(null);
@@ -18,7 +18,8 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 			projDescription: projDescription,
 			projGithub: "",
 		};
-		// get token and if token is null redirect to sign in
+
+		// Get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
 		if (!token) {
 			signOut();
@@ -61,7 +62,7 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 
 	return (
 		<Modal open={showCreateProject} setOpen={setShowCreateProject} title="Create Project">
-			<form className="create-modal" onSubmit={createProject}>
+			<form className="np__createProject">
 				<label htmlFor="projTitle">Project Title</label>
 				<input
 					type="text"
@@ -79,6 +80,7 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 					value={projDescription}
 					onChange={(e) => setProjDescription(e.target.value)}
 				/>
+
 				<div className="edit-profile__buttons">
 					<button
 						className="edit-profile__cancel"
@@ -90,8 +92,14 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 						Cancel
 					</button>
 
-					<button className="edit-profile__save" type="submit">
-						Save
+					<button
+						className="edit-profile__save"
+						onClick={() => {
+							createProject();
+							setShowCreateProject(false);
+						}}
+					>
+						Create Project
 					</button>
 				</div>
 			</form>

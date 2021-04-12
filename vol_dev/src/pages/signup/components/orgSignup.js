@@ -58,22 +58,18 @@ const OrgSignUp = ({ setSelection }) => {
 					})
 					.then((tokenStr) => {
 						token = tokenStr;
-						// token = response.data.token;
-						// console.log(response.data);
-						// console.log(token);
 						if (token === "undefined") {
 							// Account created but Authentication failed
 							setFormError("Your account was successfully created, please sign in.");
 							return {};
 						}
-						//
+
 						// Store it in session storage
 						setStorageSessionExpire("isDev", false, 3600000);
 						setStorageSessionExpire("token", token, 3600000);
 
-						// Successfully created an account and signed in -- wut now?
 						// Go to the dashboard
-						window.location.href = "/dashboard";
+						window.location.assign("/dashboard");
 					})
 					.catch((err) => {
 						console.warn(err.message);

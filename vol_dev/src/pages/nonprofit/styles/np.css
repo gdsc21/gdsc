@@ -7,52 +7,166 @@
   font-family: "Poppins", sans-serif;
 }
 
-.np-container .create-modal {
+.np__dashboard .np__createProject {
+  min-width: 40vw;
+}
+
+.np__dashboard .np__createProject input,
+.np__dashboard .np__createProject textarea {
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 28px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  font-size: 0.875rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+
+.np__dashboard .np__createProject input:focus,
+.np__dashboard .np__createProject textarea:focus {
+  border: 2px solid #16223b;
+}
+
+.np__dashboard .np__createProject textarea {
+  display: block;
+  min-height: 5rem;
+}
+
+.np__dashboard .np__createProject label {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: block;
+  color: #16223b;
+}
+
+.np__dashboard .np__createProject .error {
+  color: red;
+  font-size: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.np__dashboard .np__createProject .form-error {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.np__dashboard .np__createProject .edit-profile__buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-top: 1em;
-  padding-bottom: 2em;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 2em;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  margin-top: 1rem;
 }
 
-.np-container .create-modal h1 {
-  color: #141b28;
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-bottom: 1em;
-}
-
-.np-container .create-modal div h5 {
-  color: #fca311;
-  font-size: 1.3em;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.np-container .create-modal div input {
-  outline: none;
-  margin-bottom: 2em;
-  border-radius: 1em;
+.np__dashboard .np__createProject .edit-profile__buttons button {
+  background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
+  border-radius: 2rem;
+  color: #ffffff;
   border: none;
-  width: 100%;
-  height: 2em;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: 0.5rem 1rem;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
 }
 
-.np-container .create-modal a {
-  background-color: #fca311;
-  padding: 0.5em 2.5em 0.5em 2.5em;
-  border-radius: 1em;
+.np__dashboard .np__createProject .edit-profile__buttons button:hover {
+  background: linear-gradient(329.74deg, #202a3f 18.42%, rgba(52, 64, 91, 0.86) 81.58%);
+}
+
+.np__dashboard .np__createProject .edit-profile__buttons .edit-profile__cancel {
+  background: linear-gradient(329.74deg, rgba(139, 30, 30, 0.86) 18.42%, rgba(139, 59, 30, 0.86) 81.58%);
+}
+
+.np__dashboard .np__createProject .edit-profile__buttons .edit-profile__cancel:hover {
+  background: linear-gradient(329.74deg, rgba(138, 62, 62, 0.86) 18.42%, rgba(138, 85, 66, 0.86) 81.58%);
+}
+
+.np__dashboard .np__editProfile {
+  min-width: 40vw;
+}
+
+.np__dashboard .np__editProfile input,
+.np__dashboard .np__editProfile textarea {
+  background: rgba(255, 255, 255, 0.6);
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 28px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  font-size: 0.875rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+
+.np__dashboard .np__editProfile input:focus,
+.np__dashboard .np__editProfile textarea:focus {
+  border: 2px solid #16223b;
+}
+
+.np__dashboard .np__editProfile textarea {
+  display: block;
+  min-height: 5rem;
+}
+
+.np__dashboard .np__editProfile label {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: block;
+  color: #16223b;
+}
+
+.np__dashboard .np__editProfile .error {
+  color: red;
+  font-size: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.np__dashboard .np__editProfile .form-error {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.np__dashboard .np__editProfile .edit-profile__buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 1rem;
+}
+
+.np__dashboard .np__editProfile .edit-profile__buttons button {
+  background: linear-gradient(329.74deg, #16223b 18.42%, rgba(22, 34, 59, 0.86) 81.58%);
+  border-radius: 2rem;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.np__dashboard .np__editProfile .edit-profile__buttons button:hover {
+  background: linear-gradient(329.74deg, #202a3f 18.42%, rgba(52, 64, 91, 0.86) 81.58%);
+}
+
+.np__dashboard .np__editProfile .edit-profile__buttons .edit-profile__cancel {
+  background: linear-gradient(329.74deg, rgba(139, 30, 30, 0.86) 18.42%, rgba(139, 59, 30, 0.86) 81.58%);
+}
+
+.np__dashboard .np__editProfile .edit-profile__buttons .edit-profile__cancel:hover {
+  background: linear-gradient(329.74deg, rgba(138, 62, 62, 0.86) 18.42%, rgba(138, 85, 66, 0.86) 81.58%);
 }
 
 a {
@@ -60,7 +174,7 @@ a {
   color: white;
 }
 
-.np-container {
+.np__dashboard {
   background-color: #141b28;
   min-height: 100vh;
   height: 100%;
@@ -75,12 +189,11 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding: 0 15vw;
 }
 
-.np-container .np-curProject {
-  margin-top: 3%;
+.np__dashboard .np-curProject {
+  margin-top: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -91,7 +204,7 @@ a {
           justify-content: center;
 }
 
-.np-container .np-curProject .devproject {
+.np__dashboard .np-curProject .devproject {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 1em;
   margin: 0.5em 1em 0.5em 0;
@@ -106,30 +219,30 @@ a {
   padding: 2em 1.5em;
 }
 
-.np-container .np-curProject .devproject h3,
-.np-container .np-curProject .devproject h4 {
+.np__dashboard .np-curProject .devproject h3,
+.np__dashboard .np-curProject .devproject h4 {
   color: #fca311;
 }
 
-.np-container .np-curProject .devproject h3 {
+.np__dashboard .np-curProject .devproject h3 {
   text-align: center;
   font-size: 1.5rem;
   padding-bottom: 0.5em;
 }
 
-.np-container .np-curProject .devproject h4 {
+.np__dashboard .np-curProject .devproject h4 {
   text-transform: uppercase;
   padding-right: 1em;
 }
 
-.np-container .np-curProject .devproject div {
+.np__dashboard .np-curProject .devproject div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding: 0.375em;
 }
 
-.np-container .np-curProject .devproject .description-div {
+.np__dashboard .np-curProject .devproject .description-div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -140,32 +253,59 @@ a {
   text-align: left;
 }
 
-.np-container .np-curProject .devproject .goto-btn {
+.np__dashboard .np-curProject .devproject .goto-btn {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
       align-self: center;
-  position: relative;
   margin-top: 2em;
-  padding: 0.5em 2.5em 0.5em 2.5em;
-  border-radius: 1em;
-  vertical-align: middle;
-  text-decoration: none;
-  color: #eae8fd;
-  background-color: #fca311;
-}
-
-.np-container .np-dash {
-  margin-top: 5%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
 
-.np-container .np-dash .np-devnav {
+.np__dashboard .np-curProject .devproject .goto-btn a {
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 1em;
+  padding: 0.5em 2.5em;
+  color: #ffffff;
+  background-color: #fca311;
+  -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all ease 0.2s;
+  transition: all ease 0.2s;
+}
+
+.np__dashboard .np-curProject .devproject .goto-btn a:hover, .np__dashboard .np-curProject .devproject .goto-btn a:focus {
+  background-color: #eae8fd;
+  color: #16223b;
+}
+
+.np__dashboard .np-dash {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.np__dashboard .np-dash .np-devnav {
   display: none;
 }
 
-.np-container .np-dash .np-profile {
+.np__dashboard .np-dash .np-profile {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -175,13 +315,13 @@ a {
           flex-direction: column;
 }
 
-.np-container .np-dash .np-profile .np-profile-image {
+.np__dashboard .np-dash .np-profile .np__profileInfo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.np-container .np-dash .np-profile .np-profile-image img {
+.np__dashboard .np-dash .np-profile .np__profileInfo img {
   background-color: white;
   padding: 0.5em;
   border-radius: 50%;
@@ -192,36 +332,16 @@ a {
   height: 5em;
 }
 
-.np-container .np-dash .np-profile .np-profile-image .np-user {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-left: 2em;
-}
-
-.np-container .np-dash .np-profile .np-profile-image .np-user h1 {
+.np__dashboard .np-dash .np-profile .np__profileInfo .np__username {
   font-weight: normal;
-  font-size: 1.8em;
+  font-size: 1.5rem;
+  margin-left: 1rem;
 }
 
-.np-container .np-dash .np-profile .np-profile-image .np-user h3 {
-  font-weight: normal;
-  font-size: 1em;
-  line-height: 1em;
-  text-transform: uppercase;
-}
-
-.np-container .np-dash .np-profile .np-create-edit-mobile {
-  display: none;
-}
-
-.np-container .np-dash .np-profile a {
+.np__dashboard .np-dash .np-profile .np__signout {
   margin-top: 1em;
   background-color: #fca311;
+  text-transform: uppercase;
   color: #141b28;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -230,15 +350,14 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   border-radius: 1em;
+  padding: 0.5rem 0;
 }
 
-.np-container .np-dash .np-profile a span {
-  padding: 0.25em;
-  text-transform: lowercase;
+.np__dashboard .np-dash .np-profile .np-create-edit-mobile {
+  display: none;
 }
 
-.np-container .np-dash .np-dash-option {
-  width: 100%;
+.np__dashboard .np-dash .np-dash-option {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -251,8 +370,7 @@ a {
           align-items: flex-end;
 }
 
-.np-container .np-dash .np-dash-option .np-devnav {
-  width: 100%;
+.np__dashboard .np-dash .np-dash-option .np-devnav {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -261,16 +379,21 @@ a {
           justify-content: flex-end;
 }
 
-.np-container .np-dash .np-dash-option .np-devnav a {
-  padding-left: 2em;
-}
-
-.np-container .np-dash .np-dash-option .np-devnav a span {
-  font-size: 1.1em;
+.np__dashboard .np-dash .np-dash-option .np-devnav a {
+  margin-left: 2em;
+  padding: 0.25rem;
+  font-size: 1rem;
   text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+  -webkit-transition: border-bottom ease 0.5s;
+  transition: border-bottom ease 0.5s;
 }
 
-.np-container .np-dash .np-dash-option .np-create-edit a {
+.np__dashboard .np-dash .np-dash-option .np-devnav a:hover {
+  border-bottom: 1px solid #ffffff;
+}
+
+.np__dashboard .np-dash .np-dash-option .np-create-edit a {
   margin-top: 1em;
   background-color: white;
   color: #141b28;
@@ -281,12 +404,14 @@ a {
       -ms-flex-pack: center;
           justify-content: center;
   border-radius: 1em;
-  width: 20em;
+  width: 23rem;
+  padding: 0.4rem;
+  text-transform: lowercase;
+  cursor: pointer;
 }
 
-.np-container .np-dash .np-dash-option .np-create-edit a span {
-  padding: 0.25em;
-  text-transform: lowercase;
+.np__dashboard .np-dash .np-dash-option .np-create-edit a:hover {
+  background-color: #fca311;
 }
 
 .np-hamburger,
@@ -295,32 +420,32 @@ a {
 }
 
 @media screen and (max-width: 1242px) {
-  .np-container {
+  .np__dashboard {
     padding-left: 10%;
     padding-right: 10%;
   }
 }
 
 @media screen and (max-width: 900px) {
-  .np-container {
+  .np__dashboard {
     padding-left: 5%;
     padding-right: 5%;
   }
 }
 
 @media screen and (max-width: 800px) {
-  .np-container .np-dash {
+  .np__dashboard .np-dash {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
     margin-top: 15%;
   }
-  .np-container .np-dash .np-profile .np-profile-image {
+  .np__dashboard .np-dash .np-profile .np-profile-image {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
   }
-  .np-container .np-dash .np-profile .np-create-edit-mobile {
+  .np__dashboard .np-dash .np-profile .np-create-edit-mobile {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -329,10 +454,10 @@ a {
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .np-container .np-dash .np-profile .np-create-edit-mobile a {
+  .np__dashboard .np-dash .np-profile .np-create-edit-mobile a {
     background-color: white;
   }
-  .np-container .np-dash .np-devnav {
+  .np__dashboard .np-dash .np-devnav {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -343,17 +468,17 @@ a {
     -ms-flex-pack: distribute;
         justify-content: space-around;
   }
-  .np-container .np-dash .np-devnav a span {
+  .np__dashboard .np-dash .np-devnav a span {
     font-size: 1.3em;
     text-transform: uppercase;
   }
-  .np-container .np-dash .np-dash-option {
+  .np__dashboard .np-dash .np-dash-option {
     display: none;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .np-container .np-hamburger {
+  .np__dashboard .np-hamburger {
     display: inline;
     position: absolute;
     top: 1em;
@@ -364,19 +489,19 @@ a {
     background-color: #141b28;
     border: none;
   }
-  .np-container .np-sidebar {
+  .np__dashboard .np-sidebar {
     display: none;
   }
-  .np-container .h-open {
+  .np__dashboard .h-open {
     display: none;
   }
-  .np-container .s-open {
+  .np__dashboard .s-open {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     z-index: 1;
   }
-  .np-container .s-open .c-open {
+  .np__dashboard .s-open .c-open {
     display: inline;
     position: absolute;
     top: 1em;
@@ -387,7 +512,7 @@ a {
     background-color: #141b28;
     border: none;
   }
-  .np-container .s-open .np-devnav {
+  .np__dashboard .s-open .np-devnav {
     width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -401,7 +526,7 @@ a {
             align-items: center;
     position: relative;
   }
-  .np-container .s-open .np-devnav div {
+  .np__dashboard .s-open .np-devnav div {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -416,14 +541,14 @@ a {
     padding-bottom: 1em;
     border-bottom: solid white 1px;
   }
-  .np-container .s-open .np-devnav div a {
+  .np__dashboard .s-open .np-devnav div a {
     margin-top: 2em;
   }
-  .np-container .s-open .np-devnav div a span {
+  .np__dashboard .s-open .np-devnav div a span {
     color: white;
     font-size: 1.5em;
   }
-  .np-container .np-dash .np-devnav {
+  .np__dashboard .np-dash .np-devnav {
     display: none;
   }
 }

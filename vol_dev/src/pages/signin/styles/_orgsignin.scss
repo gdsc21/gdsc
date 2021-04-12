@@ -8,7 +8,7 @@
 	backdrop-filter: blur(40px);
 	border-radius: 50px;
 	padding: 1.5rem 3rem;
-	margin: 2rem 10vw;
+	margin: 2rem 25vw;
 
 	& > * {
 		color: $primaryclr;
@@ -57,11 +57,17 @@
 		text-align: center;
 		display: block;
 		margin: 0 auto;
+		cursor: pointer;
+
+		&:hover {
+			background: linear-gradient(329.74deg, #202a3f 18.42%, rgba(52, 64, 91, 0.86) 81.58%);
+		}
 	}
 
 	.error {
 		color: red;
 		padding-bottom: 0.75rem;
+		padding-top: 0.25rem;
 		font-size: 0.75rem;
 	}
 

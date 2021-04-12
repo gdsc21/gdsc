@@ -1,8 +1,8 @@
 import "../styles/signin.css";
 import keyboard from "../img/dev_keyboard.svg";
 import charity from "../img/charity_icon.svg";
-import {fb, fbApp} from "../../../firebase";
-import {setStorageSessionExpire} from "../../../utils";
+import { fb, fbApp } from "../../../firebase";
+import { setStorageSessionExpire } from "../../../utils";
 
 const MainPage = ({ setSelection }) => {
 	const setDev = () => {
@@ -29,7 +29,7 @@ const MainPage = ({ setSelection }) => {
 				setStorageSessionExpire("token", token, 3600000);
 
 				// Redirect to dashboard
-				window.location.href = "/dashboard";
+				window.location.assign("/dashboard");
 			})
 			.catch((error) => {
 				// https://firebase.google.com/docs/reference/js/firebase.auth.AuthError

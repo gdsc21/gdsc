@@ -8,15 +8,19 @@ const Navigation = () => {
 					<span>Dashboard</span>
 				</Link>
 			</div>
-
 			<div>
 				<Link to="/notifications">
 					<span>Notifications</span>
 				</Link>
 			</div>
-
-			{/* <div><Link to="/"><span>Messages</span></Link></div> */}
-
+			{
+				// TODO: Add messaging
+				// <div>
+				// 	<Link to="/">
+				// 		<span>Messages</span>
+				// 	</Link>
+				// </div>
+			}
 			<div>
 				<Link to="/explore">
 					<span>Explore</span>

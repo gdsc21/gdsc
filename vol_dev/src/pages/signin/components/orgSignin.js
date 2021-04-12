@@ -39,7 +39,7 @@ const OrgSignIn = ({ setSelection }) => {
 				setStorageSessionExpire("token", token, 3600000);
 
 				// Redirect to dashboard
-				window.location.href = "/dashboard";
+				window.location.assign("/dashboard");
 			})
 			.catch((err) => {
 				switch (err.code) {
@@ -94,7 +94,7 @@ const OrgSignIn = ({ setSelection }) => {
 				<div className="form-field">
 					<label htmlFor="orgpass">Password</label>
 					<input
-						type="text"
+						type="password"
 						id="orgpass"
 						value={Password}
 						onChange={(e) => setPassword(e.target.value)}

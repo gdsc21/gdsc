@@ -27,11 +27,12 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 			},
 		};
 
-		// get token and if token is null redirect to sign in
+		// Get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
 		if (!token) {
 			signOut();
-			window.location.href = "/signin";
+
+			window.location.assign("/signin");
 		}
 
 		let config = {

@@ -24,7 +24,7 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 			npPhoneNumber: npPhoneNumber,
 		};
 
-		// get token and if token is null redirect to sign in
+		// Get token and if token is null redirect to sign in
 		let token = getSessionStorageExpire("token");
 		if (!token) {
 			signOut();
@@ -63,7 +63,7 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 
 	return (
 		<Modal open={showEditProfile} setOpen={setShowEditProfile} title="Edit Profile">
-			<form className="dev__edit-profile" onSubmit={editNpProfile}>
+			<form className="np__editProfile">
 				<label htmlFor="Email">Email</label>
 				<input
 					type="text"
@@ -111,7 +111,14 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 					>
 						Cancel
 					</button>
-					<button className="edit-profile__save" type="submit">
+					<button
+						className="edit-profile__save"
+						type="submit"
+						onClick={() => {
+							editNpProfile();
+							setShowEditProfile(false);
+						}}
+					>
 						Save
 					</button>
 				</div>

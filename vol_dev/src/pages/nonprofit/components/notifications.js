@@ -1,15 +1,14 @@
-import { Link } from "react-router-dom";
 import { authErrorCheck, getSessionStorageExpire, signOut } from "../../../utils";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import NpApplication from "./npApplication";
 
-const NpNotifications = () => {
+const Notifications = () => {
 	const [applicationData, setApplicationData] = useState(null);
 
 	useEffect(() => {
-		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
+		// Requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1;
 		const fetchProjects = setInterval(() => {
 			if (counter >= 3) clearInterval(fetchProjects);
@@ -22,7 +21,7 @@ const NpNotifications = () => {
 
 			if (!token) {
 				signOut();
-				window.location.href = "/signin";
+				window.location.assign("/");
 			}
 
 			let config = { headers: { Authorization: `Bearer ${token}` } };
@@ -33,34 +32,33 @@ const NpNotifications = () => {
 				.then((response) => {
 					data = response.data;
 					setApplicationData(data);
+
 					// stops the loop
 					clearInterval(fetchProjects);
 				})
 				.then(() => {})
 				.catch((err) => {
 					console.log(err);
-					// authErrorCheck(err);
+					authErrorCheck(err);
 				});
 		}, 2000);
 	}, []);
 
 	if (!applicationData) {
-		return <Loader message="Hold on while we load the available projects" />;
+		return <Loader message="Hold on while we load your notifications" />;
 	} else {
-		let projectCards = [];
-		Object.entries(applicationData).forEach(([projectId, projectData]) => {
-			projectCards.push(<NpApplication projectId={projectId} projectData={projectData} />);
-		});
-
 		return (
 			<div className="np-curProject">
 				<div className="curProject">
-					<h1 className="head">Your Applications</h1>
-					<div className="curProjectDisp">{projectCards}</div>
+					<div className="curProjectDisp">
+						{Object.entries(applicationData).map(([projectId, projectData], i) => (
+							<NpApplication projectId={projectId} projectData={projectData} key={i} />
+						))}
+					</div>
 				</div>
 			</div>
 		);
 	}
 };
 
-export default NpNotifications;
+export default Notifications;

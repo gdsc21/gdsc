@@ -4,8 +4,11 @@ const DevProfile = ({ user }) => {
 	return (
 		<div className="dev-profile">
 			<img src={user.imgURL || defaultUser} className="dev-image" alt="developer profile" />
+
 			<h4 className="dev-name">{user.devDisplayName}</h4>
+
 			<h5 className="dev-role">{user.role}</h5>
+
 			<div className="dev-links">
 				{user.devLinks.devWebsite && (
 					<a href={user.devLinks.devWebsite}>

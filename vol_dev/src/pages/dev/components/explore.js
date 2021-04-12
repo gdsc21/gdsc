@@ -6,7 +6,7 @@ import Loader from "../../components/loader";
 import DevProject from "./devProject";
 
 const Explore = ({ hamburgerClick }) => {
-	const [allProjectData, setAllProjectData] = useState(null)
+	const [allProjectData, setAllProjectData] = useState(null);
 
 	useEffect(() => {
 		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
@@ -32,11 +32,12 @@ const Explore = ({ hamburgerClick }) => {
 				.then((response) => {
 					data = response.data;
 					setAllProjectData(data);
+
 					// stops the loop
 					clearInterval(fetchProjects);
 				})
 				.catch((err) => {
-					console.log(err)
+					console.log(err);
 					if (err.response) authErrorCheck(err);
 				});
 		}, 2000);
@@ -62,8 +63,8 @@ const Explore = ({ hamburgerClick }) => {
 							<i className="navlink__icon fas fa-bell" />
 						</Link>
 						{
-							//TODO: add messaging
-							/* <Link to="/">Messages</Link> */
+							// TODO: add messaging
+							// <Link to="/">Messages</Link>
 						}
 						<Link to="/explore">
 							<span className="navlink__text">Explore</span>
@@ -77,7 +78,7 @@ const Explore = ({ hamburgerClick }) => {
 					<h1 className="head">Projects that need developers</h1>
 					<div className="curProjectDisp">
 						{Object.entries(allProjectData).map(([projectId, projectData], i) => (
-							<DevProject projectId={projectId} projectData={projectData} key={i} />
+							<DevProject projectId={projectId} projectData={projectData} explore={true} key={i} />
 						))}
 					</div>
 				</div>
