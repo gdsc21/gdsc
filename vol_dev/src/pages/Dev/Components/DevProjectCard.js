@@ -1,12 +1,10 @@
 import {getSessionStorageExpire} from "../../../utils";
 import DevProjectCardBTN from "./DevProjectCardBTN";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 // projectId should be the projectID
 const DevProjectCard = ({ projectId, projectData, page }) => {
-
-	// const projectURL = project.id ? `/project/${project.id}` : "/";
-	const projectURL = projectId ? `/project/${projectId}` : "/";
 
 	const applyProject = () => {
 		let data = { projectId: projectId }
@@ -35,7 +33,10 @@ const DevProjectCard = ({ projectId, projectData, page }) => {
 
 	return (
 		<div className="devproject">
-			<h3>{projectData.npDisplayName}</h3>
+			<Link to={`/project/${projectId}`}>
+				<h3>{projectData.npDisplayName}</h3>
+			</Link>
+
 			<div>
 				<h4>Title</h4>
 				<p className="title">{projectData.projTitle}</p>

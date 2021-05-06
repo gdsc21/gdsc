@@ -134,16 +134,16 @@ exports.projLoad = (request, response) => {
      *          failure: status=404 --- json={message: DevProjectModal not found} OR
      *          failure: status=500 --- json={error: err.message}
      */
-    let params
-    if (typeof request.params != "object")
-        params = JSON.parse(request.params)
-    else params = request.params
+    let query
+    if (typeof request.query != "object")
+        query = JSON.parse(request.query)
+    else query = request.query
 
-    if (!("projectId" in params)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
+    if (!("projectId" in query)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
 
     fs
         .collection("projects")
-        .doc(params.projectId)
+        .doc(query.projectId)
         .get()
         .then((projectDoc) => {
             if (projectDoc.exists) {

@@ -92,8 +92,10 @@ const Dev = ({ page }) => {
 					hamCloseClick={hamburgerClick}
 					setShowEditProfile={setShowEditProfile}
 				/>
-
-				<DevProjectsLayout page={page} user={userStore} hamburgerClick={hamburgerClick}/>
+				{
+					page === "Project" ? <DevProjectModal hamburgerClick={hamburgerClick}/> :
+						<DevProjectsLayout page={page} user={userStore} hamburgerClick={hamburgerClick}/>
+				}
 			</div>
 		);
 	}
