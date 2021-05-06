@@ -50,9 +50,6 @@ const DevProject = ({ projectId, projectData, explore }) => {
 				// 	<h4>Role</h4>
 				// 	<p className="role">{project.role}</p>
 				// </div>
-			}
-
-			{
 				// TODO: Add a way to quantify the project's progess
 				// <div className="progress">
 				// 	<h4>Progress</h4>

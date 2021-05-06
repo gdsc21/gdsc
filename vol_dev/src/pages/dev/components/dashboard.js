@@ -41,8 +41,8 @@ const Dashboard = ({ hamburgerClick }) => {
 				<h1 className="head">Current Projects</h1>
 
 				<div className="curProjectDisp">
-					{Object.entries(userStore.devProjects).forEach(([projectId, projectData], i) => (
-						<DevProject projectId={projectId} projectData={projectData} key={i} />
+					{Object.entries(userStore.devProjects).map(([projectId, projectData], i) => (
+						<DevProject projectId={projectId} projectData={projectData} key={i} explore={false} />
 					))}
 				</div>
 			</div>
