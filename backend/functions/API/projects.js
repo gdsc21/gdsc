@@ -131,25 +131,25 @@ exports.projLoad = (request, response) => {
      * Takes a projectId and returns the document data for that project
      * @param {request} body={projectId:}
      * @return success: status=200 --- json={document data}
-     *          failure: status=404 --- json={message: Project not found} OR
+     *          failure: status=404 --- json={message: DevProjectModal not found} OR
      *          failure: status=500 --- json={error: err.message}
      */
-    let params
-    if (typeof request.params != "object")
-        params = JSON.parse(request.params)
-    else params = request.params
+    let query
+    if (typeof request.query != "object")
+        query = JSON.parse(request.query)
+    else query = request.query
 
-    if (!("projectId" in params)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
+    if (!("projectId" in query)) return response.status(400).json({message: "Must provide a project id to retrieve!"})
 
     fs
         .collection("projects")
-        .doc(params.projectId)
+        .doc(query.projectId)
         .get()
         .then((projectDoc) => {
             if (projectDoc.exists) {
                 return response.status(200).json(projectDoc.data())
             } else {
-                return response.status(404).json({message: "Project not found"})
+                return response.status(404).json({message: "DevProjectModal not found"})
             }
         })
         .catch((err) => {
@@ -405,7 +405,7 @@ exports.projRemoveDev = (request, response, next) => {
             if (projDoc.exists) {
                 if (projDoc.data().npInfo.npUid !== user.uid)
                     return response.status(401).json({error: "Unauthorized"})
-            } else return response.status(400).json({message: "Project doesn't exists"})
+            } else return response.status(400).json({message: "DevProjectModal doesn't exists"})
 
         })
         .then(() => {

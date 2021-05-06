@@ -2,7 +2,7 @@ import img from "../img/defaultUser.png";
 import { signOut } from "../../../utils";
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
+const DevSidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 	return (
 		<div className="sidebar" id="developer__sidebar">
 			<button className="ham-close" onClick={hamCloseClick}>
@@ -67,9 +67,9 @@ const Sidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 				{
 					// TODO: Add badge system
 					/* <div className="badges">
-				<h3>Badges</h3>
-					*insert logo* *insert logo*
-				</div> */
+					<h3>Badges</h3>
+						*insert logo* *insert logo*
+					</div> */
 				}
 
 				<div className="starproject">
@@ -129,4 +129,4 @@ function level(xp) {
 	}
 }
 
-export default Sidebar;
+export default DevSidebar;

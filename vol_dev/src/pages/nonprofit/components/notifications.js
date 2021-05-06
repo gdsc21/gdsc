@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import NpApplication from "./npApplication";
 
-const Notifications = () => {
+const NpNotifications = () => {
 	const [applicationData, setApplicationData] = useState(null);
 
 	useEffect(() => {
@@ -61,4 +61,4 @@ const Notifications = () => {
 	}
 };
 
-export default Notifications;
+export default NpNotifications;

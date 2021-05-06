@@ -5,7 +5,7 @@ import { UserContext } from "../../../store";
 
 import Modal from "../../components/modal";
 
-const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
+const DevEditProfileModal = ({ showEditProfile, setShowEditProfile }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
 
 	const [devName, setDevName] = useState(userStore.devDisplayName);
@@ -134,4 +134,4 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
 	);
 };
 
-export default EditProfile;
+export default DevEditProfileModal;

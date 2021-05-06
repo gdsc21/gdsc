@@ -72,7 +72,7 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 					onChange={(e) => setProjTitle(e.target.value)}
 				/>
 
-				<label htmlFor="projDescription">Project Description</label>
+				<label htmlFor="projDescription">DevProjectModal Description</label>
 				<input
 					type="text"
 					name="projDescription"

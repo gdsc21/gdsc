@@ -7,6 +7,7 @@ import axios from "axios";
 import { UserContext } from "../../store";
 
 // Components
+<<<<<<< HEAD:vol_dev/src/pages/dev/index.js
 import Sidebar from "./components/sidebar";
 import Explore from "./components/explore";
 import Project from "./components/project";
@@ -14,6 +15,14 @@ import Dashboard from "./components/dashboard";
 import EditProfile from "./components/editProfile";
 import Notifications from "./components/notifications";
 import Loader from "../components/loader";
+=======
+import DevSidebar from "./Components/DevSidebar";
+import DevProjectModal from "./Components/DevProjectModal";
+
+import DevEditProfileModal from "./Components/DevEditProfileModal";
+import Loader from "../Components/loader";
+import DevProjectsLayout from "./Components/DevProjectsLayout";
+>>>>>>> tim:vol_dev/src/pages/Dev/index.js
 
 const Dev = ({ page }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -21,7 +30,7 @@ const Dev = ({ page }) => {
 	useEffect(() => {
 		if (userStore) return;
 
-		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
+		// requests a Dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1;
 		const fetchProfile = setInterval(() => {
 			if (counter >= 3) clearInterval(fetchProfile);
@@ -83,13 +92,21 @@ const Dev = ({ page }) => {
 	} else {
 		return (
 			<div className="developer__dashboard">
+<<<<<<< HEAD:vol_dev/src/pages/dev/index.js
 				<EditProfile showEditProfile={showEditProfile} setShowEditProfile={setShowEditProfile} />
+=======
+				<DevEditProfileModal
+					showEditProfile={showEditProfile}
+					setShowEditProfile={setShowEditProfile}
+				/>
+>>>>>>> tim:vol_dev/src/pages/Dev/index.js
 
-				<Sidebar
+				<DevSidebar
 					user={userStore}
 					hamCloseClick={hamburgerClick}
 					setShowEditProfile={setShowEditProfile}
 				/>
+<<<<<<< HEAD:vol_dev/src/pages/dev/index.js
 
 				{page === "dashboard" ? (
 					<Dashboard user={userStore} hamburgerClick={hamburgerClick} />
@@ -100,6 +117,12 @@ const Dev = ({ page }) => {
 				) : (
 					<Project user={userStore} hamburgerClick={hamburgerClick} />
 				)}
+=======
+				{
+					page === "Project" ? <DevProjectModal hamburgerClick={hamburgerClick}/> :
+						<DevProjectsLayout page={page} user={userStore} hamburgerClick={hamburgerClick}/>
+				}
+>>>>>>> tim:vol_dev/src/pages/Dev/index.js
 			</div>
 		);
 	}

@@ -2,9 +2,7 @@ import { getSessionStorageExpire } from "../../../utils";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const DevProject = ({ projectId, projectData, explore }) => {
-	const projectURL = projectId ? `/project/${projectId}` : "/";
-
+const DevProjectCard = ({ projectId, projectData, page }) => {
 	const applyProject = () => {
 		let data = { projectId: projectId };
 
@@ -32,11 +30,13 @@ const DevProject = ({ projectId, projectData, explore }) => {
 
 	return (
 		<div className="devproject">
-			<h3>{projectData.npDisplayName}</h3>
+			<Link to={`/project/${projectId}`}>
+				<h3>{projectData.npDisplayName}</h3>
+			</Link>
 
-			<div className="title">
+			<div>
 				<h4>Title</h4>
-				<p>{projectData.projTitle}</p>
+				<p className="title">{projectData.projTitle}</p>
 			</div>
 
 			<div className="description-div">
@@ -44,33 +44,28 @@ const DevProject = ({ projectId, projectData, explore }) => {
 				<p className="description">{projectData.projDescription}</p>
 			</div>
 
-			{
-				// TODO: There are no roles for projects yet but we need to add the github repo link and the non-profits name
-				// <div>
-				// 	<h4>Role</h4>
-				// 	<p className="role">{project.role}</p>
-				// </div>
-				// TODO: Add a way to quantify the project's progess
-				// <div className="progress">
-				// 	<h4>Progress</h4>
-				// 	<progress value={project.progress} max={100} />
-				// 	{project.progress}%
-				// </div>
-			}
-
-			{explore ? (
-				<div className="goto-btn" onClick={applyProject}>
-					<a>Apply to Project</a>
+			<Link to={`/non-profit/${projectData.npUid}`}>
+				<div className="">
+					<h4>Non-Profit</h4>
+					<p>{projectData.npDisplayName}</p>
 				</div>
-			) : (
+			</Link>
+
+			<div>
+				<h4>
+					<a href={projectData.projGithub} target="_blank">
+						Source Code
+					</a>
+				</h4>
+			</div>
+
+			{page === "Explore" && (
 				<div className="goto-btn" onClick={applyProject}>
-					<Link className="goto-btn" to={projectURL}>
-						Go to Project
-					</Link>
+					Apply to Project
 				</div>
 			)}
 		</div>
 	);
 };
 
-export default DevProject;
+export default DevProjectCard;
