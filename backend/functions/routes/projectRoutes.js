@@ -49,10 +49,10 @@ projectApp.post("/delete-project", auth, npDeleteProject, projDelete, npAppDelet
 projectApp.post("/update-project", auth, projUpdate, npUpdateProject, devUpdateProject, npAppUpdateProject)
 
 // adds a developer to a project --- post from np account so user = np
-projectApp.post("/add-dev", auth, projAddDev, devAddProject)
+projectApp.post("/add-Dev", auth, projAddDev, devAddProject)
 
 // deletes a developer from a project --- post from np account so user = np
-projectApp.post("/delete-dev", auth, projRemoveDev, devDeleteProject)
+projectApp.post("/delete-Dev", auth, projRemoveDev, devDeleteProject)
 
 // loads a specific project using its id --- not a restricted route so no user object from auth
 projectApp.get("/get-project", projLoad)

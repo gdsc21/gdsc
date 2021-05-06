@@ -35,7 +35,7 @@ const project = {
 		},
 		user3: {
 			devDisplayName: "Cecilia Parekh",
-			role: "Project Manager",
+			role: "DevProjectModal Manager",
 			imgURL:
 				"https://static.wikia.nocookie.net/newgirl/images/d/db/Cece_Season_7.jpg/revision/latest/top-crop/width/360/height/360?cb=20180119135423",
 			devLinks: {

@@ -65,19 +65,19 @@ userApp.get("/get-project", auth, projLoad)
 userApp.post("/delete-project", auth, npDeleteProject, projDelete)
 
 // creates a developer profile -- must be called immediately after signup with GitHub -- creates developer document
-// userApp.post("/dev-create-profile", auth, devCreateProfile)
+// userApp.post("/Dev-create-profile", auth, devCreateProfile)
 
 // retrieves a developer document -- only available to logged in users
-userApp.get("/get-dev-profile", auth, devGetProfile)
+userApp.get("/get-Dev-profile", auth, devGetProfile)
 
 // adds a developer to a project -- only available to non-profits -- updates project/developer docs
-userApp.post("/add-dev-to-project", auth, projAddDev, devAddProject)
+userApp.post("/add-Dev-to-project", auth, projAddDev, devAddProject)
 
 // removes a developer from a project -- only available to non-profits -- updates project/developer docs
-userApp.post("/remove-dev-from-project", auth, projRemoveDev, devDeleteProject)
+userApp.post("/remove-Dev-from-project", auth, projRemoveDev, devDeleteProject)
 
 // updates the developers profile as well as all the project pages where the developers profile is saved as well
-userApp.post("/update-dev-profile", auth, devUpdateProfile, projUpdateDevInfo)
+userApp.post("/update-Dev-profile", auth, devUpdateProfile, projUpdateDevInfo)
 
 // returns all the projects that have been created
 userApp.get("/get-all-projects", auth, projGetAll)

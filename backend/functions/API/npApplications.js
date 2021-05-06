@@ -158,7 +158,7 @@ exports.npAppUpdateProject = (request, response) => {
             [`${data.projectId}.projectInfo.projGithub`]: data.projGithub,
         })
         .then(() => {
-            return response.status(200).json({message: "Project Updated"})
+            return response.status(200).json({message: "DevProjectModal Updated"})
         })
         .catch((err) => {
             return response.status(500).json({error: err.message})

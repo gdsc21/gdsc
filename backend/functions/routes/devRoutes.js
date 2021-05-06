@@ -28,9 +28,9 @@ const {
 
 
 // retrieves a developer document -- only available to logged in users
-devApp.get("/get-dev-profile", auth, devGetProfile)
+devApp.get("/get-Dev-profile", auth, devGetProfile)
 
 // updates the developers profile in all locations except the np's application page
-devApp.post("/update-dev-profile", auth, devUpdateProfile, projUpdateDevInfo)
+devApp.post("/update-Dev-profile", auth, devUpdateProfile, projUpdateDevInfo)
 
 module.exports = devApp

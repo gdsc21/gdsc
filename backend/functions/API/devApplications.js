@@ -19,7 +19,7 @@ exports.devAppApply = (request, response, next) => {
         .doc(data.projectId)
         .get()
         .then((doc) => {
-            if (!doc.exists) return response.status(404).json({message: "Project doesn't exist"})
+            if (!doc.exists) return response.status(404).json({message: "DevProjectModal doesn't exist"})
 
             // add project data and current timestamp to the request body
             data.projectData = doc.data()

@@ -10,7 +10,7 @@ const NpNotifications = () => {
     const [applicationData, setApplicationData] = useState(null)
 
     useEffect(() => {
-        // requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
+        // requests a Dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
         let counter = 1;
         const fetchProjects = setInterval(() => {
             if (counter >= 3) clearInterval(fetchProjects);

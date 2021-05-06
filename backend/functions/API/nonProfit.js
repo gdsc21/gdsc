@@ -320,7 +320,7 @@ exports.npDeleteProject = (request, response, next) => {
         .then((npDoc) => {
             if (!npDoc.exists) return response.status(400).json({message: "Non-profit doesn't exist"})
             let projects = npDoc.data().npProjects
-            if (!(data.projectId in projects)) return response.status(500).json({message: "Project doesn't exist"})
+            if (!(data.projectId in projects)) return response.status(500).json({message: "DevProjectModal doesn't exist"})
 
             npDocRef
                 .update({

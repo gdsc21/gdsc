@@ -131,7 +131,7 @@ exports.projLoad = (request, response) => {
      * Takes a projectId and returns the document data for that project
      * @param {request} body={projectId:}
      * @return success: status=200 --- json={document data}
-     *          failure: status=404 --- json={message: Project not found} OR
+     *          failure: status=404 --- json={message: DevProjectModal not found} OR
      *          failure: status=500 --- json={error: err.message}
      */
     let params
@@ -149,7 +149,7 @@ exports.projLoad = (request, response) => {
             if (projectDoc.exists) {
                 return response.status(200).json(projectDoc.data())
             } else {
-                return response.status(404).json({message: "Project not found"})
+                return response.status(404).json({message: "DevProjectModal not found"})
             }
         })
         .catch((err) => {
@@ -405,7 +405,7 @@ exports.projRemoveDev = (request, response, next) => {
             if (projDoc.exists) {
                 if (projDoc.data().npInfo.npUid !== user.uid)
                     return response.status(401).json({error: "Unauthorized"})
-            } else return response.status(400).json({message: "Project doesn't exists"})
+            } else return response.status(400).json({message: "DevProjectModal doesn't exists"})
 
         })
         .then(() => {

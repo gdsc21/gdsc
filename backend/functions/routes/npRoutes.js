@@ -35,7 +35,7 @@ npApp.post("/np-sign-up", npSignUp)
 // updates a non profits profile in all locations except developer applications
 npApp.post("/np-update", auth, npUpdateAccount, projUpdateNpInfo, devUpdateNpInfo)
 
-// gets a non-profits profile --- post from np OR dev
+// gets a non-profits profile --- post from np OR Dev
 npApp.get("/get-np", auth, npGetAccount)
 
 

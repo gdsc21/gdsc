@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-// import DevProfile from "./devProfile";
+// import DevProfileCard from "./devProfile";
 // import defaultNP from "./img/charity_icon.svg";
 import { useParams } from "react-router-dom";
 
-const Project = ({ user, hamburgerClick }) => {
+const DevProjectModal = ({ user, hamburgerClick }) => {
 	/*
 	let { id } = useParams();
 	const [npInfo, setnpInfo] = useState("");
@@ -55,7 +55,7 @@ const Project = ({ user, hamburgerClick }) => {
 						<i className="navlink__icon fas fa-home"></i>
 					</Link>
 					{/* <Link to="/">
-						<span className="navlink__text">Notifications</span>
+						<span className="navlink__text">DevApplications</span>
 						<i className="navlink__icon fas fa-bell"></i>
 					</Link> */}
 					{/* <Link to="/">Messages</Link> */}
@@ -68,7 +68,7 @@ const Project = ({ user, hamburgerClick }) => {
 
 			{/* <div className="proj-and-np">
 				<div className="proj">
-					<h3 className="title">Project Information</h3>
+					<h3 className="title">DevProjectModal Information</h3>
 					<div className="project-info">
 						<span className="proj-title">{title}</span>
 						<span className="github">
@@ -103,11 +103,11 @@ const Project = ({ user, hamburgerClick }) => {
 			<h3 className="title">Developers on this project</h3>
 			<div className="developers">
 				{Object.entries(devProfiles).map(([key, value]) => (
-					<DevProfile user={value} />
+					<DevProfileCard user={value} />
 				))}
 			</div> */}
 		</div>
 	);
 };
 
-export default Project;
+export default DevProjectModal;

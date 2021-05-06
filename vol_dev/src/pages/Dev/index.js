@@ -7,13 +7,12 @@ import axios from "axios";
 import { UserContext } from "../../store";
 
 // Components
-import Sidebar from "./Components/sidebar";
-import Explore from "./Components/explore";
-import Project from "./Components/project";
-import Dashboard from "./Components/dashboard";
-import EditProfile from "./Components/EditProfile";
-import Notifications from "./Components/notifications";
+import DevSidebar from "./Components/DevSidebar";
+import DevProjectModal from "./Components/DevProjectModal";
+
+import DevEditProfileModal from "./Components/DevEditProfileModal";
 import Loader from "../Components/loader";
+import DevProjectsLayout from "./Components/DevProjectsLayout";
 
 const Dev = ({ page }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
@@ -21,7 +20,7 @@ const Dev = ({ page }) => {
 	useEffect(() => {
 		if (userStore) return;
 
-		// requests a dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
+		// requests a Dev profile every 2 seconds until it succeeds or until 3 calls (6 seconds)
 		let counter = 1;
 		const fetchProfile = setInterval(() => {
 			if (counter >= 3) clearInterval(fetchProfile);
@@ -83,24 +82,18 @@ const Dev = ({ page }) => {
 	} else {
 		return (
 			<div className="developer__dashboard">
-				<EditProfile
+				<DevEditProfileModal
 					showEditProfile={showEditProfile}
 					setShowEditProfile={setShowEditProfile}
 				/>
 
-				<Sidebar
+				<DevSidebar
 					user={userStore}
 					hamCloseClick={hamburgerClick}
 					setShowEditProfile={setShowEditProfile}
 				/>
 
-				{
-					page === "dashboard" ? (<Dashboard user={userStore} hamburgerClick={hamburgerClick} />) :
-					page === "explore" ? (<Explore user={userStore} hamburgerClick={hamburgerClick} />) :
-					page === "notifications" ? <Notifications hamburgerClick={hamburgerClick} /> :
-						(<Project user={userStore} hamburgerClick={hamburgerClick} />)
-				}
-
+				<DevProjectsLayout page={page} user={userStore} hamburgerClick={hamburgerClick}/>
 			</div>
 		);
 	}

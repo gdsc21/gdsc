@@ -59,9 +59,9 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 	};
 
 	return (
-		<Modal open={showCreateProject} setOpen={setShowCreateProject} title="Create Project">
+		<Modal open={showCreateProject} setOpen={setShowCreateProject} title="Create DevProjectModal">
 			<form className="create-modal" onSubmit={createProject}>
-				<label htmlFor="projTitle">Project Title</label>
+				<label htmlFor="projTitle">DevProjectModal Title</label>
 				<input
 					type="text"
 					name="projTitle"
@@ -70,7 +70,7 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 					onChange={(e) => setProjTitle(e.target.value)}
 				/>
 
-				<label htmlFor="projDescription">Project Description</label>
+				<label htmlFor="projDescription">DevProjectModal Description</label>
 				<input
 					type="text"
 					name="projDescription"

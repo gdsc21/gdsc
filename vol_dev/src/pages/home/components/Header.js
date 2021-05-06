@@ -137,7 +137,7 @@ const Header = () => {
 
 				<h2 className="project-title">Awesome Projects Built on Relite</h2>
 
-				{/* Project components */}
+				{/* DevProjectModal components */}
 				<div className="projects" id="homepage-featured-projects">
 					{projectData.map((project, index) => (
 						<div className="project" key={`project${index}`}>

@@ -73,7 +73,7 @@ const NpApplication = ({ projectId, projectData }) => {
             }
 
             {/*<Link className="goto-btn" to={projectURL}>*/}
-            {/*	Go to Project*/}
+            {/*	Go to DevProjectModal*/}
             {/*</Link>*/}
             <div className="goto-btn" onClick={acceptDev}>
                 Accept Developer

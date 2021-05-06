@@ -51,7 +51,7 @@ const App = () => {
 						() => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
-								return <Dev page="dashboard" />;
+								return <Dev page="Dashboard" />;
 							else if (!!user) return <NonProfit page="dashboard" />;
 							else return <Redirect to="/" />;
 						}
@@ -64,7 +64,7 @@ const App = () => {
 						() => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
-								return <Dev page="project" />;
+								return <Dev page="Project" />;
 							else if (!!user) return <NonProfit page="project" />;
 							else return <Redirect to="/" />;
 						}
@@ -77,19 +77,19 @@ const App = () => {
 						() => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
-								return <Dev page="explore" />;
+								return <Dev page="Explore" />;
 							else if (!!user) return <NonProfit page="explore" />;
 							else return <Redirect to="/" />;
 						}
 					}
 				</Route>
-				<Route exact path="/notifications">
+				<Route exact path="/applications">
 					{
 						() => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
-								return <Dev page="notifications" />
-							else if (!!user) return <NonProfit page="notifications" />
+								return <Dev page="Applications" />
+							else if (!!user) return <NonProfit page="applications" />
 							else return <Redirect to="/" />
 						}
 					}
