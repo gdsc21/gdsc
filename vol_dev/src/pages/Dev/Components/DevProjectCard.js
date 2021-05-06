@@ -45,6 +45,15 @@ const DevProjectCard = ({ projectId, projectData, page }) => {
 				<h4>Description</h4>
 				<p className="description">{projectData.projDescription}</p>
 			</div>
+			<Link to={`/non-profit/${projectData.npUid}`}>
+				<div className="">
+					<h4>Non-Profit</h4>
+					<p>{projectData.npDisplayName}</p>
+				</div>
+			</Link>
+			<div>
+				<h4><a href={projectData.projGithub} target="_blank">Source Code</a></h4>
+			</div>
 			{
 				page === "Explore" ?
 					<DevProjectCardBTN btnText={"Apply to Project"} type={"Apply"} projectId={projectId} /> : null
