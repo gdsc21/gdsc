@@ -5,7 +5,7 @@ import { UserContext } from "../../../store";
 
 import Modal from "../../Components/modal";
 
-const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
+const NpEditProfileModal = ({ showEditProfile, setShowEditProfile }) => {
     const { userStore, updateUserStore } = useContext(UserContext);
 
     // const [npDisplayName, setNpDisplayName] = useState(userStore.npDisplayName);
@@ -120,4 +120,4 @@ const EditProfile = ({ showEditProfile, setShowEditProfile }) => {
     );
 };
 
-export default EditProfile;
+export default NpEditProfileModal;

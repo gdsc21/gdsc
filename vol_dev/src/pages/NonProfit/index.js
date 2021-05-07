@@ -9,19 +9,20 @@ import { UserContext } from "../../store";
 import { authErrorCheck, signOut, getSessionStorageExpire } from "../../utils";
 
 // Components
-import ProjectCard from "./components/projectCard";
-import Navigation from "./components/navigation";
+import NpNavigation from "./components/NpNavigation";
 import Loader from "../Components/loader";
-import CreateProject from "./components/createProject";
-import EditProfile from "../nonprofit/components/editProfile";
-import NpNotifications from "./components/notifications";
-import {Redirect} from "react-router";
+import NpCreateProjectModal from "./components/NpCreateProjectModal";
+import NpEditProfileModal from "./components/NpEditProfileModal";
+import NpApplications from "./components/NpApplications";
+import NpProjectModal from "./components/NpProjectModal";
+import NpDashboard from "./components/NpDashboard";
+import NpExplore from "./components/NpExplore";
 
 const NonProfit = ({ page }) => {
 	// Dummy user details for frontend tests
 	// const user = require("./Components/data/userDetails").default;
 
-	const { userStore, updateUserStore } = useContext(UserContext);
+	const {userStore, updateUserStore} = useContext(UserContext);
 	const [hamburger, setHamburger] = useState(false);
 	const [showCreateProject, setShowCreateProject] = useState(false);
 	const [showEditProfile, setShowEditProfile] = useState(false);
@@ -44,21 +45,21 @@ const NonProfit = ({ page }) => {
 				window.location.href = "/signin";
 			}
 
-			let config = { headers: { Authorization: `Bearer ${token}` } };
+			let config = {headers: {Authorization: `Bearer ${token}`}};
 			let data;
 
 			axios
 				.get(url, config)
 				.then((response) => {
 					data = response.data;
-					updateUserStore({ type: "set", payload: data });
+					updateUserStore({type: "set", payload: data});
 				})
 				.then(() => {
 					clearInterval(fetchProfile);
 				})
 				.catch((err) => {
-					if (counter < 3) {}
-					else authErrorCheck(err);
+					if (counter < 3) {
+					} else authErrorCheck(err);
 				});
 		}, 2000);
 	}, []);
@@ -88,15 +89,8 @@ const NonProfit = ({ page }) => {
 
 
 	if (!userStore) {
-		return <Loader message="Hold on while we load your profile" />
+		return <Loader message="Hold on while we load your profile"/>
 	} else {
-		let projectCards = []
-		console.log(Object.entries(userStore.npProjects))
-		Object.entries(userStore.npProjects).forEach(([projectId, projectData]) => {
-			projectCards.push(<ProjectCard projectId={projectId} projectData={projectData}/>)
-		})
-		console.log(projectCards)
-
 		return (
 			<div className="np-container">
 				<button className="np-hamburger" onClick={hamburgerClick}>
@@ -107,23 +101,23 @@ const NonProfit = ({ page }) => {
 					<button className="np-ham-close" onClick={hamburgerClick}>
 						<i className="fas fa-times"></i>
 					</button>
-					<Navigation />
+					<NpNavigation/>
 				</div>
 
 				<div className="np">
 					<div className="np-dash">
-						<CreateProject
+						<NpCreateProjectModal
 							showCreateProject={showCreateProject}
 							setShowCreateProject={setShowCreateProject}
 						/>
-						<EditProfile
+						<NpEditProfileModal
 							showEditProfile={showEditProfile}
 							setShowEditProfile={setShowEditProfile}
 						/>
-						<Navigation />
+						<NpNavigation/>
 						<div className="np-profile">
 							<div className="np-profile-image">
-								<img src={npicon} />
+								<img src={npicon}/>
 								<div className="np-user">
 									<h1>{userStore.npDisplayName}</h1>
 								</div>
@@ -139,27 +133,29 @@ const NonProfit = ({ page }) => {
 							</div>
 						</div>
 						<div className="np-dash-option">
-							<Navigation />
+							<NpNavigation/>
 							<div className="np-create-edit">
-								<a  onClick={() => setShowCreateProject(true)}>
+								<a onClick={() => setShowCreateProject(true)}>
 									<span>Create Project</span>
 								</a>
-								<a  onClick={() => setShowEditProfile(true)}>
+								<a onClick={() => setShowEditProfile(true)}>
 									<span>Edit Profile</span>
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				{
-					page === "dashboard" ? <div className="np-curProject">{projectCards}</div> :
-					page === "explore" ? <div>Coming Soon</div> :
-					page === "notifications" ? <NpNotifications/> :
-						<div className="np-curProject">{projectCards}</div>
-				}
+				<div>
+					{
+						page === "Dashboard" ? <NpDashboard page={page} /> :
+						page === "Explore" ? <NpExplore page={page} /> :
+						page === "Applications" ? <NpApplications /> :
+							<NpProjectModal />
+					}
+				</div>
 			</div>
-		);
+		)
 	}
-};
+}
 
 export default NonProfit;

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Navigation = () => {
+const NpNavigation = () => {
 	return (
 		<nav className="np-devnav">
 			<div>
@@ -10,8 +10,8 @@ const Navigation = () => {
 			</div>
 
 			<div>
-				<Link to="/notifications">
-					<span>Notifications</span>
+				<Link to="/applications">
+					<span>Applications</span>
 				</Link>
 			</div>
 
@@ -26,4 +26,4 @@ const Navigation = () => {
 	);
 };
 
-export default Navigation;
+export default NpNavigation;

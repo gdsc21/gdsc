@@ -1,11 +1,8 @@
-import {getSessionStorageExpire, signOut} from "../../../utils";
+import {getSessionStorageExpire, signOut} from "../../../../utils";
 import axios from "axios";
 
 // projectId should be the projectID
-const NpApplication = ({ projectId, projectData }) => {
-
-    // const projectURL = project.id ? `/project/${project.id}` : "/";
-    const projectURL = projectId ? `/project/${projectId}` : "/";
+const NpDevApplicationCard = ({ projectId, projectData }) => {
 
     const acceptDev = () => {
         let data = { devUid: Object.entries(projectData.developers)[0][0], projectId: projectId }
@@ -23,9 +20,9 @@ const NpApplication = ({ projectId, projectData }) => {
             },
         };
 
-        // const url =
-        // 	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/applicationsApp/apply-project";
-        const url = "http://localhost:5001/sunlit-webbing-305321/us-central1/applicationsApp/accept-dev"
+        const url =
+        	"https://us-central1-sunlit-webbing-305321.cloudfunctions.net/applicationsApp/apply-project";
+        // const url = "http://localhost:5001/sunlit-webbing-305321/us-central1/applicationsApp/accept-dev"
 
         axios
             .post(url, data, config)
@@ -82,4 +79,4 @@ const NpApplication = ({ projectId, projectData }) => {
     );
 };
 
-export default NpApplication;
+export default NpDevApplicationCard;

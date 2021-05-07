@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
-// projectId should be the projectID
-const ProjectCard = ({ projectId, projectData }) => {
-	// const projectURL = project.id ? `/project/${project.id}` : "/";
+const NpDashboardProjectCard = ({ projectId, projectData }) => {
 	const projectURL = projectId ? `/project/${projectId}` : "/";
 
 	return (
@@ -17,11 +15,6 @@ const ProjectCard = ({ projectId, projectData }) => {
 				<p className="description">{projectData.projDescription}</p>
 			</div>
 
-			{/*<div>*/}
-			{/*	<h4>Role</h4>*/}
-			{/*	<p className="role">{projectData.role}</p>*/}
-			{/*</div>*/}
-
 			{
 				// TODO: Add a way to quantify the project's progess
 				// <div className="progress">
@@ -29,8 +22,6 @@ const ProjectCard = ({ projectId, projectData }) => {
 				// 	<progress value={project.progress} max={100} />
 				// 	{project.progress}%
 				// </div>
-				// TODO: Add a link that takes you to that project component which makes a request to get the project from its id
-				// Currently, it takes you to the project's id, and ot the homepage if it's not there
 			}
 
 			<Link className="goto-btn" to={projectURL}>
@@ -40,4 +31,4 @@ const ProjectCard = ({ projectId, projectData }) => {
 	);
 };
 
-export default ProjectCard;
+export default NpDashboardProjectCard;

@@ -4,9 +4,9 @@ const project = {
 		"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra nullam ut nunc scelerisque. Mattis sed proin a aliquet tempor nascetur ullamcorper.",
 	gitHubRepo: "https://github.com/",
 	npInfo: {
-		npEmail: "nonprofit@me.com",
+		npEmail: "NonProfit@me.com",
 		npDisplayName: "A really influential NGO",
-		npWebsite: "nonprofit.com",
+		npWebsite: "NonProfit.com",
 		npLogo: "https://getinthepicture.org/sites/default/files/images/partner/logos/unicef.png",
 		npUid: "npuser",
 	},

@@ -52,7 +52,7 @@ const App = () => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
 								return <Dev page="Dashboard" />;
-							else if (!!user) return <NonProfit page="dashboard" />;
+							else if (!!user) return <NonProfit page="Dashboard" />;
 							else return <Redirect to="/" />;
 						}
 					}
@@ -65,20 +65,20 @@ const App = () => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
 								return <Dev page="Project" />;
-							else if (!!user) return <NonProfit page="project" />;
+							else if (!!user) return <NonProfit page="Project" />;
 							else return <Redirect to="/" />;
 						}
 					}
 				</Route>
 				<Route exact path="/explore">
 					{
-						// if user is logged in and is a developer go to explore page if user is a nonprofit go to home
+						// if user is logged in and is a developer go to explore page if user is a NonProfit go to home
 						// if user is not logged in go to sign in page
 						() => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
 								return <Dev page="Explore" />;
-							else if (!!user) return <NonProfit page="explore" />;
+							else if (!!user) return <NonProfit page="Explore" />;
 							else return <Redirect to="/" />;
 						}
 					}
@@ -89,7 +89,7 @@ const App = () => {
 							const user = checkAuth();
 							if (!!user && user.providerData[0].providerId === "github.com")
 								return <Dev page="Applications" />
-							else if (!!user) return <NonProfit page="applications" />
+							else if (!!user) return <NonProfit page="Applications" />
 							else return <Redirect to="/" />
 						}
 					}

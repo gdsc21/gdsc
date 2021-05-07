@@ -34,13 +34,9 @@ const DevProjectCard = ({ projectId, projectData, page }) => {
 	return (
 		<div className="devproject">
 			<Link to={`/project/${projectId}`}>
-				<h3>{projectData.npDisplayName}</h3>
-			</Link>
-
-			<div>
 				<h4>Title</h4>
 				<p className="title">{projectData.projTitle}</p>
-			</div>
+			</Link>
 			<div className="description-div">
 				<h4>Description</h4>
 				<p className="description">{projectData.projDescription}</p>

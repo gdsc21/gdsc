@@ -4,7 +4,7 @@ import { UserContext } from "../../../store";
 import axios from "axios";
 import Modal from "../../Components/modal";
 
-const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
+const NpCreateProjectModal = ({ showCreateProject, setShowCreateProject }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);
 
 	const [projTitle, setProjTitle] = useState(null);
@@ -97,4 +97,4 @@ const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 	);
 };
 
-export default CreateProject;
+export default NpCreateProjectModal;
