@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
@@ -37,7 +36,7 @@ const DevProjectModal = ({ hamburgerClick }) => {
 				else {
 				}
 			});
-	}, []);
+	}, [id]);
 
 	if (!projectData) {
 		return <Loader message="Hold on while we load the project" />;

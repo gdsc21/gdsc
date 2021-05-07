@@ -117,7 +117,7 @@ const NonProfit = ({ page }) => {
 						<NpNavigation/>
 						<div className="np-profile">
 							<div className="np-profile-image">
-								<img src={npicon}/>
+								<img src={npicon} alt="Profile Picture"/>
 								<div className="np-user">
 									<h1>{userStore.npDisplayName}</h1>
 								</div>

@@ -6,7 +6,7 @@ const DevSidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 	return (
 		<div className="sidebar" id="developer__sidebar">
 			<button className="ham-close" onClick={hamCloseClick}>
-				<i className="fas fa-times"></i>
+				<i className="fas fa-times"/>
 			</button>
 
 			<div className="profile">
@@ -36,13 +36,13 @@ const DevSidebar = ({ user, hamCloseClick, setShowEditProfile }) => {
 					<div className="links">
 						{user.devLinks.devWebsite && (
 							<a href={user.devLinks.devWebsite} name="project page">
-								<i className="fa fa-info"></i>
+								<i className="fa fa-info"/>
 							</a>
 						)}
 
 						{user.devLinks.devLinkedIn && (
 							<a href={user.devLinks.devLinkedIn} name="github page">
-								<i className="fab fa-github"></i>
+								<i className="fab fa-github"/>
 							</a>
 						)}
 					</div>

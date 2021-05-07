@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import DevProjectCardBTN from "../../../Dev/Components/DevProjectCardBTN";
 
 // projectId should be the projectID
 const NpExploreProjectCard = ({ projectId, projectData }) => {
@@ -22,7 +21,7 @@ const NpExploreProjectCard = ({ projectId, projectData }) => {
                 </div>
             </Link>
             <div>
-                <h4><a href={projectData.projGithub} target="_blank">Source Code</a></h4>
+                <h4><a href={projectData.projGithub} target="_blank" rel="noreferrer">Source Code</a></h4>
             </div>
             <Link className="goto-btn" to={projectURL}>
                 Go to Project

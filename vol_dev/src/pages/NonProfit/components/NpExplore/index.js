@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {authErrorCheck, getSessionStorageExpire, signOut} from "../../../../utils";
 import axios from "axios";
 import Loader from "../../../Components/loader";
@@ -42,7 +42,7 @@ const NpExplore = () => {
 
         let cards = []
         Object.entries(pageData).forEach(([projectId, projectData]) => {
-            cards.push(<NpExploreProjectCard projectId={projectId} projectData={projectData} />)
+            cards.push(<NpExploreProjectCard key={projectId} projectId={projectId} projectData={projectData} />)
         })
 
         return (

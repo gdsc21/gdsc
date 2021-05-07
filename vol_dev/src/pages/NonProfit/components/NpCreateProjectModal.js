@@ -5,7 +5,7 @@ import axios from "axios";
 import Modal from "../../Components/modal";
 
 const NpCreateProjectModal = ({ showCreateProject, setShowCreateProject }) => {
-	const { userStore, updateUserStore } = useContext(UserContext);
+	const { updateUserStore } = useContext(UserContext);
 
 	const [projTitle, setProjTitle] = useState(null);
 	const [projDescription, setProjDescription] = useState(null);

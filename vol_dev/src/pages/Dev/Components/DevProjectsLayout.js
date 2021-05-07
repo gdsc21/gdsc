@@ -9,7 +9,7 @@ import {UserContext} from "../../../store";
 
 const DevProjectsLayout = ({page, hamburgerClick}) => {
     const [projectData, setProjectData] = useState(null)
-    const { userStore, updateUserStore } = useContext(UserContext);
+    const { userStore } = useContext(UserContext);
 
     useEffect(() => {
             let url

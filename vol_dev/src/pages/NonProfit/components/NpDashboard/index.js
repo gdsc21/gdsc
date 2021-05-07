@@ -5,7 +5,7 @@ import NpDashboardProjectCard from "./NpDashboardProjectCard";
 
 const NpDashboard = () => {
     const [pageData, setPageData] = useState(null)
-    const { userStore, updateUserStore } = useContext(UserContext)
+    const { userStore } = useContext(UserContext)
 
     useEffect(() => {
         setPageData(userStore.npProjects)

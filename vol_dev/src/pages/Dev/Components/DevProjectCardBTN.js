@@ -17,6 +17,8 @@ const DevProjectCardBTN = ({btnText, type, projectId}) => {
                 data.projectId = projectId
                 url = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/applicationsApp/apply-project"
                 break;
+            default:
+                break;
         }
 
         axios
