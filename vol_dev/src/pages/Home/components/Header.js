@@ -60,13 +60,13 @@ const Header = () => {
 		<div className="home__header">
 			<nav className="nav">
 				<div className="logo">
-					<img src={logo} alt="website logo"></img>
+					<img src={logo} alt="website logo"/>
 				</div>
 
 				<div className="hamburger" onClick={() => handleHamburger()}>
-					<div className="line" id="hamburger-line1"></div>
-					<div className="line" id="hamburger-line2"></div>
-					<div className="line" id="hamburger-line3"></div>
+					<div className="line" id="hamburger-line1"/>
+					<div className="line" id="hamburger-line2"/>
+					<div className="line" id="hamburger-line3"/>
 				</div>
 
 				<div className="navlinks">
@@ -119,7 +119,7 @@ const Header = () => {
 						Join Our Community
 					</Link>
 				</div>
-				<img className="abstract" src={abstract} alt="abstract"></img>
+				<img className="abstract" src={abstract} alt="abstract"/>
 			</div>
 
 			<div name="explore" className="explore" id="homepage-explore-section">

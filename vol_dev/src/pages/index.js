@@ -1,6 +1,6 @@
-import Home from "./home";
-import SignUp from "./signup";
-import SignIn from "./signin";
+import Home from "./Home";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 import NonProfit from "./NonProfit";
 import Dev from "./Dev";
 

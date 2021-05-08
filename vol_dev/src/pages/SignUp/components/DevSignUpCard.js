@@ -5,7 +5,8 @@ import {setStorageSessionExpire} from "../../../utils";
 const DevSignUpCard = () => {
     const devSignUp = () => {
         let provider = new fb.auth.GithubAuthProvider();
-        let gHtoken, token;
+        let token;
+        // let gHtoken
         fbApp
             .auth()
             .setPersistence(fb.auth.Auth.Persistence.SESSION)
@@ -14,7 +15,8 @@ const DevSignUpCard = () => {
             })
             .then((result) => {
                 // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-                gHtoken = result.credential.accessToken;
+                // gHtoken = result.credential.accessToken;  ---- this token can be used to make github requests
+                // on behalf of the user
                 return result.user.getIdToken();
             })
             .then((idToken) => {

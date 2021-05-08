@@ -37,7 +37,7 @@ const NpCreateProjectModal = ({ showCreateProject, setShowCreateProject }) => {
 		axios
 			.post(url, data, config)
 			.then((response) => {
-				if (!response.data.projectId) throw "projectId not returned";
+				if (!response.data.projectId) throw new Error("projectId not returned");
 				const getProfileUrl = "https://us-central1-sunlit-webbing-305321.cloudfunctions.net/npApp/get-np"
 				axios
 					.get(getProfileUrl, config)
