@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { authErrorCheck, getSessionStorageExpire, signOut } from "../../../utils";
 import { UserContext } from "../../../store";
 import axios from "axios";
-import Modal from "../../components/modal";
+import Modal from "../../Components/modal";
 
 const CreateProject = ({ showCreateProject, setShowCreateProject }) => {
 	const { updateUserStore } = useContext(UserContext);

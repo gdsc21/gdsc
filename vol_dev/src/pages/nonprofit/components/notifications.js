@@ -1,7 +1,7 @@
 import { authErrorCheck, getSessionStorageExpire, signOut } from "../../../utils";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Loader from "../../components/loader";
+import Loader from "../../Components/loader";
 import NpApplication from "./npApplication";
 
 const NpNotifications = () => {

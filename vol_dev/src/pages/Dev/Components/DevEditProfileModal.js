@@ -3,7 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../store";
 
-import Modal from "../../components/modal";
+import Modal from "../../Components/modal";
 
 const DevEditProfileModal = ({ showEditProfile, setShowEditProfile }) => {
 	const { userStore, updateUserStore } = useContext(UserContext);

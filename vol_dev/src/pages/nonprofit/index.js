@@ -11,7 +11,7 @@ import { authErrorCheck, signOut, getSessionStorageExpire } from "../../utils";
 // Components
 import ProjectCard from "./components/projectCard";
 import Navigation from "./components/navigation";
-import Loader from "../components/loader";
+import Loader from "../Components/loader";
 import CreateProject from "./components/createProject";
 import EditProfile from "./components/editProfile";
 import Notifications from "./components/notifications";
