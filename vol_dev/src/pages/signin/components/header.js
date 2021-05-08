@@ -6,7 +6,7 @@ const Header = () => {
 	return (
 		<div className="signin_header">
 			<nav className="nav">
-				<img src={logo} alt="website logo"></img>
+				<img src={logo} alt="website logo"/>
 				<div className="links">
 					<Link className="btn" to="/">
 						home

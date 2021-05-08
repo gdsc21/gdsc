@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 // Import components
 import Header from "./components/header";
-import MainPage from "./components/mainpage";
-import OrgSignIn from "./components/orgSignin";
+import NpSignInForm from "./components/NpSignInForm";
+import DevSignInCard from "./components/DevSignInCard";
+import NpSignInCard from "./components/NpSignInCard";
 
 const SignIn = () => {
-	const [selection, setSelection] = useState("main-page");
+	const [selection, setSelection] = useState("dev-or-np");
 
 	return (
 		<div className="signin">
@@ -20,13 +21,18 @@ const SignIn = () => {
 			/>
 
 			<Header />
-			{selection === "main-page" ? (
-				<MainPage setSelection={setSelection} />
-			) : selection === "org" ? (
-				<OrgSignIn setSelection={setSelection} />
-			) : (
-				""
-			)}
+			{
+				selection === "dev-or-np" ? (
+						<div className="main_signin">
+							<h3 className="heading">Select your role to log back in</h3>
+							<div className="cards">
+								<DevSignInCard />
+								<NpSignInCard setSelection={setSelection} />
+							</div>
+						</div>
+					) :
+				selection === "np" ? <NpSignInForm setSelection={setSelection} /> : ""
+			}
 
 			<div className="have-account">
 				<Link className="have-account" to="/signup">

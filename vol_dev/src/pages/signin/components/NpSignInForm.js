@@ -3,7 +3,7 @@ import "../styles/signin.css";
 import { fbApp, fb } from "../../../firebase";
 import { setStorageSessionExpire } from "../../../utils";
 
-const OrgSignIn = ({ setSelection }) => {
+const NpSignInForm = ({ setSelection }) => {
 	// Form values
 	const [Email, setEmail] = useState("");
 	const [Password, setPassword] = useState("");
@@ -113,4 +113,4 @@ const OrgSignIn = ({ setSelection }) => {
 	);
 };
 
-export default OrgSignIn;
+export default NpSignInForm;
