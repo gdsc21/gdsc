@@ -4,11 +4,12 @@ import "./scss/signup.css";
 
 // Import components
 import Header from "./components/header";
-import MainPage from "./components/mainpage";
-import OrgSignUp from "./components/orgSignup";
+import NpSignUpForm from "./components/NpSignUpForm";
+import DevSignUpCard from "./components/DevSignUpCard";
+import NpSignUpCard from "./components/NpSignUpCard";
 
 const SignUp = () => {
-	const [selection, setSelection] = useState("main-page");
+	const [selection, setSelection] = useState("dev-or-np");
 
 	return (
 		<div className="signup">
@@ -20,15 +21,18 @@ const SignUp = () => {
 			/>
 
 			<Header />
-
-			{selection === "main-page" ? (
-				<MainPage setSelection={setSelection} />
-			) : selection === "org" ? (
-				<OrgSignUp setSelection={setSelection} />
-			) : (
-				// Deal with Dev Signup
-				""
-			)}
+			{
+				selection === "dev-or-np" ? (
+					<div className="main_signup">
+						<h3 className="heading">Which of these describes you best?</h3>
+						<div className="cards">
+							<DevSignUpCard />
+							<NpSignUpCard setSelection={setSelection} />
+						</div>
+					</div>
+				)
+					: <NpSignUpForm setSelection={setSelection} />
+			}
 
 			<div className="have-account">
 				<Link className="have-account" to="/signin">

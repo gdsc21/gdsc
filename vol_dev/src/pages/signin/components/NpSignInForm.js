@@ -64,7 +64,7 @@ const NpSignInForm = ({ setSelection }) => {
 	};
 
 	const goBack = () => {
-		setSelection("main-page");
+		setSelection("dev-or-np");
 	};
 
 	return (

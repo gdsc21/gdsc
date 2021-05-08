@@ -5,7 +5,7 @@ import { setStorageSessionExpire } from "../../../utils";
 import Country from "./country";
 import { fb, fbApp } from "../../../firebase";
 
-const OrgSignUp = ({ setSelection }) => {
+const NpSignUpForm = ({ setSelection }) => {
 	// Form values
 	const [orgName, setOrgName] = useState("");
 	const [Name, setName] = useState("");
@@ -100,7 +100,7 @@ const OrgSignUp = ({ setSelection }) => {
 	};
 
 	const goBack = () => {
-		setSelection("main-page");
+		setSelection("dev-or-np");
 	};
 
 	return (
@@ -226,4 +226,4 @@ const OrgSignUp = ({ setSelection }) => {
 	);
 };
 
-export default OrgSignUp;
+export default NpSignUpForm;
